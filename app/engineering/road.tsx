@@ -1,20 +1,374 @@
-import React from 'react';
-import { WorkflowPlaceholder } from '@/components/WorkflowPlaceholder';
+/**
+ * Engineering Road Design — horizontal curve calculator using the engine.
+ */
+
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Share,
+} from 'react-native';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+import { Colors } from '@/theme';
+import { Card } from '@/components/Card';
+import { TextInput } from '@/components/TextInput';
+import { Button } from '@/components/Button';
+import {
+  horizontalCurve,
+  curveDeflections,
+  type HorizontalCurve,
+} from '@engine/curves';
 
 export default function RoadDesignScreen() {
+  const router = useRouter();
+
+  const [piEasting, setPiEasting] = useState('');
+  const [piNorthing, setPiNorthing] = useState('');
+  const [backBearing, setBackBearing] = useState('');
+  const [forwardBearing, setForwardBearing] = useState('');
+  const [radius, setRadius] = useState('200');
+  const [interval, setInterval] = useState('10');
+  const [curve, setCurve] = useState<HorizontalCurve | null>(null);
+  const [deflections, setDeflections] = useState<
+    { station: number; deflectionAngle: number; chordLength: number }[]
+  >([]);
+
+  const compute = () => {
+    const pe = parseFloat(piEasting);
+    const pn = parseFloat(piNorthing);
+    const bb = parseFloat(backBearing);
+    const fb = parseFloat(forwardBearing);
+    const r = parseFloat(radius);
+    const iv = parseFloat(interval);
+
+    if ([pe, pn, bb, fb, r].some(isNaN)) return;
+
+    const result = horizontalCurve(
+      { easting: pe, northing: pn },
+      bb,
+      fb,
+      r
+    );
+    setCurve(result);
+    setDeflections(curveDeflections(result, isNaN(iv) ? 10 : iv));
+  };
+
+  const handleShare = async () => {
+    if (!curve) return;
+    const text = [
+      `METARDU ACCESS — HORIZONTAL CURVE REPORT`,
+      ``,
+      `PI: E ${curve.PI.easting.toFixed(3)}, N ${curve.PI.northing.toFixed(3)}`,
+      `Back tangent bearing:    ${curve.backTangentBearing.toFixed(4)}°`,
+      `Forward tangent bearing: ${curve.forwardTangentBearing.toFixed(4)}°`,
+      `Radius:                  ${curve.radius.toFixed(3)} m`,
+      `Deflection angle:        ${curve.deflectionAngle.toFixed(4)}°`,
+      ``,
+      `GEOMETRY`,
+      `  Tangent length:  ${curve.tangentLength.toFixed(3)} m`,
+      `  Arc length:      ${curve.arcLength.toFixed(3)} m`,
+      `  Chord length:    ${curve.chordLength.toFixed(3)} m`,
+      `  Degree of curve: ${curve.degreeOfCurve.toFixed(4)}° / 30m`,
+      `  Mid-ordinate:    ${curve.midOrdinate.toFixed(3)} m`,
+      `  External dist:   ${curve.externalDistance.toFixed(3)} m`,
+      ``,
+      `PC: E ${curve.PC.easting.toFixed(3)}, N ${curve.PC.northing.toFixed(3)}`,
+      `PT: E ${curve.PT.easting.toFixed(3)}, N ${curve.PT.northing.toFixed(3)}`,
+      ``,
+      `SETTING-OUT TABLE (deflection method, ${interval}m intervals)`,
+      `Station (m)  | Deflection (°) | Chord (m)`,
+      ...deflections.map(d =>
+        `${d.station.toFixed(2).padStart(10)}  | ${d.deflectionAngle.toFixed(4).padStart(13)} | ${d.chordLength.toFixed(3).padStart(8)}`
+      ),
+    ].join('\n');
+    await Share.share({ message: text });
+  };
+
   return (
-    <WorkflowPlaceholder
-      title="Road Design"
-      icon="road-variant"
-      description="Horizontal and vertical alignment design with curve geometry, super-elevation, and setting-out tables."
-      features={[
-        'Horizontal curves: radius, tangent, arc, chord, deflection angle',
-        'Vertical curves: parabolic, K-values',
-        'Super-elevation computation',
-        'Setting-out table (chord/deflection method)',
-        'Design vs as-built comparison',
-        'Earthworks: cut/fill volumes by chainage',
-      ]}
-    />
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()}>
+          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+        </TouchableOpacity>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.title}>Road Design</Text>
+          <Text style={styles.subtitle}>Horizontal curve calculator</Text>
+        </View>
+        {curve && (
+          <TouchableOpacity onPress={handleShare} style={{ padding: 8 }}>
+            <MaterialCommunityIcons name="share-variant" size={18} color={Colors.metarduOrange} />
+          </TouchableOpacity>
+        )}
+      </View>
+
+      <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 40 }}>
+        <Card style={{ marginBottom: 16 }}>
+          <Text style={styles.cardTitle}>Point of Intersection (PI)</Text>
+          <View style={styles.row}>
+            <View style={{ flex: 1 }}>
+              <TextInput
+                label="PI Easting"
+                value={piEasting}
+                onChangeText={setPiEasting}
+                keyboardType="decimal-pad"
+                placeholder="e.g. 254500.000"
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <TextInput
+                label="PI Northing"
+                value={piNorthing}
+                onChangeText={setPiNorthing}
+                keyboardType="decimal-pad"
+                placeholder="e.g. 9857200.000"
+              />
+            </View>
+          </View>
+
+          <View style={styles.row}>
+            <View style={{ flex: 1 }}>
+              <TextInput
+                label="Back Tangent Bearing (°)"
+                value={backBearing}
+                onChangeText={setBackBearing}
+                keyboardType="decimal-pad"
+                placeholder="e.g. 45.0000"
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <TextInput
+                label="Forward Tangent Bearing (°)"
+                value={forwardBearing}
+                onChangeText={setForwardBearing}
+                keyboardType="decimal-pad"
+                placeholder="e.g. 95.0000"
+              />
+            </View>
+          </View>
+
+          <View style={styles.row}>
+            <View style={{ flex: 1 }}>
+              <TextInput
+                label="Radius (m)"
+                value={radius}
+                onChangeText={setRadius}
+                keyboardType="decimal-pad"
+                placeholder="200"
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <TextInput
+                label="Setting-out Interval (m)"
+                value={interval}
+                onChangeText={setInterval}
+                keyboardType="decimal-pad"
+                placeholder="10"
+              />
+            </View>
+          </View>
+
+          <Button title="Compute Curve" onPress={compute} fullWidth />
+        </Card>
+
+        {curve && (
+          <>
+            {/* Curve geometry */}
+            <Card style={{ marginBottom: 16 }}>
+              <Text style={styles.cardTitle}>Curve Geometry</Text>
+              <DetailRow label="Deflection angle" value={`${curve.deflectionAngle.toFixed(4)}°`} />
+              <DetailRow label="Tangent length (T)" value={`${curve.tangentLength.toFixed(3)} m`} />
+              <DetailRow label="Arc length (L)" value={`${curve.arcLength.toFixed(3)} m`} />
+              <DetailRow label="Chord length (C)" value={`${curve.chordLength.toFixed(3)} m`} />
+              <DetailRow label="Degree of curve" value={`${curve.degreeOfCurve.toFixed(4)}° / 30m`} />
+              <DetailRow label="Mid-ordinate (M)" value={`${curve.midOrdinate.toFixed(3)} m`} />
+              <DetailRow label="External distance (E)" value={`${curve.externalDistance.toFixed(3)} m`} />
+            </Card>
+
+            {/* PC and PT */}
+            <Card style={{ marginBottom: 16 }}>
+              <Text style={styles.cardTitle}>Key Points</Text>
+              <View style={styles.pointRow}>
+                <View style={[styles.pointIcon, { backgroundColor: `${Colors.metarduOrange}15` }]}>
+                  <Text style={[styles.pointLetter, { color: Colors.metarduOrange }]}>PC</Text>
+                </View>
+                <View>
+                  <Text style={styles.pointName}>Point of Curve (start)</Text>
+                  <Text style={styles.pointCoords}>
+                    E: {curve.PC.easting.toFixed(3)}    N: {curve.PC.northing.toFixed(3)}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.pointRow}>
+                <View style={[styles.pointIcon, { backgroundColor: `${Colors.info}15` }]}>
+                  <Text style={[styles.pointLetter, { color: Colors.info }]}>PI</Text>
+                </View>
+                <View>
+                  <Text style={styles.pointName}>Point of Intersection</Text>
+                  <Text style={styles.pointCoords}>
+                    E: {curve.PI.easting.toFixed(3)}    N: {curve.PI.northing.toFixed(3)}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.pointRow}>
+                <View style={[styles.pointIcon, { backgroundColor: `${Colors.success}15` }]}>
+                  <Text style={[styles.pointLetter, { color: Colors.success }]}>PT</Text>
+                </View>
+                <View>
+                  <Text style={styles.pointName}>Point of Tangent (end)</Text>
+                  <Text style={styles.pointCoords}>
+                    E: {curve.PT.easting.toFixed(3)}    N: {curve.PT.northing.toFixed(3)}
+                  </Text>
+                </View>
+              </View>
+            </Card>
+
+            {/* Setting-out table */}
+            <Card>
+              <Text style={styles.cardTitle}>Setting-Out Table (Deflection Method)</Text>
+              <View style={styles.tableHeader}>
+                <Text style={[styles.tableCell, styles.tableHeaderCell, { flex: 1 }]}>Station (m)</Text>
+                <Text style={[styles.tableCell, styles.tableHeaderCell, { flex: 1 }]}>Deflection (°)</Text>
+                <Text style={[styles.tableCell, styles.tableHeaderCell, { flex: 1 }]}>Chord (m)</Text>
+              </View>
+              {deflections.map((d, i) => (
+                <View key={i} style={[styles.tableRow, i % 2 === 0 ? styles.tableRowAlt : null]}>
+                  <Text style={[styles.tableCell, { flex: 1 }]}>{d.station.toFixed(2)}</Text>
+                  <Text style={[styles.tableCell, { flex: 1, color: Colors.metarduOrange, fontWeight: '600' }]}>
+                    {d.deflectionAngle.toFixed(4)}
+                  </Text>
+                  <Text style={[styles.tableCell, { flex: 1 }]}>{d.chordLength.toFixed(3)}</Text>
+                </View>
+              ))}
+            </Card>
+
+            <Button
+              title="Share Report"
+              onPress={handleShare}
+              variant="outline"
+              style={{ marginTop: 16 }}
+              icon={<MaterialCommunityIcons name="share-variant" size={18} color={Colors.metarduNavy} />}
+            />
+          </>
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
+function DetailRow({ label, value }: { label: string; value: string }) {
+  return (
+    <View style={styles.detailRow}>
+      <Text style={styles.detailLabel}>{label}</Text>
+      <Text style={styles.detailValue}>{value}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    padding: 16,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: Colors.metarduNavy,
+  },
+  subtitle: {
+    fontSize: 13,
+    color: Colors.gray500,
+    marginTop: 2,
+  },
+  cardTitle: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: Colors.metarduNavy,
+    textTransform: 'uppercase',
+    marginBottom: 12,
+  },
+  row: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  detailRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 6,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.gray200,
+  },
+  detailLabel: {
+    fontSize: 13,
+    color: Colors.gray500,
+  },
+  detailValue: {
+    fontSize: 13,
+    color: Colors.metarduNavy,
+    fontWeight: '600',
+    fontFamily: 'JetBrainsMono',
+  },
+  pointRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingVertical: 8,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.gray200,
+  },
+  pointIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  pointLetter: {
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  pointName: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: Colors.metarduNavy,
+  },
+  pointCoords: {
+    fontSize: 11,
+    color: Colors.gray500,
+    fontFamily: 'JetBrainsMono',
+    marginTop: 2,
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1.5,
+    borderBottomColor: Colors.metarduNavy,
+  },
+  tableHeaderCell: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: Colors.metarduNavy,
+    textTransform: 'uppercase',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.gray200,
+  },
+  tableRowAlt: {
+    backgroundColor: Colors.gray50,
+  },
+  tableCell: {
+    fontSize: 12,
+    color: Colors.metarduNavy,
+    fontFamily: 'JetBrainsMono',
+  },
+});
