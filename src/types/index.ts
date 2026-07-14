@@ -316,3 +316,59 @@ export interface CountryPack {
   submissionFormat: string; // 'NLIMS-JSON-1.0'
   locale: string;
 }
+
+// ============================================================================
+// Feature Codes (topographic)
+// ============================================================================
+export type FeatureLayer =
+  | 'vegetation'
+  | 'structures'
+  | 'transport'
+  | 'hydrology'
+  | 'utilities'
+  | 'contours'
+  | 'general';
+
+export interface FeatureCode {
+  id: string;
+  projectId: string;
+  code: string;          // short code: TREE, BUILD, ROAD, FENCE
+  description?: string;
+  layer: FeatureLayer;
+  color: string;         // hex
+  icon: string;          // MaterialCommunityIcons name
+  isActive: boolean;
+  createdAt: string;
+}
+
+// ============================================================================
+// Breaklines (constrain TIN surface)
+// ============================================================================
+export type BreaklineType = 'hard' | 'soft' | 'boundary';
+
+export interface Breakline {
+  id: string;
+  projectId: string;
+  name: string;
+  type: BreaklineType;
+  layer?: string;
+  pointCount: number;
+  lengthM: number;
+  capturedAt: string;
+  notes?: string;
+}
+
+export interface BreaklinePoint {
+  id: string;
+  breaklineId: string;
+  seq: number;
+  pointNumber: string;
+  easting?: number;
+  northing?: number;
+  elevation?: number;
+  capturedAt: string;
+}
+
+export interface BreaklineWithPoints extends Breakline {
+  points: BreaklinePoint[];
+}

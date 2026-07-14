@@ -251,15 +251,15 @@ EAS Update for OTA hotfixes (no store review)
 - [ ] Photo capture with geotag
 - [ ] Detox E2E tests
 
-### v0.3 — Engineering + Topographic
-- [ ] Leveling runs (rise & fall, height of collimation)
-- [ ] Road design (curves, super-elevation)
-- [ ] Setting out with stakeout
-- [ ] TIN surface generation
-- [ ] Contour rendering
+### v0.3 — Topographic Field Capture ✅
+- ✅ Feature codes library (Kenya standard 30 codes pre-loaded, custom codes)
+- ✅ Breakline capture (hard / soft / boundary types, GPS + manual entry, live validation)
+- ✅ Coverage map (2D map with points colored by code, density stats, quality assessment)
+- ✅ TIN prep data export (JSON for desktop's TIN engine)
+- ✅ Engine module: validateBreakline, buildTinPrepData, assessCoverage
 
-### v0.4 — Sectional Properties
-- [ ] Floor plan drawing tool
+### v0.4 — Polish + Sectional Properties
+- [ ] Floor plan drawing tool (touch sketch with snap-to-grid)
 - [ ] Sectional plan schedule generation
 - [ ] ArdhiSasa JSON export
 
@@ -270,7 +270,21 @@ EAS Update for OTA hotfixes (no store review)
 - [ ] 99.5% crash-free sessions
 
 ### v1.1+
-- [ ] Drone / UAV photogrammetry pipeline
+- [ ] Drone / UAV photogrammetry pipeline (GCP capture, RINEX, WebODM export)
 - [ ] Deformation monitoring
 - [ ] Mining surveys
 - [ ] Hydrographic surveys
+
+## Topographic Workflow — Mobile vs Desktop
+
+The topo workflow is split between mobile (field capture) and desktop (analysis & deliverables):
+
+| Mobile (Metardu Access) | Desktop (Metardu Desktop) |
+|------------------------|---------------------------|
+| Capture mass points with feature codes | TIN generation (Delaunay) |
+| Capture breaklines (hard/soft/boundary) | Contour generation |
+| Verify coverage on 2D map | 3D surface rendering |
+| Quality assessment (density, gaps) | Volume computation |
+| TIN prep data export | Final map production |
+
+**Key principle**: The desktop cannot produce a survey-grade surface without breaklines captured in the field. Without breaklines, the TIN interpolates across valleys and ridges incorrectly — producing a smooth surface where reality is sharp. Metardu Access makes breakline capture a first-class workflow.

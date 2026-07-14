@@ -8,7 +8,7 @@ import * as SQLite from 'expo-sqlite';
 import { v4 as uuidv4 } from 'uuid';
 
 const DB_NAME = 'metardu-access.db';
-const SCHEMA_VERSION = 3;
+const SCHEMA_VERSION = 4;
 
 let dbInstance: SQLite.SQLiteDatabase | null = null;
 
@@ -43,6 +43,9 @@ async function initSchema(db: SQLite.SQLiteDatabase): Promise<void> {
   }
   if (!currentVersion || currentVersion.version < 3) {
     await v3(db);
+  }
+  if (!currentVersion || currentVersion.version < 4) {
+    await v4(db);
   }
 }
 
@@ -370,6 +373,69 @@ async function v3(db: SQLite.SQLiteDatabase): Promise<void> {
     CREATE INDEX IF NOT EXISTS idx_sessions_sync ON field_sessions(sync_status);
 
     INSERT INTO schema_version (version) VALUES (3);
+  `);
+}
+
+// ============================================================================
+// v4 — Topographic field capture: breaklines + feature codes + breakline points
+// ============================================================================
+async function v4(db: SQLite.SQLiteDatabase): Promise<void> {
+  await db.execAsync(`
+    -- Feature codes (TREE, BUILD, ROAD, FENCE, etc.)
+    -- Layer grouping: utilities, vegetation, structures, hydrology, transport
+    CREATE TABLE IF NOT EXISTS feature_codes (
+      id TEXT PRIMARY KEY,
+      project_id TEXT NOT NULL,
+      code TEXT NOT NULL,
+      description TEXT,
+      layer TEXT NOT NULL DEFAULT 'general',
+      color TEXT NOT NULL DEFAULT '#F97316',
+      icon TEXT NOT NULL DEFAULT 'map-marker',
+      is_active INTEGER NOT NULL DEFAULT 1,
+      created_at TEXT NOT NULL,
+      FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
+      UNIQUE(project_id, code)
+    );
+
+    -- Breaklines: ridge lines, road edges, water courses, retaining walls, etc.
+    -- Each breakline is a sequence of point numbers that constrain the TIN.
+    -- Type:
+    --   'hard'  — man-made (road edge, wall, building footing) — TIN edges follow exactly
+    --   'soft'  — natural (ridge, valley, water course) — TIN edges follow approximately
+    --   'boundary' — outer boundary of survey area
+    CREATE TABLE IF NOT EXISTS breaklines (
+      id TEXT PRIMARY KEY,
+      project_id TEXT NOT NULL,
+      name TEXT NOT NULL,
+      type TEXT NOT NULL DEFAULT 'soft',
+      layer TEXT,
+      point_count INTEGER NOT NULL DEFAULT 0,
+      length_m REAL NOT NULL DEFAULT 0,
+      captured_at TEXT NOT NULL,
+      notes TEXT,
+      FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_breaklines_project ON breaklines(project_id);
+    CREATE INDEX IF NOT EXISTS idx_breaklines_type ON breaklines(type);
+
+    -- Breakline vertices (ordered sequence of points)
+    CREATE TABLE IF NOT EXISTS breakline_points (
+      id TEXT PRIMARY KEY,
+      breakline_id TEXT NOT NULL,
+      seq INTEGER NOT NULL,
+      point_number TEXT NOT NULL,
+      easting REAL,
+      northing REAL,
+      elevation REAL,
+      captured_at TEXT NOT NULL,
+      FOREIGN KEY (breakline_id) REFERENCES breaklines(id) ON DELETE CASCADE
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_blp_breakline ON breakline_points(breakline_id);
+    CREATE INDEX IF NOT EXISTS idx_blp_seq ON breakline_points(breakline_id, seq);
+
+    INSERT INTO schema_version (version) VALUES (4);
   `);
 }
 

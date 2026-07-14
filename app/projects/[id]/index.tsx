@@ -248,9 +248,9 @@ function WorkflowTab({ project }: { project: Project }) {
     ],
     topographic: [
       { label: 'Feature Codes', icon: 'tag-multiple', route: `/topo/features?projectId=${project.id}` },
-      { label: 'TIN Surface', icon: 'triangle-outline', route: `/topo/tin?projectId=${project.id}` },
-      { label: 'Contours', icon: 'chart-bell-curve', route: `/topo/contours?projectId=${project.id}` },
-      { label: 'Drone Imagery', icon: 'quadcopter', route: `/topo/drone?projectId=${project.id}` },
+      { label: 'Breaklines', icon: 'wave', route: `/topo/breaklines?projectId=${project.id}` },
+      { label: 'Coverage Map', icon: 'map-search', route: `/topo/coverage?projectId=${project.id}` },
+      { label: 'Drone / GCPs', icon: 'quadcopter', route: `/topo/drone?projectId=${project.id}` },
     ],
     sectional: [
       { label: 'Development Info', icon: 'home-city', route: `/sectional/development?projectId=${project.id}` },

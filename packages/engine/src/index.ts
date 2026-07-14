@@ -14,3 +14,4 @@ export * from './traverse';
 export * from './cogo';
 export * from './transforms';
 export * from './curves';
+export * from './breaklines';
