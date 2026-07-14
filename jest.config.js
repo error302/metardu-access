@@ -11,8 +11,9 @@ module.exports = {
     '^@app/(.*)$': '<rootDir>/app/$1',
   },
   testMatch: [
-    '<rootDir>/tests/**/*.test.ts',
-    '<rootDir>/tests/**/*.test.tsx',
+    '<rootDir>/tests/unit/**/*.test.ts',
+    '<rootDir>/tests/unit/**/*.test.tsx',
+    '<rootDir>/tests/integration/**/*.test.ts',
     '<rootDir>/packages/engine/src/**/*.test.ts',
   ],
   collectCoverageFrom: [
@@ -20,4 +21,6 @@ module.exports = {
     'src/lib/**/*.ts',
     '!**/*.d.ts',
   ],
+  // Slow timeout for integration tests (mock server round-trips)
+  testTimeout: 15000,
 };

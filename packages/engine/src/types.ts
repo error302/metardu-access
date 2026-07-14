@@ -21,3 +21,5 @@ export interface Point2D {
 export interface Point3D extends Point2D {
   elevation: number;
 }
+
+export type SolutionType = 'fixed' | 'float' | 'single' | 'dgps';

@@ -372,3 +372,62 @@ export interface BreaklinePoint {
 export interface BreaklineWithPoints extends Breakline {
   points: BreaklinePoint[];
 }
+
+// ============================================================================
+// Drone / UAV: GCPs + flight missions
+// ============================================================================
+export type TargetType = 'checkerboard' | 'cross' | 'natural';
+export type SolutionType = 'fixed' | 'float' | 'single' | 'dgps';
+export type DroneType = 'dji_phantom' | 'dji_mavic' | 'parrot' | 'fixed_wing' | 'other';
+export type MissionStatus = 'planned' | 'flying' | 'completed' | 'failed';
+
+export interface GCP {
+  id: string;
+  projectId: string;
+  gcpId: string;            // user-visible ID, e.g. GCP-001
+  easting: number;          // local grid (UTM)
+  northing: number;
+  elevation: number;        // orthometric height
+  lat?: number;             // WGS84 latitude (for desktop GCP file)
+  lng?: number;             // WGS84 longitude
+  height?: number;          // WGS84 ellipsoidal height
+  accuracyMm?: number;      // achieved accuracy
+  solutionType?: SolutionType;
+  numSatellites?: number;
+  photoUri?: string;
+  targetType?: TargetType;
+  targetSizeM?: number;
+  capturedAt: string;
+  notes?: string;
+}
+
+export interface DroneMission {
+  id: string;
+  projectId: string;
+  name: string;
+  droneType?: DroneType;
+  plannedAltitudeM?: number;
+  plannedSpeedMs?: number;
+  overlapFrontal?: number;  // %
+  overlapSide?: number;     // %
+  areaCoveredSqm?: number;
+  photoCount: number;
+  flightStart?: string;
+  flightEnd?: string;
+  status: MissionStatus;
+  notes?: string;
+  createdAt: string;
+}
+
+export interface FlightPhoto {
+  id: string;
+  missionId: string;
+  photoUri: string;
+  capturedAt: string;
+  lat?: number;
+  lng?: number;
+  altitudeM?: number;
+  yawDeg?: number;
+  pitchDeg?: number;
+  rollDeg?: number;
+}

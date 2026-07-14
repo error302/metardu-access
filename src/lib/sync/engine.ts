@@ -62,6 +62,35 @@ export class SyncEngine {
     return Boolean(state.isConnected && state.isInternetReachable);
   }
 
+  /**
+   * Health check — ping the sync server to verify it's reachable.
+   * Used by the Profile screen to show "Sync server: online/offline".
+   */
+  async checkHealth(): Promise<{ online: boolean; latencyMs?: number; stats?: any }> {
+    const start = Date.now();
+    try {
+      // Health endpoint is at the server root, not under /sync
+      const healthUrl = this.apiUrl.replace(/\/sync\/?$/, '') + '/health';
+      const response = await fetch(healthUrl, {
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+        // Short timeout for health check
+        signal: AbortSignal.timeout?.(5000),
+      });
+      if (!response.ok) {
+        return { online: false };
+      }
+      const data = await response.json();
+      return {
+        online: true,
+        latencyMs: Date.now() - start,
+        stats: data.stats ?? data,
+      };
+    } catch {
+      return { online: false };
+    }
+  }
+
   // ==========================================================================
   // Push: upload a field session to the sync server
   // ==========================================================================

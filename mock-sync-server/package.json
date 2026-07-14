@@ -1,0 +1,16 @@
+{
+  "name": "metardu-mock-sync-server",
+  "version": "0.1.0",
+  "description": "Mock sync server implementing SYNC_API_CONTRACT.md for Metardu Access development. Not for production use — stores data in memory only.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "uuid": "^10.0.0"
+  },
+  "license": "MIT"
+}

@@ -18,6 +18,7 @@ import { useSettingsStore } from '@/stores/settingsStore';
 import { getSyncQueue } from '@/lib/db/queries';
 import { getSyncEngine } from '@/lib/sync/engine';
 import * as Application from 'expo-application';
+import React, { useState, useEffect, useCallback } from 'react';
 
 export default function ProfileScreen() {
   const { t } = useTranslation();
@@ -32,6 +33,28 @@ export default function ProfileScreen() {
   const setLocale = useSettingsStore((s) => s.setLocale);
   const autoSync = useSettingsStore((s) => s.autoSync);
   const toggleAutoSync = useSettingsStore((s) => s.toggleAutoSync);
+
+  const [serverHealth, setServerHealth] = useState<{
+    online: boolean;
+    latencyMs?: number;
+    stats?: any;
+    checking: boolean;
+  }>({ online: false, checking: false });
+
+  const checkServerHealth = useCallback(async () => {
+    setServerHealth({ online: false, checking: true });
+    try {
+      const engine = getSyncEngine();
+      const result = await engine.checkHealth();
+      setServerHealth({ ...result, checking: false });
+    } catch (err: any) {
+      setServerHealth({ online: false, checking: false });
+    }
+  }, []);
+
+  useEffect(() => {
+    checkServerHealth();
+  }, [checkServerHealth]);
 
   const handleSignOut = () => {
     Alert.alert(
@@ -89,6 +112,41 @@ export default function ProfileScreen() {
           {profile?.firmName && (
             <Text style={styles.firmName}>{profile.firmName}</Text>
           )}
+        </Card>
+
+        {/* Sync server health */}
+        <Card style={{ marginBottom: 16 }}>
+          <View style={styles.healthRow}>
+            <View style={[
+              styles.healthDot,
+              serverHealth.checking
+                ? { backgroundColor: Colors.warning }
+                : serverHealth.online
+                  ? { backgroundColor: Colors.success }
+                  : { backgroundColor: Colors.danger },
+            ]} />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.healthTitle}>
+                {serverHealth.checking
+                  ? 'Checking sync server...'
+                  : serverHealth.online
+                    ? 'Sync server online'
+                    : 'Sync server offline'}
+              </Text>
+              <Text style={styles.healthSubtitle} numberOfLines={1}>
+                {serverHealth.online
+                  ? `${serverHealth.latencyMs ?? 0}ms · ${serverHealth.stats?.sessions ?? 0} sessions stored`
+                  : 'Run the mock server: cd mock-sync-server && npm start'}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={checkServerHealth} style={{ padding: 4 }}>
+              <MaterialCommunityIcons
+                name={serverHealth.checking ? 'loading' : 'refresh'}
+                size={18}
+                color={Colors.metarduOrange}
+              />
+            </TouchableOpacity>
+          </View>
         </Card>
 
         {/* Sync */}
@@ -283,6 +341,27 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.gray500,
     marginTop: 8,
+  },
+  healthRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  healthDot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+  },
+  healthTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: Colors.metarduNavy,
+  },
+  healthSubtitle: {
+    fontSize: 11,
+    color: Colors.gray500,
+    marginTop: 2,
+    fontFamily: 'JetBrainsMono',
   },
   sectionTitle: {
     fontSize: 13,

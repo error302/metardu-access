@@ -8,7 +8,7 @@ import * as SQLite from 'expo-sqlite';
 import { v4 as uuidv4 } from 'uuid';
 
 const DB_NAME = 'metardu-access.db';
-const SCHEMA_VERSION = 4;
+const SCHEMA_VERSION = 5;
 
 let dbInstance: SQLite.SQLiteDatabase | null = null;
 
@@ -46,6 +46,9 @@ async function initSchema(db: SQLite.SQLiteDatabase): Promise<void> {
   }
   if (!currentVersion || currentVersion.version < 4) {
     await v4(db);
+  }
+  if (!currentVersion || currentVersion.version < 5) {
+    await v5(db);
   }
 }
 
@@ -436,6 +439,82 @@ async function v4(db: SQLite.SQLiteDatabase): Promise<void> {
     CREATE INDEX IF NOT EXISTS idx_blp_seq ON breakline_points(breakline_id, seq);
 
     INSERT INTO schema_version (version) VALUES (4);
+  `);
+}
+
+// ============================================================================
+// v5 — Drone / UAV: GCPs (Ground Control Points) + flight missions + RINEX
+// ============================================================================
+async function v5(db: SQLite.SQLiteDatabase): Promise<void> {
+  await db.execAsync(`
+    -- Ground Control Points (GCPs) for drone photogrammetry
+    -- Surveyed with cm-level GNSS RTK; used to georeference drone imagery
+    -- on the desktop's WebODM / Pix4D pipeline
+    CREATE TABLE IF NOT EXISTS gcps (
+      id TEXT PRIMARY KEY,
+      project_id TEXT NOT NULL,
+      gcp_id TEXT NOT NULL,              -- user-visible ID, e.g. GCP-001
+      easting REAL NOT NULL,
+      northing REAL NOT NULL,
+      elevation REAL NOT NULL,
+      lat REAL,                          -- WGS84 latitude (for desktop GCP file)
+      lng REAL,                          -- WGS84 longitude
+      height REAL,                       -- WGS84 ellipsoidal height
+      accuracy_mm REAL,                  -- achieved accuracy in mm
+      solution_type TEXT,                -- 'fixed' | 'float' | 'single' | 'dgps'
+      num_satellites INTEGER,
+      photo_uri TEXT,                    -- photo of the GCP target on the ground
+      target_type TEXT,                  -- 'checkerboard' | 'cross' | 'natural'
+      target_size_m REAL,                -- target size in meters
+      captured_at TEXT NOT NULL,
+      notes TEXT,
+      FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_gcps_project ON gcps(project_id);
+    CREATE INDEX IF NOT EXISTS idx_gcps_id ON gcps(gcp_id);
+
+    -- Drone flight missions
+    CREATE TABLE IF NOT EXISTS drone_missions (
+      id TEXT PRIMARY KEY,
+      project_id TEXT NOT NULL,
+      name TEXT NOT NULL,
+      drone_type TEXT,                   -- 'dji_phantom' | 'dji_mavic' | 'parrot' | 'fixed_wing' | 'other'
+      planned_altitude_m REAL,           -- AGL (above ground level)
+      planned_speed_ms REAL,             -- m/s
+      overlap_frontal REAL,              -- 0-100 (%)
+      overlap_side REAL,                 -- 0-100 (%)
+      area_covered_sqm REAL,
+      photo_count INTEGER NOT NULL DEFAULT 0,
+      flight_start TEXT,
+      flight_end TEXT,
+      status TEXT NOT NULL DEFAULT 'planned', -- 'planned' | 'flying' | 'completed' | 'failed'
+      notes TEXT,
+      created_at TEXT NOT NULL,
+      FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_missions_project ON drone_missions(project_id);
+
+    -- Flight photos (linked to drone mission)
+    -- Each photo has a GPS position from the drone's EXIF data
+    CREATE TABLE IF NOT EXISTS flight_photos (
+      id TEXT PRIMARY KEY,
+      mission_id TEXT NOT NULL,
+      photo_uri TEXT NOT NULL,
+      captured_at TEXT NOT NULL,
+      lat REAL,                          -- drone GPS at capture
+      lng REAL,
+      altitude_m REAL,                   -- AGL or MSL depending on drone config
+      yaw_deg REAL,                      -- camera yaw
+      pitch_deg REAL,
+      roll_deg REAL,
+      FOREIGN KEY (mission_id) REFERENCES drone_missions(id) ON DELETE CASCADE
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_photos_mission ON flight_photos(mission_id);
+
+    INSERT INTO schema_version (version) VALUES (5);
   `);
 }
 
