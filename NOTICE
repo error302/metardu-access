@@ -1,0 +1,19 @@
+Metardu Access
+Copyright (c) 2026 error302
+
+This product includes software developed by:
+- error302 (Metardu ecosystem — https://github.com/error302)
+- msitarzewski (agency-agents methodology — https://github.com/msitarzewski/agency-agents)
+
+This product includes GeoTools / Proj4j-style coordinate transformation logic
+based on EPSG dataset parameters for Arc 1960 ↔ WGS84 (Kenya).
+
+The Metardu logo and brand colors (orange #F97316, navy #0B1F3A, white) are
+trademarks of error302 and may not be used without permission.
+
+Regulatory alignment:
+- Survey Act Cap. 299 (Kenya)
+- Survey Regulations 1994 (Kenya)
+- Sectional Properties Act 2020 (Kenya)
+- RDM 1.1 (Registry of Documents Manual, Survey of Kenya, 2025)
+- NLIMS-JSON-1.0 submission format (ArdhiSasa)

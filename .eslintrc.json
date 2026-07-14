@@ -1,0 +1,19 @@
+{
+  "extends": "universe/native",
+  "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
+    ],
+    "react-hooks/exhaustive-deps": "warn",
+    "react-native/no-unused-styles": "warn",
+    "import/order": "off"
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    ".expo/",
+    "dist/",
+    "coverage/",
+    "packages/engine/dist/"
+  ]
+}

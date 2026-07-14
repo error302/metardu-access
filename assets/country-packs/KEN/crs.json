@@ -1,0 +1,34 @@
+{
+  "crs": {
+    "epsg": 21037,
+    "name": "Arc 1960 / UTM zone 37S",
+    "datum": "ARC1960",
+    "ellipsoid": "Clarke 1880 (RGS)",
+    "semiMajor": 6378249.145,
+    "inverseFlattening": 293.465,
+    "projection": "Transverse Mercator",
+    "zone": 37,
+    "centralMeridian": 39,
+    "falseEasting": 500000,
+    "falseNorthing": 10000000,
+    "scaleFactor": 0.9996,
+    "hemisphere": "south"
+  },
+  "datumTransformation": {
+    "toWgs84": {
+      "method": "Helmert 7-parameter",
+      "tx": -157,
+      "ty": -2,
+      "tz": -299,
+      "rx": -0.00000372453182,
+      "ry": 0.00000704984247,
+      "rz": -0.00000372453182,
+      "scale": 0
+    },
+    "source": "EPSG:1122"
+  },
+  "verticalDatum": {
+    "name": "Mean Sea Level (Mombasa)",
+    "datum": "Arc 1960"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "iso3": "KEN",
+  "name": "Kenya",
+  "defaultCrs": {
+    "epsg": 21037,
+    "name": "Arc 1960 / UTM zone 37S",
+    "datum": "ARC1960",
+    "projection": "UTM 37S"
+  },
+  "regulatoryBody": "Survey of Kenya",
+  "statutoryDocuments": [
+    "Form No. 4 (Deed Plan)",
+    "RDM 1.1 (Registry of Documents Manual, 2025)",
+    "Survey Regulations 1994",
+    "Sectional Properties Act 2020"
+  ],
+  "submissionFormat": "NLIMS-JSON-1.0",
+  "locale": "en",
+  "supportedLocales": ["en", "sw"],
+  "counties": [
+    "Nairobi", "Kiambu", "Machakos", "Kajiado", "Murang'a", "Nyandarua",
+    "Nakuru", "Uasin Gishu", "Kakamega", "Kisumu", "Mombasa", "Kilifi",
+    "Nyeri", "Meru", "Kericho", "Bomet", "Bungoma", "Busia", "Embu",
+    "Tharaka-Nithi", "Trans Nzoia", "West Pokot", "Turkana", "Marsabit",
+    "Isiolo", "Garissa", "Wajir", "Mandera", "Tana River", "Lamu",
+    "Taita-Taveta", "Kwale", "Narok", "Baringo", "Elgeyo-Marakwet",
+    "Nandi", "Laikipia", "Vihiga", "Siaya", "Homa Bay", "Migori",
+    "Kisii", "Nyamira", "Kirinyaga", "Samburu", "Kitui", "Makueni"
+  ],
+  "iskVerification": {
+    "required": true,
+    "format": "ISK/\\d+",
+    "verifyingBody": "Institution of Surveyors of Kenya"
+  },
+  "precisionRequirements": {
+    "cadastral": {
+      "firstOrder": "1:25000",
+      "secondOrder": "1:10000",
+      "thirdOrder": "1:5000",
+      "fourthOrder": "1:2000"
+    }
+  },
+  "gnss": {
+    "corsNetwork": "Kenya CORS",
+    "ntripMountpoints": ["RTCM31", "RTCM32"]
+  },
+  "submissionEndpoint": "https://ardhiasasa.land.go.ke/api/v1/surveys"
+}
