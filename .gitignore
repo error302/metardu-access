@@ -1,0 +1,73 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+ios/
+android/
+
+# Metro
+.metro-health-check*
+
+# Debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.production
+
+# Typescript
+*.tsbuildinfo
+
+# Testing
+coverage/
+.jest/
+
+# EAS
+.easignore
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Worklog (per-agent file, kept locally)
+worklog.local.md
+
+# Bundles
+*.ipa
+*.apk
+*.aab
+
+# Generated assets
+assets/images/generated/
+
+# Map tiles cache
+*.mbtiles
+!assets/sample-data/*.mbtiles

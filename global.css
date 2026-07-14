@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Outdoor-readable contrast defaults */
+  :root {
+    --color-bg: #faf7f2;
+    --color-fg: #0b1f3a;
+  }
+
+  .dark {
+    --color-bg: #061122;
+    --color-fg: #ffffff;
+  }
+}
+
+@layer components {
+  /* High-contrast outdoor mode */
+  .outdoor-mode {
+    --color-bg: #000000;
+    --color-fg: #ffffff;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  .outdoor-mode .text-metardu-navy {
+    color: #ffffff !important;
+  }
+
+  /* Touch-friendly buttons for glove use */
+  .btn-touch {
+    @apply min-h-[48px] min-w-[48px] items-center justify-center rounded-card px-4 py-3;
+  }
+
+  .btn-primary {
+    @apply btn-touch bg-metardu-orange text-white font-semibold;
+  }
+
+  .btn-secondary {
+    @apply btn-touch bg-metardu-navy text-white font-semibold;
+  }
+
+  .btn-ghost {
+    @apply btn-touch bg-transparent text-metardu-navy;
+  }
+
+  .card {
+    @apply bg-white dark:bg-metardu-navy rounded-card p-4 shadow-field-card;
+  }
+
+  .input-field {
+    @apply min-h-[48px] rounded-card border border-gray-300 dark:border-metardu-navy-light bg-white dark:bg-metardu-navy-dark px-4 text-field text-metardu-navy dark:text-white;
+  }
+
+  .label-field {
+    @apply text-field-sm font-medium text-metardu-navy dark:text-gray-300 mb-2;
+  }
+}
