@@ -13,6 +13,8 @@ import { useTranslation } from 'react-i18next';
 import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
+import { CameraCapture, type CapturedPhoto } from '@/components/CameraCapture';
+import { field as haptics } from '@/lib/haptics';
 import { EmptyState } from '@/components/EmptyState';
 import { SurveyTypeBadge } from '@/components/SurveyTypeBadge';
 import { SyncStatusBadge } from '@/components/SyncStatusBadge';
@@ -41,6 +43,7 @@ export default function FieldbookScreen() {
   const profile = useAuthStore((s) => s.profile);
   const [items, setItems] = useState<RecentItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showCamera, setShowCamera] = useState(false);
 
   useEffect(() => {
     loadProjects();
@@ -124,9 +127,50 @@ export default function FieldbookScreen() {
         'Point captured',
         `${pointNumber}\nE: ${utm.easting.toFixed(3)}\nN: ${utm.northing.toFixed(3)}\nElev: ${(location.coords.altitude ?? 0).toFixed(2)}m`
       );
+      await haptics.pointCaptured();
       loadRecentItems(project.id);
     } catch (err: any) {
+      await haptics.syncFailed();
       Alert.alert('Capture failed', err.message ?? 'Unknown error');
+    }
+  }
+
+  async function capturePhotoPoint(photo: CapturedPhoto) {
+    if (!selected && projects.length === 0) {
+      Alert.alert('No project', 'Create a project first to capture points.');
+      return;
+    }
+    const project = selected ?? projects[0];
+
+    try {
+      const pointNumber = `PHOTO-${Date.now().toString().slice(-6)}`;
+      const point = await addPoint({
+        pointNumber,
+        easting: photo.easting ?? 0,
+        northing: photo.northing ?? 0,
+        elevation: photo.elevation ?? 0,
+        code: 'PHOTO',
+        description: `Photo point${photo.accuracy ? ` (±${photo.accuracy.toFixed(1)}m)` : ''}`,
+        source: 'gnss',
+        projectId: project.id,
+        sessionId: undefined,
+        photoUri: photo.uri,
+        raw: photo.lat ? {
+          latitude: photo.lat,
+          longitude: photo.lng,
+          accuracy: photo.accuracy,
+          capturedAt: photo.capturedAt,
+        } : undefined,
+      });
+      await haptics.pointCaptured();
+      Alert.alert(
+        'Photo point captured',
+        `${pointNumber}\n${photo.lat ? `Lat: ${photo.lat.toFixed(6)}\nLng: ${photo.lng!.toFixed(6)}\n` : ''}Photo attached.`
+      );
+      loadRecentItems(project.id);
+    } catch (err: any) {
+      await haptics.syncFailed();
+      Alert.alert('Failed', err.message);
     }
   }
 
@@ -185,7 +229,7 @@ export default function FieldbookScreen() {
           icon="camera"
           label={t('fieldbook.capturePhoto')}
           color={Colors.info}
-          onPress={() => router.push('/fieldbook/photo')}
+          onPress={() => setShowCamera(true)}
         />
         <QuickCaptureButton
           icon="note-plus"
@@ -209,6 +253,13 @@ export default function FieldbookScreen() {
         }
         refreshing={loading}
         onRefresh={() => selected && loadRecentItems(selected.id)}
+      />
+
+      <CameraCapture
+        visible={showCamera}
+        onClose={() => setShowCamera(false)}
+        onCapture={capturePhotoPoint}
+        title="Capture Photo Point"
       />
     </SafeAreaView>
   );

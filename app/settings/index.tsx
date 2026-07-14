@@ -146,6 +146,54 @@ export default function SettingsScreen() {
           </TouchableOpacity>
         </Section>
 
+        {/* Field Tools */}
+        <Section title="Field Tools">
+          <TouchableOpacity
+            onPress={() => router.push('/settings/gnss-rtk')}
+            style={styles.actionRow}
+          >
+            <MaterialCommunityIcons name="antenna" size={20} color={Colors.metarduNavy} />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.actionLabel}>GNSS / RTK Settings</Text>
+              <Text style={styles.actionSublabel}>NTRIP corrections + external receivers</Text>
+            </View>
+            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push('/instruments')}
+            style={styles.actionRow}
+          >
+            <MaterialCommunityIcons name="radio-tower" size={20} color={Colors.metarduNavy} />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.actionLabel}>Instruments (Total Stations)</Text>
+              <Text style={styles.actionSublabel}>Bluetooth connectivity for Trimble, Leica, Topcon</Text>
+            </View>
+            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push('/settings/offline-maps')}
+            style={styles.actionRow}
+          >
+            <MaterialCommunityIcons name="map-marker-radius" size={20} color={Colors.metarduNavy} />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.actionLabel}>Offline Maps</Text>
+              <Text style={styles.actionSublabel}>MBTiles basemaps for field use</Text>
+            </View>
+            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push('/settings/beacon-library')}
+            style={styles.actionRow}
+          >
+            <MaterialCommunityIcons name="book-open-variant" size={20} color={Colors.metarduNavy} />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.actionLabel}>Beacon Library</Text>
+              <Text style={styles.actionSublabel}>Kenya standard beacon specifications</Text>
+            </View>
+            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+          </TouchableOpacity>
+        </Section>
+
         {/* About */}
         <Section title={t('settings.about')}>
           <View style={styles.actionRow}>

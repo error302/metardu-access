@@ -12,6 +12,7 @@ import {
   type TextStyle,
 } from 'react-native';
 import { Colors } from '@/theme';
+import { field as haptics } from '@/lib/haptics';
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'outline';
 type Size = 'sm' | 'md' | 'lg';
@@ -65,7 +66,10 @@ export function Button({
   return (
     <TouchableOpacity
       testID={testID}
-      onPress={onPress}
+      onPress={() => {
+        if (!isDisabled) haptics.tap();
+        onPress();
+      }}
       disabled={isDisabled}
       activeOpacity={0.7}
       style={{

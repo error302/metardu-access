@@ -1,10 +1,14 @@
 /**
  * Metardu Access — Design System Theme
  * Colors derived from the Metardu logo (analyzed via VLM).
+ *
+ * Three theme modes:
+ *   - light: cream background, navy text (default indoor)
+ *   - dark: navy-dark background, white text (night / low light)
+ *   - outdoor: pure black background, white text, max contrast (Kenya sun)
  */
 
-export const Colors = {
-  // Brand
+export const BrandColors = {
   metarduOrange: '#F97316',
   metarduOrangeLight: '#FB923C',
   metarduOrangeDark: '#EA580C',
@@ -13,8 +17,9 @@ export const Colors = {
   metarduNavyDark: '#061122',
   metarduWhite: '#FFFFFF',
   metarduCream: '#FAF7F2',
+};
 
-  // Semantic
+export const SemanticColors = {
   success: '#10B981',
   successLight: '#D1FAE5',
   warning: '#F59E0B',
@@ -23,8 +28,9 @@ export const Colors = {
   dangerLight: '#FEE2E2',
   info: '#3B82F6',
   infoLight: '#DBEAFE',
+};
 
-  // Neutral grays
+export const NeutralColors = {
   gray50: '#F9FAFB',
   gray100: '#F3F4F6',
   gray200: '#E5E7EB',
@@ -35,6 +41,73 @@ export const Colors = {
   gray700: '#374151',
   gray800: '#1F2937',
   gray900: '#111827',
+};
+
+// Dark theme overrides (for dark mode)
+export const DarkColors = {
+  bg: '#061122',
+  bgElevated: '#0B1F3A',
+  bgCard: '#1E3A5F',
+  fg: '#FFFFFF',
+  fgSecondary: '#E5E7EB',
+  fgMuted: '#9CA3AF',
+  border: '#1E3A5F',
+  inputBg: '#0B1F3A',
+  inputBorder: '#1E3A5F',
+};
+
+// Outdoor theme overrides (for Kenya sun — max contrast)
+export const OutdoorColors = {
+  bg: '#000000',
+  bgElevated: '#000000',
+  bgCard: '#0A0A0A',
+  fg: '#FFFFFF',
+  fgSecondary: '#FFFFFF',
+  fgMuted: '#CCCCCC',
+  border: '#FFFFFF',
+  inputBg: '#111111',
+  inputBorder: '#FFFFFF',
+};
+
+// Light theme (default)
+export const LightColors = {
+  bg: '#FAF7F2',
+  bgElevated: '#FFFFFF',
+  bgCard: '#FFFFFF',
+  fg: '#0B1F3A',
+  fgSecondary: '#1F2937',
+  fgMuted: '#6B7280',
+  border: '#E5E7EB',
+  inputBg: '#FFFFFF',
+  inputBorder: '#D1D5DB',
+};
+
+export type ThemeMode = 'light' | 'dark' | 'outdoor';
+
+export interface Theme {
+  mode: ThemeMode;
+  brand: typeof BrandColors;
+  semantic: typeof SemanticColors;
+  neutral: typeof NeutralColors;
+  colors: {
+    bg: string;
+    bgElevated: string;
+    bgCard: string;
+    fg: string;
+    fgSecondary: string;
+    fgMuted: string;
+    border: string;
+    inputBg: string;
+    inputBorder: string;
+  };
+}
+
+// Backward-compat: keep the original flat Colors export
+// (used by existing screens — gradually migrate to useTheme())
+export const Colors = {
+  ...BrandColors,
+  ...SemanticColors,
+  ...NeutralColors,
 };
 
 export const Spacing = {
@@ -81,6 +154,17 @@ export const Typography = {
   },
 };
 
+export function getTheme(mode: ThemeMode): Theme {
+  const colors = mode === 'light' ? LightColors : mode === 'dark' ? DarkColors : OutdoorColors;
+  return {
+    mode,
+    brand: BrandColors,
+    semantic: SemanticColors,
+    neutral: NeutralColors,
+    colors,
+  };
+}
+
 export const SurveyTypeConfig: Record<
   string,
   { label: string; icon: string; color: string; shortCode: string }
@@ -88,55 +172,55 @@ export const SurveyTypeConfig: Record<
   cadastral: {
     label: 'Cadastral',
     icon: 'map-marker',
-    color: Colors.metarduOrange,
+    color: BrandColors.metarduOrange,
     shortCode: 'CAD',
   },
   engineering: {
     label: 'Engineering',
     icon: 'road-variant',
-    color: Colors.info,
+    color: SemanticColors.info,
     shortCode: 'ENG',
   },
   topographic: {
     label: 'Topographic',
     icon: 'terrain',
-    color: Colors.success,
+    color: SemanticColors.success,
     shortCode: 'TOP',
   },
   sectional: {
     label: 'Sectional Properties',
     icon: 'home-city',
-    color: Colors.warning,
+    color: SemanticColors.warning,
     shortCode: 'SEC',
   },
   geodetic: {
     label: 'Geodetic / Control',
     icon: 'crosshairs-gps',
-    color: Colors.metarduNavy,
+    color: BrandColors.metarduNavy,
     shortCode: 'GEO',
   },
   mining: {
     label: 'Mining',
     icon: 'pickaxe',
-    color: Colors.gray700,
+    color: NeutralColors.gray700,
     shortCode: 'MIN',
   },
   hydrographic: {
     label: 'Hydrographic',
     icon: 'waves',
-    color: Colors.info,
+    color: SemanticColors.info,
     shortCode: 'HYD',
   },
   drone: {
     label: 'Drone / UAV',
     icon: 'quadcopter',
-    color: Colors.metarduOrangeDark,
+    color: BrandColors.metarduOrangeDark,
     shortCode: 'UAV',
   },
   deformation: {
     label: 'Deformation / Monitoring',
     icon: 'chart-line',
-    color: Colors.danger,
+    color: SemanticColors.danger,
     shortCode: 'DEF',
   },
 };
@@ -145,10 +229,10 @@ export const SyncStatusConfig: Record<
   string,
   { label: string; color: string; icon: string }
 > = {
-  pending: { label: 'Pending', color: Colors.gray500, icon: 'circle-outline' },
-  queued: { label: 'Queued', color: Colors.warning, icon: 'cloud-upload' },
-  syncing: { label: 'Syncing', color: Colors.info, icon: 'sync' },
-  synced: { label: 'Synced', color: Colors.success, icon: 'cloud-check' },
-  failed: { label: 'Failed', color: Colors.danger, icon: 'alert-circle' },
-  conflict: { label: 'Conflict', color: Colors.danger, icon: 'alert-octagon' },
+  pending: { label: 'Pending', color: NeutralColors.gray500, icon: 'circle-outline' },
+  queued: { label: 'Queued', color: SemanticColors.warning, icon: 'cloud-upload' },
+  syncing: { label: 'Syncing', color: SemanticColors.info, icon: 'sync' },
+  synced: { label: 'Synced', color: SemanticColors.success, icon: 'cloud-check' },
+  failed: { label: 'Failed', color: SemanticColors.danger, icon: 'alert-circle' },
+  conflict: { label: 'Conflict', color: SemanticColors.danger, icon: 'alert-octagon' },
 };
