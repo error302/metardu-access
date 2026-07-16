@@ -37,13 +37,21 @@
 const express = require('express');
 const cors = require('cors');
 const crypto = require('crypto');
+const http = require('http');
 const { v4: uuidv4 } = require('uuid');
+const { setupWebSocketServer } = require('./realtime');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
+
+// Create HTTP server (shared with WebSocket)
+const server = http.createServer(app);
+
+// Mount WebSocket server for real-time collaboration
+setupWebSocketServer(server);
 
 // ============================================================================
 // In-memory stores
@@ -348,15 +356,21 @@ app.use((req, res) => {
 // ============================================================================
 // Start
 // ============================================================================
-app.listen(PORT, '0.0.0.0', () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`╔══════════════════════════════════════════════════════════╗`);
-  console.log(`║  Metardu Mock Sync Server                                ║`);
+  console.log(`║  Metardu Mock Sync Server v0.6                           ║`);
   console.log(`║  Listening on http://localhost:${PORT}                    ║`);
-  console.log(`║  Health:   GET  /health                                   ║`);
-  console.log(`║  Login:    POST /auth/login                               ║`);
-  console.log(`║  Register: POST /auth/register                            ║`);
-  console.log(`║  Push:     POST /sync/sessions                            ║`);
-  console.log(`║  List:     GET  /sync/sessions                            ║`);
+  console.log(`║                                                          ║`);
+  console.log(`║  REST API:                                               ║`);
+  console.log(`║    GET  /health                                          ║`);
+  console.log(`║    POST /auth/login                                      ║`);
+  console.log(`║    POST /auth/register                                   ║`);
+  console.log(`║    GET  /sync/sessions                                   ║`);
+  console.log(`║    POST /sync/sessions                                   ║`);
+  console.log(`║                                                          ║`);
+  console.log(`║  Real-time WebSocket:                                    ║`);
+  console.log(`║    ws://localhost:${PORT}/realtime                       ║`);
+  console.log(`║    (presence + live capture events)                      ║`);
   console.log(`║                                                          ║`);
   console.log(`║  Configure the app:                                       ║`);
   console.log(`║  EXPO_PUBLIC_SYNC_API_URL=http://<this-ip>:${PORT}/sync    ║`);

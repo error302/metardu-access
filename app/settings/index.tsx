@@ -192,6 +192,28 @@ export default function SettingsScreen() {
             </View>
             <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push('/settings/database')}
+            style={styles.actionRow}
+          >
+            <MaterialCommunityIcons name="database-cog" size={20} color={Colors.metarduNavy} />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.actionLabel}>Database & Backup</Text>
+              <Text style={styles.actionSublabel}>Integrity check · cloud backup · restore</Text>
+            </View>
+            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push('/sync/conflicts')}
+            style={styles.actionRow}
+          >
+            <MaterialCommunityIcons name="cloud-braces" size={20} color={Colors.metarduNavy} />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.actionLabel}>Sync Conflicts</Text>
+              <Text style={styles.actionSublabel}>Review and resolve divergences</Text>
+            </View>
+            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+          </TouchableOpacity>
         </Section>
 
         {/* About */}
