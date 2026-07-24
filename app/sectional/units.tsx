@@ -20,7 +20,6 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
@@ -122,19 +121,19 @@ export default function UnitsScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.gray500 }}>Loading...</Text>
+          <Text style={{ color: '#6B7280' }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Sectional Units</Text>
@@ -177,14 +176,14 @@ export default function UnitsScreen() {
               <Card style={{ marginBottom: 16 }}>
                 <View style={styles.devHeader}>
                   <View style={styles.devIcon}>
-                    <MaterialCommunityIcons name="home-city" size={24} color={Colors.warning} />
+                    <MaterialCommunityIcons name="home-city" size={24} color={'#F59E0B'} />
                   </View>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.devName}>{selected.developmentName}</Text>
                     <Text style={styles.devParcel}>Parent Parcel: {selected.parcelNumber}</Text>
                   </View>
-                  <View style={[styles.statusBadge, { backgroundColor: `${Colors.warning}20` }]}>
-                    <Text style={[styles.statusText, { color: Colors.warning }]}>
+                  <View style={[styles.statusBadge, { backgroundColor: #F59E0B20 }]}>
+                    <Text style={[styles.statusText, { color: '#F59E0B' }]}>
                       {selected.status.toUpperCase()}
                     </Text>
                   </View>
@@ -202,7 +201,7 @@ export default function UnitsScreen() {
                 <Text style={styles.sectionTitle}>Units ({selected.units.length})</Text>
                 <TouchableOpacity onPress={() => setShowAddUnit(true)}>
                   <View style={styles.addBtn}>
-                    <MaterialCommunityIcons name="plus" size={16} color={Colors.metarduWhite} />
+                    <MaterialCommunityIcons name="plus" size={16} color={'#FFFFFF'} />
                     <Text style={styles.addBtnText}>Add Unit</Text>
                   </View>
                 </TouchableOpacity>
@@ -298,9 +297,9 @@ function UnitCard({ unit, onEdit }: { unit: UnitWithEUAs; onEdit: () => void }) 
             {unit.euas.length > 0 && (
               <View style={styles.euaRow}>
                 {unit.euas.map((e) => (
-                  <View key={e.id} style={[styles.euaBadge, { backgroundColor: `${Colors.warning}20` }]}>
-                    <MaterialCommunityIcons name={(euaIcons[e.type] ?? 'crop') as any} size={11} color={Colors.warning} />
-                    <Text style={[styles.euaText, { color: Colors.warning }]}>
+                  <View key={e.id} style={[styles.euaBadge, { backgroundColor: #F59E0B20 }]}>
+                    <MaterialCommunityIcons name={(euaIcons[e.type] ?? 'crop') as any} size={11} color={'#F59E0B'} />
+                    <Text style={[styles.euaText, { color: '#F59E0B' }]}>
                       {e.type}: {e.areaSqm.toFixed(1)}m²
                     </Text>
                   </View>
@@ -308,7 +307,7 @@ function UnitCard({ unit, onEdit }: { unit: UnitWithEUAs; onEdit: () => void }) 
               </View>
             )}
           </View>
-          <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+          <MaterialCommunityIcons name="chevron-right" size={20} color={'#9CA3AF'} />
         </View>
       </TouchableOpacity>
     </Card>
@@ -485,29 +484,29 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   chip: {
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
   },
   chipActive: {
-    backgroundColor: Colors.metarduNavy,
+    backgroundColor: '#0B1F3A',
   },
   chipText: {
     fontSize: 13,
-    color: Colors.gray600,
+    color: '#4B5563',
     fontWeight: '500',
   },
   chipTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
   devHeader: {
@@ -520,18 +519,18 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 14,
-    backgroundColor: `${Colors.warning}15`,
+    backgroundColor: #F59E0B15,
     alignItems: 'center',
     justifyContent: 'center',
   },
   devName: {
     fontSize: 17,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   devParcel: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   statusBadge: {
@@ -547,21 +546,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingTop: 8,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: Colors.gray200,
+    borderTopColor: '#E5E7EB',
   },
   devStatValue: {
     fontSize: 16,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   devStatTarget: {
     fontSize: 10,
-    color: Colors.gray400,
+    color: '#9CA3AF',
     fontFamily: 'JetBrainsMono',
   },
   devStatLabel: {
     fontSize: 10,
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     marginTop: 2,
   },
@@ -574,13 +573,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   addBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: Colors.metarduOrange,
+    backgroundColor: '#F97316',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
@@ -588,17 +587,17 @@ const styles = StyleSheet.create({
   addBtnText: {
     fontSize: 12,
     fontWeight: '600',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   emptyTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginTop: 8,
   },
   emptySub: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     textAlign: 'center',
     marginTop: 4,
   },
@@ -611,28 +610,28 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 12,
-    backgroundColor: Colors.metarduNavy,
+    backgroundColor: '#0B1F3A',
     alignItems: 'center',
     justifyContent: 'center',
   },
   unitFloorLabel: {
     fontSize: 9,
-    color: Colors.metarduCream,
+    color: '#FAF7F2',
     fontWeight: '600',
   },
   unitNumber: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   unitTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   unitMeta: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   euaRow: {
@@ -659,7 +658,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -669,14 +668,14 @@ const styles = StyleSheet.create({
     width: 40,
     height: 4,
     borderRadius: 2,
-    backgroundColor: Colors.gray300,
+    backgroundColor: '#D1D5DB',
     alignSelf: 'center',
     marginBottom: 16,
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 16,
   },
   row: {

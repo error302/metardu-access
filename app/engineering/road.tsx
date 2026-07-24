@@ -15,7 +15,6 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
@@ -91,10 +90,10 @@ export default function RoadDesignScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Road Design</Text>
@@ -102,7 +101,7 @@ export default function RoadDesignScreen() {
         </View>
         {curve && (
           <TouchableOpacity onPress={handleShare} style={{ padding: 8 }}>
-            <MaterialCommunityIcons name="share-variant" size={18} color={Colors.metarduOrange} />
+            <MaterialCommunityIcons name="share-variant" size={18} color={'#F97316'} />
           </TouchableOpacity>
         )}
       </View>
@@ -194,8 +193,8 @@ export default function RoadDesignScreen() {
             <Card style={{ marginBottom: 16 }}>
               <Text style={styles.cardTitle}>Key Points</Text>
               <View style={styles.pointRow}>
-                <View style={[styles.pointIcon, { backgroundColor: `${Colors.metarduOrange}15` }]}>
-                  <Text style={[styles.pointLetter, { color: Colors.metarduOrange }]}>PC</Text>
+                <View style={[styles.pointIcon, { backgroundColor: #F9731615 }]}>
+                  <Text style={[styles.pointLetter, { color: '#F97316' }]}>PC</Text>
                 </View>
                 <View>
                   <Text style={styles.pointName}>Point of Curve (start)</Text>
@@ -205,8 +204,8 @@ export default function RoadDesignScreen() {
                 </View>
               </View>
               <View style={styles.pointRow}>
-                <View style={[styles.pointIcon, { backgroundColor: `${Colors.info}15` }]}>
-                  <Text style={[styles.pointLetter, { color: Colors.info }]}>PI</Text>
+                <View style={[styles.pointIcon, { backgroundColor: #3B82F615 }]}>
+                  <Text style={[styles.pointLetter, { color: '#3B82F6' }]}>PI</Text>
                 </View>
                 <View>
                   <Text style={styles.pointName}>Point of Intersection</Text>
@@ -216,8 +215,8 @@ export default function RoadDesignScreen() {
                 </View>
               </View>
               <View style={styles.pointRow}>
-                <View style={[styles.pointIcon, { backgroundColor: `${Colors.success}15` }]}>
-                  <Text style={[styles.pointLetter, { color: Colors.success }]}>PT</Text>
+                <View style={[styles.pointIcon, { backgroundColor: #10B98115 }]}>
+                  <Text style={[styles.pointLetter, { color: '#10B981' }]}>PT</Text>
                 </View>
                 <View>
                   <Text style={styles.pointName}>Point of Tangent (end)</Text>
@@ -239,7 +238,7 @@ export default function RoadDesignScreen() {
               {deflections.map((d, i) => (
                 <View key={i} style={[styles.tableRow, i % 2 === 0 ? styles.tableRowAlt : null]}>
                   <Text style={[styles.tableCell, { flex: 1 }]}>{d.station.toFixed(2)}</Text>
-                  <Text style={[styles.tableCell, { flex: 1, color: Colors.metarduOrange, fontWeight: '600' }]}>
+                  <Text style={[styles.tableCell, { flex: 1, color: '#F97316', fontWeight: '600' }]}>
                     {d.deflectionAngle.toFixed(4)}
                   </Text>
                   <Text style={[styles.tableCell, { flex: 1 }]}>{d.chordLength.toFixed(3)}</Text>
@@ -252,7 +251,7 @@ export default function RoadDesignScreen() {
               onPress={handleShare}
               variant="outline"
               style={{ marginTop: 16 }}
-              icon={<MaterialCommunityIcons name="share-variant" size={18} color={Colors.metarduNavy} />}
+              icon={<MaterialCommunityIcons name="share-variant" size={18} color={'#0B1F3A'} />}
             />
           </>
         )}
@@ -280,17 +279,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   cardTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     textTransform: 'uppercase',
     marginBottom: 12,
   },
@@ -303,15 +302,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 6,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   detailLabel: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   detailValue: {
     fontSize: 13,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '600',
     fontFamily: 'JetBrainsMono',
   },
@@ -321,7 +320,7 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: 8,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   pointIcon: {
     width: 40,
@@ -337,11 +336,11 @@ const styles = StyleSheet.create({
   pointName: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   pointCoords: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontFamily: 'JetBrainsMono',
     marginTop: 2,
   },
@@ -349,26 +348,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 8,
     borderBottomWidth: 1.5,
-    borderBottomColor: Colors.metarduNavy,
+    borderBottomColor: '#0B1F3A',
   },
   tableHeaderCell: {
     fontSize: 11,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     textTransform: 'uppercase',
   },
   tableRow: {
     flexDirection: 'row',
     paddingVertical: 8,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   tableRowAlt: {
-    backgroundColor: Colors.gray50,
+    backgroundColor: '#F9FAFB',
   },
   tableCell: {
     fontSize: 12,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
 });

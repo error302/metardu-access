@@ -89,10 +89,10 @@ export default function ConflictsScreen() {
   const resolved = conflicts.filter((c) => c.resolution !== 'pending');
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Sync Conflicts</Text>
@@ -157,12 +157,12 @@ function ConflictCard({
   };
 
   return (
-    <Card style={[styles.conflictCard, { borderLeftColor: Colors.warning }]}>
+    <Card style={[styles.conflictCard, { borderLeftColor: '#F59E0B' }]}>
       <View style={styles.conflictHeader}>
-        <MaterialCommunityIcons name="cloud-braces" size={18} color={Colors.warning} />
+        <MaterialCommunityIcons name="cloud-braces" size={18} color={'#F59E0B'} />
         <Text style={styles.conflictTitle} numberOfLines={1}>{title}</Text>
         <TouchableOpacity onPress={handleShare} style={{ padding: 4 }}>
-          <MaterialCommunityIcons name="share-variant" size={14} color={Colors.gray400} />
+          <MaterialCommunityIcons name="share-variant" size={14} color={'#9CA3AF'} />
         </TouchableOpacity>
       </View>
 
@@ -171,17 +171,17 @@ function ConflictCard({
           label="Your version"
           value={conflict.clientValue}
           timestamp={conflict.clientTimestamp}
-          color={Colors.metarduOrange}
+          color={'#F97316'}
           isWinner={recommendation === 'client'}
         />
         <View style={styles.diffDivider}>
-          <MaterialCommunityIcons name="swap-vertical" size={14} color={Colors.gray400} />
+          <MaterialCommunityIcons name="swap-vertical" size={14} color={'#9CA3AF'} />
         </View>
         <DiffRow
           label="Server version"
           value={conflict.serverValue}
           timestamp={conflict.serverTimestamp}
-          color={Colors.info}
+          color={'#3B82F6'}
           isWinner={recommendation === 'server'}
         />
       </View>
@@ -263,11 +263,11 @@ function ResolvedConflictCard({ conflict }: { conflict: ConflictRecord }) {
   }[conflict.resolution];
 
   const resolutionColor = {
-    'client-wins': Colors.metarduOrange,
-    'server-wins': Colors.info,
-    'merged': Colors.success,
-    'manual': Colors.warning,
-    'pending': Colors.gray400,
+    'client-wins': '#F97316',
+    'server-wins': '#3B82F6',
+    'merged': '#10B981',
+    'manual': '#F59E0B',
+    'pending': '#9CA3AF',
   }[conflict.resolution];
 
   return (
@@ -296,12 +296,12 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily.heading,
     fontSize: Typography.fontSize.xl,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontFamily: Typography.fontFamily.sans,
     fontSize: Typography.fontSize.xs,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   sectionOverline: {
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
     letterSpacing: Typography.letterSpacing.widest,
     textTransform: 'uppercase',
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     marginBottom: Spacing[3],
     marginLeft: Spacing[1],
   },
@@ -328,10 +328,10 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily.sansMedium,
     fontSize: Typography.fontSize.sm,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   diffContainer: {
-    backgroundColor: Colors.gray50,
+    backgroundColor: '#F9FAFB',
     borderRadius: Radius.md,
     padding: Spacing[3],
     marginBottom: Spacing[3],
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily.sansMedium,
     fontSize: Typography.fontSize.xs,
     fontWeight: '600',
-    color: Colors.gray700,
+    color: '#374151',
     flex: 1,
   },
   winnerBadge: {
@@ -365,18 +365,18 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily.sansBold,
     fontSize: 9,
     fontWeight: '700',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   diffValue: {
     fontFamily: Typography.fontFamily.mono,
     fontSize: Typography.fontSize.xs,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     lineHeight: 16,
   },
   diffTimestamp: {
     fontFamily: Typography.fontFamily.mono,
     fontSize: Typography.fontSize['2xs'],
-    color: Colors.gray400,
+    color: '#9CA3AF',
   },
   diffDivider: {
     alignItems: 'center',
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
   recommendation: {
     fontFamily: Typography.fontFamily.sans,
     fontSize: Typography.fontSize.xs,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontStyle: 'italic',
     marginBottom: Spacing[3],
   },
@@ -396,6 +396,6 @@ const styles = StyleSheet.create({
   resolvedAt: {
     fontFamily: Typography.fontFamily.mono,
     fontSize: Typography.fontSize['2xs'],
-    color: Colors.gray400,
+    color: '#9CA3AF',
   },
 });

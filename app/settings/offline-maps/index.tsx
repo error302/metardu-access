@@ -21,7 +21,6 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { EmptyState } from '@/components/EmptyState';
@@ -89,10 +88,10 @@ export default function OfflineMapsScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Offline Maps</Text>
@@ -104,7 +103,7 @@ export default function OfflineMapsScreen() {
         {/* Info card */}
         <Card style={{ marginBottom: 16 }}>
           <View style={styles.infoRow}>
-            <MaterialCommunityIcons name="information-outline" size={20} color={Colors.info} />
+            <MaterialCommunityIcons name="information-outline" size={20} color={'#3B82F6'} />
             <View style={{ flex: 1 }}>
               <Text style={styles.infoTitle}>Why offline maps?</Text>
               <Text style={styles.infoText}>
@@ -123,7 +122,7 @@ export default function OfflineMapsScreen() {
           loading={importing}
           fullWidth
           size="lg"
-          icon={<MaterialCommunityIcons name="file-import" size={20} color={Colors.metarduWhite} />}
+          icon={<MaterialCommunityIcons name="file-import" size={20} color={'#FFFFFF'} />}
         />
 
         {/* Maps list */}
@@ -140,11 +139,11 @@ export default function OfflineMapsScreen() {
             {maps.map((map) => (
               <Card key={map.id} style={[
                 styles.mapCard,
-                map.isActive && { borderColor: Colors.metarduOrange, borderWidth: 2 },
+                map.isActive && { borderColor: '#F97316', borderWidth: 2 },
               ]}>
                 <View style={styles.mapHeader}>
-                  <View style={[styles.mapIcon, { backgroundColor: `${Colors.metarduOrange}15` }]}>
-                    <MaterialCommunityIcons name="map" size={22} color={Colors.metarduOrange} />
+                  <View style={[styles.mapIcon, { backgroundColor: #F9731615 }]}>
+                    <MaterialCommunityIcons name="map" size={22} color={'#F97316'} />
                   </View>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.mapName} numberOfLines={1}>{map.name}</Text>
@@ -153,7 +152,7 @@ export default function OfflineMapsScreen() {
                     </Text>
                   </View>
                   {map.isActive && (
-                    <View style={[styles.activeBadge, { backgroundColor: Colors.metarduOrange }]}>
+                    <View style={[styles.activeBadge, { backgroundColor: '#F97316' }]}>
                       <Text style={styles.activeBadgeText}>ACTIVE</Text>
                     </View>
                   )}
@@ -207,11 +206,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   infoRow: {
@@ -222,18 +221,18 @@ const styles = StyleSheet.create({
   infoTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 4,
   },
   infoText: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     lineHeight: 17,
   },
   sectionTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginTop: 24,
@@ -242,7 +241,7 @@ const styles = StyleSheet.create({
   },
   mapCard: {
     borderWidth: 1.5,
-    borderColor: Colors.gray200,
+    borderColor: '#E5E7EB',
   },
   mapHeader: {
     flexDirection: 'row',
@@ -260,11 +259,11 @@ const styles = StyleSheet.create({
   mapName: {
     fontSize: 15,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   mapMeta: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   activeBadge: {
@@ -275,7 +274,7 @@ const styles = StyleSheet.create({
   activeBadgeText: {
     fontSize: 10,
     fontWeight: '700',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   mapActions: {
     flexDirection: 'row',
@@ -284,12 +283,12 @@ const styles = StyleSheet.create({
   howtoTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 8,
   },
   howtoStep: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     lineHeight: 18,
   },
 });

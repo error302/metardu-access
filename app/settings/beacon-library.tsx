@@ -12,7 +12,6 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { KENYA_BEACON_TYPES, type BeaconTypeSpec } from '@/lib/data/kenya-beacons';
@@ -38,10 +37,10 @@ export default function BeaconLibraryScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Beacon Library</Text>
@@ -52,7 +51,7 @@ export default function BeaconLibraryScreen() {
       <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32 }}>
         <Card variant="outline" style={{ marginBottom: 16 }}>
           <View style={styles.infoRow}>
-            <MaterialCommunityIcons name="book-open-variant" size={20} color={Colors.info} />
+            <MaterialCommunityIcons name="book-open-variant" size={20} color={'#3B82F6'} />
             <View style={{ flex: 1 }}>
               <Text style={styles.infoText}>
                 Reference specifications per Survey of Kenya Field Manual and
@@ -74,7 +73,7 @@ export default function BeaconLibraryScreen() {
                 <Text style={styles.beaconSwahili}>{beacon.swahili}</Text>
               </View>
               <TouchableOpacity onPress={() => handleShare(beacon)} style={{ padding: 4 }}>
-                <MaterialCommunityIcons name="share-variant" size={18} color={Colors.metarduOrange} />
+                <MaterialCommunityIcons name="share-variant" size={18} color={'#F97316'} />
               </TouchableOpacity>
             </View>
 
@@ -95,7 +94,7 @@ function DetailRow({ icon, label, value }: { icon: string; label: string; value:
   return (
     <View style={styles.detailRow}>
       <View style={styles.detailIconRow}>
-        <MaterialCommunityIcons name={icon as any} size={14} color={Colors.gray500} />
+        <MaterialCommunityIcons name={icon as any} size={14} color={'#6B7280'} />
         <Text style={styles.detailLabel}>{label}</Text>
       </View>
       <Text style={styles.detailValue}>{value}</Text>
@@ -113,11 +112,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   infoRow: {
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     lineHeight: 17,
   },
   beaconCard: {
@@ -150,18 +149,18 @@ const styles = StyleSheet.create({
   beaconName: {
     fontSize: 16,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   beaconSwahili: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
     fontStyle: 'italic',
   },
   detailRow: {
     paddingVertical: 8,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   detailIconRow: {
     flexDirection: 'row',
@@ -171,13 +170,13 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     fontWeight: '600',
   },
   detailValue: {
     fontSize: 12,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     lineHeight: 16,
   },
 });

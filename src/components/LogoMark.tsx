@@ -1,11 +1,11 @@
 /**
  * LogoMark — the Metardu logo as a React component.
- * Falls back to a text-based wordmark if the image asset fails to load.
+ * Theme-aware: wordmark color adapts to background.
  */
 
 import React from 'react';
 import { Image, View, Text, type ImageStyle } from 'react-native';
-import { Colors } from '@/theme';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 interface LogoProps {
   size?: number;
@@ -14,6 +14,7 @@ interface LogoProps {
 }
 
 export function LogoMark({ size = 64, withWordmark = false, style }: LogoProps) {
+  const Colors = useThemeColors();
   return (
     <View style={{ alignItems: 'center', gap: 12 }}>
       <Image
@@ -29,7 +30,7 @@ export function LogoMark({ size = 64, withWordmark = false, style }: LogoProps) 
               fontFamily: 'InterDisplay',
               fontSize: size * 0.35,
               fontWeight: '700',
-              color: Colors.metarduWhite,
+              color: Colors.fg,
               letterSpacing: -1,
             }}
           >

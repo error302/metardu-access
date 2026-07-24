@@ -9,7 +9,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { EmptyState } from '@/components/EmptyState';
@@ -42,19 +41,19 @@ export default function ProjectsScreen() {
           <SurveyTypeBadge type={item.surveyType} size="sm" />
         </View>
         <View style={styles.metaRow}>
-          <MaterialCommunityIcons name="map-marker" size={14} color={Colors.gray500} />
+          <MaterialCommunityIcons name="map-marker" size={14} color={'#6B7280'} />
           <Text style={styles.metaText}>
             {item.county ?? '—'}, {item.country}
           </Text>
         </View>
         {item.lrNumber && (
           <View style={styles.metaRow}>
-            <MaterialCommunityIcons name="file-document-outline" size={14} color={Colors.gray500} />
+            <MaterialCommunityIcons name="file-document-outline" size={14} color={'#6B7280'} />
             <Text style={styles.metaText}>LR {item.lrNumber}</Text>
           </View>
         )}
         <View style={styles.metaRow}>
-          <MaterialCommunityIcons name="account" size={14} color={Colors.gray500} />
+          <MaterialCommunityIcons name="account" size={14} color={'#6B7280'} />
           <Text style={styles.metaText}>
             {item.surveyorName} · {item.surveyorLicense}
           </Text>
@@ -70,7 +69,7 @@ export default function ProjectsScreen() {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <View>
           <Text style={styles.title}>{t('projects.title')}</Text>
@@ -118,11 +117,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   row: {
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   metaRow: {
     flexDirection: 'row',
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
   },
   metaText: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   footer: {
     flexDirection: 'row',
@@ -154,6 +153,6 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 11,
-    color: Colors.gray400,
+    color: '#9CA3AF',
   },
 });

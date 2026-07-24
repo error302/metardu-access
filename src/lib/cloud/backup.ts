@@ -23,6 +23,13 @@ import * as FileSystem from 'expo-file-system';
 import * as Crypto from 'expo-crypto';
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
+import {
+  encrypt as aesEncrypt,
+  decrypt as aesDecrypt,
+  type EncryptedPayload,
+  bytesToBase64,
+  base64ToBytes,
+} from '@/lib/crypto/aes';
 
 const BACKUP_DIR = FileSystem.documentDirectory + 'backups/';
 const BACKUP_INDEX = BACKUP_DIR + 'index.json';
@@ -106,44 +113,24 @@ export async function updateConfig(updates: Partial<BackupConfig>): Promise<void
 }
 
 // ============================================================================
-// Encryption (XOR-based stream cipher using SHA-256 key derivation)
-// NOTE: For real production, use AES-GCM via a native module.
-//       This is a v0.6 placeholder that's better than plaintext.
+// Encryption — real AES-256-GCM via @noble/ciphers (audited pure-TS)
+//
+// Replaces the v0.6 XOR placeholder. AES-256-GCM provides:
+//   - Confidentiality (AES-256 — no known practical attacks)
+//   - Authenticity (GCM auth tag — tampering detected on decrypt)
+//   - Key derivation via PBKDF2-HMAC-SHA256 (100k iterations, per-backup salt)
+//
+// Encrypted file is JSON: { version, salt, iv, ciphertext }
+// ciphertext includes the 16-byte auth tag appended (noble's convention)
 // ============================================================================
-async function deriveKey(surveyorApiKey: string): Promise<Uint8Array> {
-  const hash = await Crypto.digestStringAsync(
-    Crypto.CryptoDigestAlgorithm.SHA256,
-    `metardu-backup-key:${surveyorApiKey}`,
-    Crypto.CryptoEncoding.Base64
-  );
-  const bytes = new Uint8Array(32);
-  const raw = atob(hash);
-  for (let i = 0; i < 32; i++) bytes[i] = raw.charCodeAt(i);
-  return bytes;
+async function encryptData(plaintext: string, password: string): Promise<string> {
+  const payload: EncryptedPayload = aesEncrypt(plaintext, password);
+  return JSON.stringify(payload);
 }
 
-async function encryptData(data: string, key: Uint8Array): Promise<string> {
-  // Simple XOR stream cipher (placeholder — use AES in production)
-  const bytes = new TextEncoder().encode(data);
-  const out = new Uint8Array(bytes.length);
-  for (let i = 0; i < bytes.length; i++) {
-    out[i] = bytes[i] ^ key[i % key.length];
-  }
-  // Convert to base64
-  let binary = '';
-  for (let i = 0; i < out.length; i++) binary += String.fromCharCode(out[i]);
-  return btoa(binary);
-}
-
-async function decryptData(encrypted: string, key: Uint8Array): Promise<string> {
-  const binary = atob(encrypted);
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-  const out = new Uint8Array(bytes.length);
-  for (let i = 0; i < bytes.length; i++) {
-    out[i] = bytes[i] ^ key[i % key.length];
-  }
-  return new TextDecoder().decode(out);
+async function decryptData(encryptedJson: string, password: string): Promise<string> {
+  const payload: EncryptedPayload = JSON.parse(encryptedJson);
+  return aesDecrypt(payload, password);
 }
 
 // ============================================================================
@@ -179,8 +166,7 @@ export async function createBackup(input: {
   // Encrypt if enabled
   let finalData = dbData;
   if (config.encryptionEnabled) {
-    const key = await deriveKey(input.surveyorApiKey);
-    finalData = await encryptData(dbData, key);
+    finalData = await encryptData(dbData, input.surveyorApiKey);
   }
 
   // Write backup file
@@ -305,8 +291,7 @@ export async function restoreFromBackup(
 
   // Decrypt if needed
   if (entry.encrypted) {
-    const key = await deriveKey(surveyorApiKey);
-    dbData = await decryptData(dbData, key);
+    dbData = await decryptData(dbData, surveyorApiKey);
   }
 
   // Verify checksum

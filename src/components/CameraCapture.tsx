@@ -16,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as Location from 'expo-location';
-import { Colors } from '@/theme';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import { field as haptics } from '@/lib/haptics';
 import { wgs84ToArc1960Utm37S } from '@engine/transforms';
 
@@ -39,6 +39,7 @@ interface Props {
 }
 
 export function CameraCapture({ visible, onClose, onCapture, title = 'Capture Photo' }: Props) {
+  const Colors = useThemeColors();
   const [permission, requestPermission] = useCameraPermissions();
   const [locationPermission, setLocationPermission] = useState<string | null>(null);
   const [cameraRef, setCameraRef] = useState<CameraView | null>(null);
@@ -113,22 +114,22 @@ export function CameraCapture({ visible, onClose, onCapture, title = 'Capture Ph
   if (!permission?.granted) {
     return (
       <Modal visible={visible} animationType="slide">
-        <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduNavy, justifyContent: 'center', alignItems: 'center', padding: 32 }}>
-          <MaterialCommunityIcons name="camera-off" size={64} color={Colors.metarduCream} />
-          <Text style={{ color: Colors.metarduWhite, fontSize: 18, fontWeight: '600', marginTop: 16, textAlign: 'center' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#0B1F3A', justifyContent: 'center', alignItems: 'center', padding: 32 }}>
+          <MaterialCommunityIcons name="camera-off" size={64} color={'#FAF7F2'} />
+          <Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '600', marginTop: 16, textAlign: 'center' }}>
             Camera permission required
           </Text>
-          <Text style={{ color: Colors.metarduCream, fontSize: 14, marginTop: 8, textAlign: 'center', opacity: 0.7 }}>
+          <Text style={{ color: '#FAF7F2', fontSize: 14, marginTop: 8, textAlign: 'center', opacity: 0.7 }}>
             Grant camera access to capture field photos.
           </Text>
           <TouchableOpacity
             onPress={requestPermission}
-            style={{ marginTop: 24, backgroundColor: Colors.metarduOrange, paddingHorizontal: 24, paddingVertical: 12, borderRadius: 12 }}
+            style={{ marginTop: 24, backgroundColor: '#F97316', paddingHorizontal: 24, paddingVertical: 12, borderRadius: 12 }}
           >
-            <Text style={{ color: Colors.metarduWhite, fontWeight: '600' }}>Grant Permission</Text>
+            <Text style={{ color: '#FFFFFF', fontWeight: '600' }}>Grant Permission</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={onClose} style={{ marginTop: 12 }}>
-            <Text style={{ color: Colors.metarduCream }}>Cancel</Text>
+            <Text style={{ color: '#FAF7F2' }}>Cancel</Text>
           </TouchableOpacity>
         </SafeAreaView>
       </Modal>
@@ -148,14 +149,14 @@ export function CameraCapture({ visible, onClose, onCapture, title = 'Capture Ph
         {/* Top bar */}
         <SafeAreaView edges={['top']} style={styles.topBar}>
           <TouchableOpacity onPress={onClose} style={styles.topBtn}>
-            <MaterialCommunityIcons name="close" size={24} color={Colors.metarduWhite} />
+            <MaterialCommunityIcons name="close" size={24} color={'#FFFFFF'} />
           </TouchableOpacity>
           <Text style={styles.topTitle}>{title}</Text>
           <TouchableOpacity
             onPress={() => setFlash(flash === 'off' ? 'on' : 'off')}
             style={styles.topBtn}
           >
-            <MaterialCommunityIcons name={flash === 'off' ? 'flash-off' : 'flash'} size={22} color={Colors.metarduWhite} />
+            <MaterialCommunityIcons name={flash === 'off' ? 'flash-off' : 'flash'} size={22} color={'#FFFFFF'} />
           </TouchableOpacity>
         </SafeAreaView>
 
@@ -175,7 +176,7 @@ export function CameraCapture({ visible, onClose, onCapture, title = 'Capture Ph
             onPress={() => setFacing(facing === 'back' ? 'front' : 'back')}
             style={styles.topBtn}
           >
-            <MaterialCommunityIcons name="flip-camera" size={24} color={Colors.metarduWhite} />
+            <MaterialCommunityIcons name="flip-camera" size={24} color={'#FFFFFF'} />
           </TouchableOpacity>
         </SafeAreaView>
 
@@ -190,7 +191,7 @@ export function CameraCapture({ visible, onClose, onCapture, title = 'Capture Ph
           <MaterialCommunityIcons
             name={locationPermission === 'granted' ? 'crosshairs-gps' : 'crosshairs'}
             size={14}
-            color={locationPermission === 'granted' ? Colors.success : Colors.warning}
+            color={locationPermission === 'granted' ? '#10B981' : '#F59E0B'}
           />
           <Text style={styles.gpsText}>
             {locationPermission === 'granted' ? 'GPS ready' : 'No GPS'}
@@ -222,7 +223,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   topTitle: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
     height: 72,
     borderRadius: 36,
     borderWidth: 4,
-    borderColor: Colors.metarduWhite,
+    borderColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
   },
   capturingOverlay: {
     position: 'absolute',
@@ -264,7 +265,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   capturingText: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
   },
@@ -281,7 +282,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   gpsText: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontSize: 11,
     fontWeight: '600',
   },

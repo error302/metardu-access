@@ -90,7 +90,7 @@ export default function NewProjectScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{ flex: 1 }}
@@ -134,7 +134,7 @@ export default function NewProjectScreen() {
                             {type === 'sectional' && 'Sectional Properties Act 2020 — units, floors, exclusive use areas'}
                           </Text>
                         </View>
-                        <MaterialCommunityIcons name="chevron-right" size={22} color={Colors.gray400} />
+                        <MaterialCommunityIcons name="chevron-right" size={22} color={'#9CA3AF'} />
                       </View>
                     </Card>
                   </TouchableOpacity>
@@ -284,47 +284,47 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: Colors.gray200,
+    borderColor: '#E5E7EB',
   },
   stepCircleActive: {
-    borderColor: Colors.metarduOrange,
-    backgroundColor: `${Colors.metarduOrange}20`,
+    borderColor: '#F97316',
+    backgroundColor: #F9731620,
   },
   stepCircleDone: {
-    backgroundColor: Colors.metarduOrange,
-    borderColor: Colors.metarduOrange,
+    backgroundColor: '#F97316',
+    borderColor: '#F97316',
   },
   stepNumber: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   stepNumberActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   stepLabel: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   stepLabelActive: {
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '600',
   },
   stepDivider: {
     width: 60,
     height: 2,
-    backgroundColor: Colors.gray200,
+    backgroundColor: '#E5E7EB',
     marginHorizontal: 12,
     marginBottom: 18,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 8,
   },
   typeCard: {
@@ -345,12 +345,12 @@ const styles = StyleSheet.create({
   typeLabel: {
     fontSize: 16,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 2,
   },
   typeDesc: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     lineHeight: 16,
   },
   selectedTypeRow: {
@@ -362,37 +362,37 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   changeText: {
-    color: Colors.metarduOrange,
+    color: '#F97316',
     fontSize: 13,
     fontWeight: '500',
   },
   label: {
     fontSize: 14,
     fontWeight: '500',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 8,
   },
   chip: {
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 16,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: Colors.gray200,
+    borderColor: '#E5E7EB',
   },
   chipActive: {
-    backgroundColor: Colors.metarduNavy,
-    borderColor: Colors.metarduNavy,
+    backgroundColor: '#0B1F3A',
+    borderColor: '#0B1F3A',
   },
   chipText: {
     fontSize: 13,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   chipTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
   buttonRow: {

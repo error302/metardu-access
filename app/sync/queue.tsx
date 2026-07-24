@@ -17,7 +17,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { EmptyState } from '@/components/EmptyState';
@@ -111,11 +110,11 @@ export default function SyncQueueScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
           <TouchableOpacity onPress={() => router.back()}>
-            <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+            <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
           </TouchableOpacity>
           <View>
             <Text style={styles.title}>{t('sync.queue')}</Text>
@@ -186,11 +185,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   itemRow: {
@@ -201,30 +200,30 @@ const styles = StyleSheet.create({
   itemTitle: {
     fontSize: 15,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   itemMeta: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
     fontFamily: 'JetBrainsMono',
   },
   itemDate: {
     fontSize: 11,
-    color: Colors.gray400,
+    color: '#9CA3AF',
     marginTop: 4,
   },
   itemAttempts: {
     fontSize: 11,
-    color: Colors.danger,
+    color: '#EF4444',
     marginTop: 2,
   },
   bottomBar: {
     flexDirection: 'row',
     gap: 8,
     padding: 12,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
-    borderTopColor: Colors.gray200,
+    borderTopColor: '#E5E7EB',
   },
 });

@@ -26,7 +26,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MapView, { Marker, Polyline, Circle } from 'react-native-maps';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { EmptyState } from '@/components/EmptyState';
@@ -172,39 +171,39 @@ export default function CoverageScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.gray500 }}>Loading...</Text>
+          <Text style={{ color: '#6B7280' }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Coverage Map</Text>
           <Text style={styles.subtitle} numberOfLines={1}>{project.name}</Text>
         </View>
         <TouchableOpacity onPress={handleExportTinPrep} style={{ padding: 8 }}>
-          <MaterialCommunityIcons name="share-variant" size={18} color={Colors.metarduOrange} />
+          <MaterialCommunityIcons name="share-variant" size={18} color={'#F97316'} />
         </TouchableOpacity>
       </View>
 
       {/* Stats summary */}
       <View style={styles.statsRow}>
-        <StatCard icon="map-marker" label="Points" value={String(points.length)} color={Colors.metarduOrange} />
-        <StatCard icon="wave" label="Breaklines" value={String(breaklines.length)} color={Colors.success} />
-        <StatCard icon="vector-square" label="Boundary" value={breaklines.some(b => b.type === 'boundary') ? 'Yes' : 'No'} color={Colors.info} />
+        <StatCard icon="map-marker" label="Points" value={String(points.length)} color={'#F97316'} />
+        <StatCard icon="wave" label="Breaklines" value={String(breaklines.length)} color={'#10B981'} />
+        <StatCard icon="vector-square" label="Boundary" value={breaklines.some(b => b.type === 'boundary') ? 'Yes' : 'No'} color={'#3B82F6'} />
         <StatCard
           icon="chart-bar"
           label="Density"
           value={coverage ? `${(coverage.densityPerSqKm).toFixed(0)}/km²` : '—'}
-          color={Colors.warning}
+          color={'#F59E0B'}
         />
       </View>
 
@@ -249,15 +248,15 @@ export default function CoverageScreen() {
             <Circle
               center={{ latitude: region.latitude, longitude: region.longitude }}
               radius={Math.sqrt((region.latitudeDelta * 111000) ** 2 / 2)}
-              strokeColor={`${Colors.metarduOrange}40`}
-              fillColor={`${Colors.metarduOrange}10`}
+              strokeColor={#F9731640}
+              fillColor={#F9731610}
               strokeWidth={1}
             />
 
             {/* Mass points colored by feature code */}
             {mapPoints.map((p, i) => {
               const fc = featureCodes.find(c => c.code === p.code);
-              const color = fc?.color ?? Colors.metarduOrange;
+              const color = fc?.color ?? '#F97316';
               return (
                 <Marker
                   key={`${p.pointNumber}-${i}`}
@@ -281,7 +280,7 @@ export default function CoverageScreen() {
             <MaterialCommunityIcons
               name={showBreaklines ? 'eye' : 'eye-off'}
               size={16}
-              color={Colors.metarduWhite}
+              color={'#FFFFFF'}
             />
             <Text style={styles.mapToggleText}>Breaklines</Text>
           </TouchableOpacity>
@@ -293,13 +292,13 @@ export default function CoverageScreen() {
         <ScrollView style={{ maxHeight: 220 }} contentContainerStyle={{ padding: 16, paddingTop: 8 }}>
           <Card style={[
             styles.assessmentCard,
-            { borderLeftColor: coverage.issues.length === 0 ? Colors.success : Colors.warning },
+            { borderLeftColor: coverage.issues.length === 0 ? '#10B981' : '#F59E0B' },
           ]}>
             <View style={styles.assessmentHeader}>
               <MaterialCommunityIcons
                 name={coverage.issues.length === 0 ? 'check-decagram' : 'alert-decagram'}
                 size={20}
-                color={coverage.issues.length === 0 ? Colors.success : Colors.warning}
+                color={coverage.issues.length === 0 ? '#10B981' : '#F59E0B'}
               />
               <Text style={styles.assessmentTitle}>
                 {coverage.issues.length === 0
@@ -316,15 +315,15 @@ export default function CoverageScreen() {
 
             {coverage.issues.map((issue, i) => (
               <View key={`i${i}`} style={styles.assessmentRow}>
-                <MaterialCommunityIcons name="alert-circle-outline" size={14} color={Colors.warning} />
-                <Text style={[styles.assessmentText, { color: Colors.warning }]}>{issue}</Text>
+                <MaterialCommunityIcons name="alert-circle-outline" size={14} color={'#F59E0B'} />
+                <Text style={[styles.assessmentText, { color: '#F59E0B' }]}>{issue}</Text>
               </View>
             ))}
 
             {coverage.recommendations.slice(0, 3).map((rec, i) => (
               <View key={`r${i}`} style={styles.assessmentRow}>
-                <MaterialCommunityIcons name="lightbulb-outline" size={14} color={Colors.info} />
-                <Text style={[styles.assessmentText, { color: Colors.info }]}>{rec}</Text>
+                <MaterialCommunityIcons name="lightbulb-outline" size={14} color={'#3B82F6'} />
+                <Text style={[styles.assessmentText, { color: '#3B82F6' }]}>{rec}</Text>
               </View>
             ))}
           </Card>
@@ -333,7 +332,7 @@ export default function CoverageScreen() {
             title="Export TIN Prep Data"
             onPress={handleExportTinPrep}
             style={{ marginTop: 12 }}
-            icon={<MaterialCommunityIcons name="file-export" size={18} color={Colors.metarduWhite} />}
+            icon={<MaterialCommunityIcons name="file-export" size={18} color={'#FFFFFF'} />}
           />
         </ScrollView>
       )}
@@ -375,7 +374,7 @@ function FilterChip({
       onPress={onPress}
       style={[
         styles.filterChip,
-        active && { backgroundColor: Colors.metarduNavy },
+        active && { backgroundColor: '#0B1F3A' },
       ]}
     >
       <Text style={[styles.filterChipText, active && styles.filterChipTextActive]}>
@@ -395,11 +394,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   statsRow: {
@@ -410,7 +409,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     padding: 8,
     borderTopWidth: 3,
@@ -420,12 +419,12 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   statLabel: {
     fontSize: 9,
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
   },
   filterRow: {
@@ -437,15 +436,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 14,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
   },
   filterChipText: {
     fontSize: 11,
-    color: Colors.gray600,
+    color: '#4B5563',
     fontWeight: '500',
   },
   filterChipTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
   mapToggle: {
@@ -455,14 +454,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: `${Colors.metarduNavy}CC`,
+    backgroundColor: #0B1F3ACC,
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 16,
   },
   mapToggleText: {
     fontSize: 11,
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
   assessmentCard: {
@@ -478,11 +477,11 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   assessmentGood: {
     fontSize: 12,
-    color: Colors.success,
+    color: '#10B981',
     lineHeight: 17,
   },
   assessmentRow: {

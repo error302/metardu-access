@@ -9,7 +9,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { LogoMark } from '@/components/LogoMark';
 import { Button } from '@/components/Button';
@@ -93,7 +92,7 @@ export default function ProfileScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 32 }}>
         {/* Profile card */}
         <Card variant="elevated" style={{ alignItems: 'center', padding: 24, marginBottom: 16 }}>
@@ -101,10 +100,10 @@ export default function ProfileScreen() {
           <Text style={styles.profileName}>{profile?.fullName ?? 'Surveyor'}</Text>
           <Text style={styles.profileEmail}>{profile?.email}</Text>
           <View style={styles.iskBadge}>
-            <MaterialCommunityIcons name="shield-check" size={14} color={Colors.metarduOrange} />
+            <MaterialCommunityIcons name="shield-check" size={14} color={'#F97316'} />
             <Text style={styles.iskText}>{profile?.iskNumber ?? 'ISK/—'}</Text>
             {profile?.verifiedIsk ? (
-              <MaterialCommunityIcons name="check-decagram" size={14} color={Colors.success} />
+              <MaterialCommunityIcons name="check-decagram" size={14} color={'#10B981'} />
             ) : (
               <Text style={styles.iskPending}>pending</Text>
             )}
@@ -120,10 +119,10 @@ export default function ProfileScreen() {
             <View style={[
               styles.healthDot,
               serverHealth.checking
-                ? { backgroundColor: Colors.warning }
+                ? { backgroundColor: '#F59E0B' }
                 : serverHealth.online
-                  ? { backgroundColor: Colors.success }
-                  : { backgroundColor: Colors.danger },
+                  ? { backgroundColor: '#10B981' }
+                  : { backgroundColor: '#EF4444' },
             ]} />
             <View style={{ flex: 1 }}>
               <Text style={styles.healthTitle}>
@@ -143,7 +142,7 @@ export default function ProfileScreen() {
               <MaterialCommunityIcons
                 name={serverHealth.checking ? 'loading' : 'refresh'}
                 size={18}
-                color={Colors.metarduOrange}
+                color={'#F97316'}
               />
             </TouchableOpacity>
           </View>
@@ -160,23 +159,23 @@ export default function ProfileScreen() {
             onToggle={toggleAutoSync}
           />
           <TouchableOpacity onPress={handleSyncNow} style={styles.actionRow}>
-            <MaterialCommunityIcons name="sync" size={20} color={Colors.metarduOrange} />
+            <MaterialCommunityIcons name="sync" size={20} color={'#F97316'} />
             <View style={{ flex: 1 }}>
               <Text style={styles.actionLabel}>{t('sync.syncNow')}</Text>
               <Text style={styles.actionSublabel}>Push pending sessions to the server</Text>
             </View>
-            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+            <MaterialCommunityIcons name="chevron-right" size={20} color={'#9CA3AF'} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => router.push('/sync/queue')}
             style={styles.actionRow}
           >
-            <MaterialCommunityIcons name="cloud-upload" size={20} color={Colors.metarduOrange} />
+            <MaterialCommunityIcons name="cloud-upload" size={20} color={'#F97316'} />
             <View style={{ flex: 1 }}>
               <Text style={styles.actionLabel}>{t('sync.queue')}</Text>
               <Text style={styles.actionSublabel}>View pending sync items</Text>
             </View>
-            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+            <MaterialCommunityIcons name="chevron-right" size={20} color={'#9CA3AF'} />
           </TouchableOpacity>
         </Card>
 
@@ -197,7 +196,7 @@ export default function ProfileScreen() {
             onToggle={toggleContrast}
           />
           <View style={styles.actionRow}>
-            <MaterialCommunityIcons name="translate" size={20} color={Colors.metarduNavy} />
+            <MaterialCommunityIcons name="translate" size={20} color={'#0B1F3A'} />
             <View style={{ flex: 1 }}>
               <Text style={styles.actionLabel}>{t('settings.language')}</Text>
             </View>
@@ -235,17 +234,17 @@ export default function ProfileScreen() {
             onPress={() => router.push('/settings')}
             style={styles.actionRow}
           >
-            <MaterialCommunityIcons name="cog" size={20} color={Colors.metarduNavy} />
+            <MaterialCommunityIcons name="cog" size={20} color={'#0B1F3A'} />
             <Text style={styles.actionLabel}>All Settings</Text>
-            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+            <MaterialCommunityIcons name="chevron-right" size={20} color={'#9CA3AF'} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => router.push('/settings/audit')}
             style={styles.actionRow}
           >
-            <MaterialCommunityIcons name="clipboard-list" size={20} color={Colors.metarduNavy} />
+            <MaterialCommunityIcons name="clipboard-list" size={20} color={'#0B1F3A'} />
             <Text style={styles.actionLabel}>Audit Log</Text>
-            <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+            <MaterialCommunityIcons name="chevron-right" size={20} color={'#9CA3AF'} />
           </TouchableOpacity>
         </Card>
 
@@ -253,7 +252,7 @@ export default function ProfileScreen() {
         <Text style={styles.sectionTitle}>{t('settings.about')}</Text>
         <Card>
           <View style={styles.actionRow}>
-            <MaterialCommunityIcons name="information" size={20} color={Colors.metarduNavy} />
+            <MaterialCommunityIcons name="information" size={20} color={'#0B1F3A'} />
             <Text style={styles.actionLabel}>{t('settings.version')}</Text>
             <Text style={styles.versionText}>
               {Application.nativeApplicationVersion ?? '0.1.0'}
@@ -288,7 +287,7 @@ function SettingRow({
 }) {
   return (
     <View style={styles.actionRow}>
-      <MaterialCommunityIcons name={icon as any} size={20} color={Colors.metarduNavy} />
+      <MaterialCommunityIcons name={icon as any} size={20} color={'#0B1F3A'} />
       <View style={{ flex: 1 }}>
         <Text style={styles.actionLabel}>{label}</Text>
         {sublabel && <Text style={styles.actionSublabel}>{sublabel}</Text>}
@@ -309,19 +308,19 @@ const styles = StyleSheet.create({
   profileName: {
     fontSize: 22,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginTop: 12,
   },
   profileEmail: {
     fontSize: 14,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   iskBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: `${Colors.metarduOrange}15`,
+    backgroundColor: #F9731615,
     paddingHorizontal: 12,
     paddingVertical: 4,
     borderRadius: 12,
@@ -330,16 +329,16 @@ const styles = StyleSheet.create({
   iskText: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduOrange,
+    color: '#F97316',
   },
   iskPending: {
     fontSize: 10,
-    color: Colors.warning,
+    color: '#F59E0B',
     fontWeight: '500',
   },
   firmName: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 8,
   },
   healthRow: {
@@ -355,18 +354,18 @@ const styles = StyleSheet.create({
   healthTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   healthSubtitle: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
     fontFamily: 'JetBrainsMono',
   },
   sectionTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginTop: 20,
@@ -379,23 +378,23 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   actionLabel: {
     fontSize: 15,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '500',
   },
   actionSublabel: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   toggle: {
     width: 44,
     height: 24,
     borderRadius: 12,
-    backgroundColor: Colors.gray200,
+    backgroundColor: '#E5E7EB',
     padding: 2,
     justifyContent: 'center',
   },
@@ -403,19 +402,19 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
   },
   toggleKnobOn: {
-    backgroundColor: Colors.metarduOrange,
+    backgroundColor: '#F97316',
     alignSelf: 'flex-end',
   },
   toggleKnobOff: {
-    backgroundColor: Colors.gray400,
+    backgroundColor: '#9CA3AF',
     alignSelf: 'flex-start',
   },
   localeToggle: {
     flexDirection: 'row',
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
     borderRadius: 8,
     padding: 2,
   },
@@ -425,8 +424,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   localeBtnActive: {
-    backgroundColor: Colors.metarduWhite,
-    shadowColor: Colors.metarduNavy,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#0B1F3A',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
@@ -435,14 +434,14 @@ const styles = StyleSheet.create({
   localeText: {
     fontSize: 12,
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   localeTextActive: {
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   versionText: {
     fontSize: 14,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontFamily: 'JetBrainsMono',
   },
 });

@@ -27,7 +27,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
@@ -81,19 +80,19 @@ export default function TraverseScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.gray500 }}>Loading...</Text>
+          <Text style={{ color: '#6B7280' }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Cadastral Traverse</Text>
@@ -243,7 +242,7 @@ function TraverseEditor({
         {/* Setup card */}
         <Card style={{ marginBottom: 12 }}>
           <View style={styles.setupHeader}>
-            <MaterialCommunityIcons name="crosshairs-gps" size={18} color={Colors.metarduNavy} />
+            <MaterialCommunityIcons name="crosshairs-gps" size={18} color={'#0B1F3A'} />
             <Text style={styles.setupTitle}>{traverse.name}</Text>
           </View>
           <View style={styles.setupRow}>
@@ -280,7 +279,7 @@ function TraverseEditor({
           <Text style={styles.legsTitle}>Legs ({traverse.legs.length})</Text>
           <TouchableOpacity onPress={() => setShowAddLeg(true)}>
             <View style={styles.addLegBtn}>
-              <MaterialCommunityIcons name="plus" size={18} color={Colors.metarduWhite} />
+              <MaterialCommunityIcons name="plus" size={18} color={'#FFFFFF'} />
               <Text style={styles.addLegBtnText}>Add Leg</Text>
             </View>
           </TouchableOpacity>
@@ -288,7 +287,7 @@ function TraverseEditor({
 
         {traverse.legs.length === 0 ? (
           <Card variant="outline" style={{ alignItems: 'center', padding: 24 }}>
-            <MaterialCommunityIcons name="vector-line" size={36} color={Colors.gray400} />
+            <MaterialCommunityIcons name="vector-line" size={36} color={'#9CA3AF'} />
             <Text style={styles.emptyLegsTitle}>No legs yet</Text>
             <Text style={styles.emptyLegsSub}>Tap "Add Leg" to enter your first bearing and distance.</Text>
           </Card>
@@ -350,15 +349,15 @@ function AdjustmentPreviewCard({
 }) {
   const passes = result.precisionPasses;
   return (
-    <Card style={[styles.previewCard, { borderLeftColor: passes ? Colors.success : Colors.danger }]}>
+    <Card style={[styles.previewCard, { borderLeftColor: passes ? '#10B981' : '#EF4444' }]}>
       <View style={styles.previewHeader}>
         <MaterialCommunityIcons
           name={passes ? 'check-circle' : 'alert-circle'}
           size={20}
-          color={passes ? Colors.success : Colors.danger}
+          color={passes ? '#10B981' : '#EF4444'}
         />
         <Text style={styles.previewTitle}>Bowditch Adjustment</Text>
-        <View style={[styles.previewBadge, { backgroundColor: passes ? Colors.success : Colors.danger }]}>
+        <View style={[styles.previewBadge, { backgroundColor: passes ? '#10B981' : '#EF4444' }]}>
           <Text style={styles.previewBadgeText}>{passes ? 'PASS' : 'FAIL'}</Text>
         </View>
       </View>
@@ -368,7 +367,7 @@ function AdjustmentPreviewCard({
         <PreviewStat
           label="Precision"
           value={result.precisionRatio}
-          highlight={passes ? Colors.success : Colors.danger}
+          highlight={passes ? '#10B981' : '#EF4444'}
         />
       </View>
       <Text style={styles.previewNote}>
@@ -425,7 +424,7 @@ function LegCard({
           </View>
         </View>
         <TouchableOpacity onPress={onDelete} style={styles.legDelete}>
-          <MaterialCommunityIcons name="delete-outline" size={20} color={Colors.danger} />
+          <MaterialCommunityIcons name="delete-outline" size={20} color={'#EF4444'} />
         </TouchableOpacity>
       </View>
     </Card>
@@ -680,7 +679,7 @@ function NewTraverseModal({
                 <MaterialCommunityIcons
                   name="loop"
                   size={18}
-                  color={isClosed ? Colors.metarduWhite : Colors.metarduNavy}
+                  color={isClosed ? '#FFFFFF' : '#0B1F3A'}
                 />
                 <Text style={[styles.typeBtnText, isClosed && styles.typeBtnTextActive]}>
                   Closed (link to known point)
@@ -693,7 +692,7 @@ function NewTraverseModal({
                 <MaterialCommunityIcons
                   name="ray-end-arrow"
                   size={18}
-                  color={!isClosed ? Colors.metarduWhite : Colors.metarduNavy}
+                  color={!isClosed ? '#FFFFFF' : '#0B1F3A'}
                 />
                 <Text style={[styles.typeBtnText, !isClosed && styles.typeBtnTextActive]}>
                   Open (no closure check)
@@ -757,36 +756,36 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   travSelector: {
     maxHeight: 44,
     paddingVertical: 6,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   travChip: {
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
   },
   travChipActive: {
-    backgroundColor: Colors.metarduNavy,
+    backgroundColor: '#0B1F3A',
   },
   travChipText: {
     fontSize: 13,
-    color: Colors.gray600,
+    color: '#4B5563',
     fontWeight: '500',
   },
   travChipTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
   setupHeader: {
@@ -798,7 +797,7 @@ const styles = StyleSheet.create({
   setupTitle: {
     fontSize: 15,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     flex: 1,
   },
   setupRow: {
@@ -807,19 +806,19 @@ const styles = StyleSheet.create({
   },
   setupLabel: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
   setupValue: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginTop: 2,
   },
   setupCoords: {
     fontSize: 11,
-    color: Colors.gray600,
+    color: '#4B5563',
     marginTop: 2,
     fontFamily: 'JetBrainsMono',
     lineHeight: 16,
@@ -838,7 +837,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 15,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   previewBadge: {
     paddingHorizontal: 10,
@@ -848,7 +847,7 @@ const styles = StyleSheet.create({
   previewBadgeText: {
     fontSize: 11,
     fontWeight: '700',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   previewStatsRow: {
     flexDirection: 'row',
@@ -856,19 +855,19 @@ const styles = StyleSheet.create({
   },
   previewStatLabel: {
     fontSize: 10,
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
   },
   previewStatValue: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
     marginTop: 2,
   },
   previewNote: {
     fontSize: 10,
-    color: Colors.gray400,
+    color: '#9CA3AF',
     marginTop: 8,
     fontStyle: 'italic',
   },
@@ -881,13 +880,13 @@ const styles = StyleSheet.create({
   legsTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   addLegBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: Colors.metarduOrange,
+    backgroundColor: '#F97316',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
@@ -895,17 +894,17 @@ const styles = StyleSheet.create({
   addLegBtnText: {
     fontSize: 12,
     fontWeight: '600',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   emptyLegsTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginTop: 8,
   },
   emptyLegsSub: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     textAlign: 'center',
     marginTop: 4,
     paddingHorizontal: 16,
@@ -919,19 +918,19 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: Colors.metarduNavy,
+    backgroundColor: '#0B1F3A',
     alignItems: 'center',
     justifyContent: 'center',
   },
   legSeqText: {
     fontSize: 12,
     fontWeight: '700',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   legRoute: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   legMetaRow: {
@@ -941,7 +940,7 @@ const styles = StyleSheet.create({
   },
   legMeta: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontFamily: 'JetBrainsMono',
   },
   legDelete: {
@@ -950,7 +949,7 @@ const styles = StyleSheet.create({
   coordsTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 8,
   },
   coordRow: {
@@ -958,19 +957,19 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: 4,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   coordPoint: {
     flex: 1,
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduOrange,
+    color: '#F97316',
     fontFamily: 'JetBrainsMono',
   },
   coordValue: {
     flex: 1.5,
     fontSize: 12,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   modalOverlay: {
@@ -979,7 +978,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -989,20 +988,20 @@ const styles = StyleSheet.create({
     width: 40,
     height: 4,
     borderRadius: 2,
-    backgroundColor: Colors.gray300,
+    backgroundColor: '#D1D5DB',
     alignSelf: 'center',
     marginBottom: 16,
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 16,
   },
   modalSectionTitle: {
     fontSize: 12,
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginTop: 16,
@@ -1027,21 +1026,21 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: Colors.gray200,
-    backgroundColor: Colors.metarduWhite,
+    borderColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
   },
   typeBtnActive: {
-    borderColor: Colors.metarduNavy,
-    backgroundColor: Colors.metarduNavy,
+    borderColor: '#0B1F3A',
+    backgroundColor: '#0B1F3A',
   },
   typeBtnText: {
     fontSize: 13,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '500',
     flex: 1,
   },
   typeBtnTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
 });

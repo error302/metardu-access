@@ -19,7 +19,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
@@ -86,7 +85,7 @@ export default function ObservationEntryScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{ flex: 1 }}
@@ -95,7 +94,7 @@ export default function ObservationEntryScreen() {
           {/* Header */}
           <View style={styles.header}>
             <TouchableOpacity onPress={() => router.back()}>
-              <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+              <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
             </TouchableOpacity>
             <Text style={styles.title}>{t('fieldbook.addObservation')}</Text>
           </View>
@@ -239,12 +238,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   cardTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 12,
   },
   row: {
@@ -254,7 +253,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '500',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 6,
   },
   faceRow: {
@@ -267,21 +266,21 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: Colors.gray300,
+    borderColor: '#D1D5DB',
     alignItems: 'center',
     justifyContent: 'center',
   },
   faceBtnActive: {
-    borderColor: Colors.metarduOrange,
-    backgroundColor: `${Colors.metarduOrange}15`,
+    borderColor: '#F97316',
+    backgroundColor: #F9731615,
   },
   faceBtnText: {
     fontSize: 14,
     fontWeight: '500',
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   faceBtnTextActive: {
-    color: Colors.metarduOrange,
+    color: '#F97316',
     fontWeight: '600',
   },
 });

@@ -25,7 +25,6 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { EmptyState } from '@/components/EmptyState';
@@ -106,14 +105,14 @@ export default function InstrumentsScreen() {
       nikon: '#A21CAF',
       generic: '#6B7280',
     };
-    return colors[brand] ?? Colors.gray500;
+    return colors[brand] ?? '#6B7280';
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Instruments</Text>
@@ -133,7 +132,7 @@ export default function InstrumentsScreen() {
                 <Text style={styles.connectedName}>{connected.name}</Text>
                 <Text style={styles.connectedBrand}>{connected.brand} · {connected.protocol.toUpperCase()}</Text>
               </View>
-              <View style={[styles.statusDot, { backgroundColor: Colors.success }]} />
+              <View style={[styles.statusDot, { backgroundColor: '#10B981' }]} />
             </View>
 
             <View style={styles.commandRow}>
@@ -141,7 +140,7 @@ export default function InstrumentsScreen() {
                 title="Measure"
                 onPress={sendMeasureCommand}
                 style={{ flex: 1 }}
-                icon={<MaterialCommunityIcons name="target" size={18} color={Colors.metarduWhite} />}
+                icon={<MaterialCommunityIcons name="target" size={18} color={'#FFFFFF'} />}
               />
               <Button
                 title="Disconnect"
@@ -161,7 +160,7 @@ export default function InstrumentsScreen() {
             loading={scanning}
             fullWidth
             size="lg"
-            icon={<MaterialCommunityIcons name="bluetooth-search" size={20} color={Colors.metarduWhite} />}
+            icon={<MaterialCommunityIcons name="bluetooth-search" size={20} color={'#FFFFFF'} />}
           />
         )}
 
@@ -186,7 +185,7 @@ export default function InstrumentsScreen() {
                       {inst.rssi ? ` · ${inst.rssi}dB` : ''}
                     </Text>
                   </View>
-                  <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+                  <MaterialCommunityIcons name="chevron-right" size={20} color={'#9CA3AF'} />
                 </TouchableOpacity>
               ))}
             </View>
@@ -202,7 +201,7 @@ export default function InstrumentsScreen() {
                 <Card key={i} style={{ padding: 10 }}>
                   <View style={styles.readingRow}>
                     <View style={styles.readingIcon}>
-                      <MaterialCommunityIcons name="angle-acute" size={16} color={Colors.metarduOrange} />
+                      <MaterialCommunityIcons name="angle-acute" size={16} color={'#F97316'} />
                     </View>
                     <View style={{ flex: 1 }}>
                       {r.pointNumber && (
@@ -269,11 +268,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   connectedCard: {
@@ -296,11 +295,11 @@ const styles = StyleSheet.create({
   connectedName: {
     fontSize: 15,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   connectedBrand: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
     textTransform: 'capitalize',
   },
@@ -316,7 +315,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 12,
@@ -329,8 +328,8 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     borderWidth: 1.5,
-    borderColor: Colors.gray200,
-    backgroundColor: Colors.metarduWhite,
+    borderColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
   },
   instrumentIcon: {
     width: 40,
@@ -342,11 +341,11 @@ const styles = StyleSheet.create({
   instrumentName: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   instrumentBrand: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   readingRow: {
@@ -358,31 +357,31 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 8,
-    backgroundColor: `${Colors.metarduOrange}15`,
+    backgroundColor: #F9731615,
     alignItems: 'center',
     justifyContent: 'center',
   },
   readingPoint: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduOrange,
+    color: '#F97316',
     fontFamily: 'JetBrainsMono',
   },
   readingValues: {
     fontSize: 12,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
     marginTop: 2,
   },
   readingTime: {
     fontSize: 10,
-    color: Colors.gray400,
+    color: '#9CA3AF',
     marginTop: 2,
   },
   cardTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 12,
     textTransform: 'uppercase',
   },
@@ -392,7 +391,7 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingVertical: 6,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   supportedDot: {
     width: 8,
@@ -402,13 +401,13 @@ const styles = StyleSheet.create({
   supportedBrand: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     width: 80,
   },
   supportedModels: {
     flex: 1,
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontFamily: 'JetBrainsMono',
   },
 });

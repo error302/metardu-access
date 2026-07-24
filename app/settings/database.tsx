@@ -201,10 +201,10 @@ export default function DatabaseSettingsScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Database & Backup</Text>
@@ -244,20 +244,20 @@ export default function DatabaseSettingsScreen() {
             onPress={handleIntegrityCheck}
             loading={checking}
             fullWidth
-            icon={<MaterialCommunityIcons name="shield-check-outline" size={18} color={Colors.metarduWhite} />}
+            icon={<MaterialCommunityIcons name="shield-check-outline" size={18} color={'#FFFFFF'} />}
           />
           {integrity && (
             <View style={[styles.integrityResult, {
-              backgroundColor: integrity.status === 'ok' ? Colors.successLight : Colors.dangerLight,
-              borderColor: integrity.status === 'ok' ? Colors.success : Colors.danger,
+              backgroundColor: integrity.status === 'ok' ? '#D1FAE5' : '#FEE2E2',
+              borderColor: integrity.status === 'ok' ? '#10B981' : '#EF4444',
             }]}>
               <MaterialCommunityIcons
                 name={integrity.status === 'ok' ? 'check-circle' : 'alert-circle'}
                 size={16}
-                color={integrity.status === 'ok' ? Colors.success : Colors.danger}
+                color={integrity.status === 'ok' ? '#10B981' : '#EF4444'}
               />
               <View style={{ flex: 1 }}>
-                <Text style={[styles.integrityStatus, { color: integrity.status === 'ok' ? Colors.success : Colors.danger }]}>
+                <Text style={[styles.integrityStatus, { color: integrity.status === 'ok' ? '#10B981' : '#EF4444' }]}>
                   {integrity.status.toUpperCase()}
                 </Text>
                 {integrity.integrityCheck && (
@@ -308,7 +308,7 @@ export default function DatabaseSettingsScreen() {
                 <MaterialCommunityIcons
                   name={config.encryptionEnabled ? 'lock-check' : 'lock-open'}
                   size={18}
-                  color={config.encryptionEnabled ? Colors.success : Colors.gray400}
+                  color={config.encryptionEnabled ? '#10B981' : '#9CA3AF'}
                 />
                 <View style={{ flex: 1 }}>
                   <Text style={styles.toggleLabel}>Encryption</Text>
@@ -326,7 +326,7 @@ export default function DatabaseSettingsScreen() {
                 <MaterialCommunityIcons
                   name={config.autoBackup ? 'cloud-sync' : 'cloud-off'}
                   size={18}
-                  color={config.autoBackup ? Colors.metarduOrange : Colors.gray400}
+                  color={config.autoBackup ? '#F97316' : '#9CA3AF'}
                 />
                 <View style={{ flex: 1 }}>
                   <Text style={styles.toggleLabel}>Auto-backup</Text>
@@ -353,7 +353,7 @@ export default function DatabaseSettingsScreen() {
             onPress={handleCreateBackup}
             loading={backing}
             style={{ flex: 1 }}
-            icon={<MaterialCommunityIcons name="cloud-upload" size={18} color={Colors.metarduWhite} />}
+            icon={<MaterialCommunityIcons name="cloud-upload" size={18} color={'#FFFFFF'} />}
           />
           <Button
             title={compacting ? 'Compacting...' : 'Compact'}
@@ -368,7 +368,7 @@ export default function DatabaseSettingsScreen() {
         <Text style={styles.sectionOverline}>Backup history ({backups.length})</Text>
         {backups.length === 0 ? (
           <Card variant="outline" style={{ alignItems: 'center', padding: Spacing[6] }}>
-            <MaterialCommunityIcons name="cloud-off-outline" size={28} color={Colors.gray400} />
+            <MaterialCommunityIcons name="cloud-off-outline" size={28} color={'#9CA3AF'} />
             <Text style={styles.emptyTitle}>No backups yet</Text>
             <Text style={styles.emptySub}>Create your first backup above.</Text>
           </Card>
@@ -377,11 +377,11 @@ export default function DatabaseSettingsScreen() {
             {backups.map((entry) => (
               <Card key={entry.id} style={{ padding: Spacing[3] }}>
                 <View style={styles.backupRow}>
-                  <View style={[styles.backupIcon, { backgroundColor: `${Colors.metarduOrange}15` }]}>
+                  <View style={[styles.backupIcon, { backgroundColor: #F9731615 }]}>
                     <MaterialCommunityIcons
                       name={entry.encrypted ? 'lock' : 'database'}
                       size={18}
-                      color={Colors.metarduOrange}
+                      color={'#F97316'}
                     />
                   </View>
                   <View style={{ flex: 1 }}>
@@ -395,9 +395,9 @@ export default function DatabaseSettingsScreen() {
                     <View style={styles.backupBadges}>
                       <Badge
                         label={entry.uploadedToCloud ? 'CLOUD' : 'LOCAL'}
-                        color={entry.uploadedToCloud ? Colors.success : Colors.gray500}
+                        color={entry.uploadedToCloud ? '#10B981' : '#6B7280'}
                       />
-                      <Badge label={entry.provider.toUpperCase()} color={Colors.info} />
+                      <Badge label={entry.provider.toUpperCase()} color={'#3B82F6'} />
                     </View>
                   </View>
                 </View>
@@ -454,7 +454,7 @@ function ProviderChip({
       <MaterialCommunityIcons
         name={icon as any}
         size={14}
-        color={active ? Colors.metarduWhite : Colors.metarduNavy}
+        color={active ? '#FFFFFF' : '#0B1F3A'}
       />
       <Text style={[styles.providerChipText, active && styles.providerChipTextActive]}>
         {label}
@@ -482,12 +482,12 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily.heading,
     fontSize: Typography.fontSize.xl,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontFamily: Typography.fontFamily.sans,
     fontSize: Typography.fontSize.xs,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   sectionOverline: {
@@ -496,7 +496,7 @@ const styles = StyleSheet.create({
     letterSpacing: Typography.letterSpacing.widest,
     textTransform: 'uppercase',
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     marginBottom: Spacing[3],
     marginLeft: Spacing[1],
   },
@@ -504,13 +504,13 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily.sansMedium,
     fontSize: Typography.fontSize.sm,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: Spacing[2],
   },
   cardHelp: {
     fontFamily: Typography.fontFamily.sans,
     fontSize: Typography.fontSize.xs,
-    color: Colors.gray500,
+    color: '#6B7280',
     lineHeight: 17,
     marginBottom: Spacing[3],
   },
@@ -519,18 +519,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: Spacing[2],
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   statLabel: {
     fontFamily: Typography.fontFamily.sans,
     fontSize: Typography.fontSize.sm,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   statValue: {
     fontFamily: Typography.fontFamily.mono,
     fontSize: Typography.fontSize.sm,
     fontWeight: '500',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   integrityResult: {
     flexDirection: 'row',
@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
   integrityDetail: {
     fontFamily: Typography.fontFamily.mono,
     fontSize: Typography.fontSize['2xs'],
-    color: Colors.gray600,
+    color: '#4B5563',
     marginTop: 2,
   },
   providerRow: {
@@ -566,21 +566,21 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing[2],
     borderRadius: Radius.md,
     borderWidth: 1,
-    borderColor: Colors.gray200,
-    backgroundColor: Colors.metarduWhite,
+    borderColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
   },
   providerChipActive: {
-    backgroundColor: Colors.metarduNavy,
-    borderColor: Colors.metarduNavy,
+    backgroundColor: '#0B1F3A',
+    borderColor: '#0B1F3A',
   },
   providerChipText: {
     fontFamily: Typography.fontFamily.sansMedium,
     fontSize: Typography.fontSize.xs,
     fontWeight: '500',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   providerChipTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   toggleRow: {
     flexDirection: 'row',
@@ -588,36 +588,36 @@ const styles = StyleSheet.create({
     gap: Spacing[3],
     paddingVertical: Spacing[3],
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   toggleLabel: {
     fontFamily: Typography.fontFamily.sansMedium,
     fontSize: Typography.fontSize.sm,
     fontWeight: '500',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   toggleHelp: {
     fontFamily: Typography.fontFamily.sans,
     fontSize: Typography.fontSize.xs,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 1,
   },
   toggle: {
     width: 36,
     height: 20,
     borderRadius: 10,
-    backgroundColor: Colors.gray200,
+    backgroundColor: '#E5E7EB',
     padding: 2,
     justifyContent: 'center',
   },
   toggleOn: {
-    backgroundColor: Colors.metarduOrange,
+    backgroundColor: '#F97316',
   },
   toggleKnob: {
     width: 16,
     height: 16,
     borderRadius: 8,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
   },
   toggleKnobOn: {
     alignSelf: 'flex-end',
@@ -625,7 +625,7 @@ const styles = StyleSheet.create({
   lastBackup: {
     fontFamily: Typography.fontFamily.mono,
     fontSize: Typography.fontSize['2xs'],
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: Spacing[2],
   },
   actionRow: {
@@ -637,13 +637,13 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily.sansMedium,
     fontSize: Typography.fontSize.sm,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginTop: Spacing[2],
   },
   emptySub: {
     fontFamily: Typography.fontFamily.sans,
     fontSize: Typography.fontSize.xs,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 4,
   },
   backupRow: {
@@ -663,12 +663,12 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily.sansMedium,
     fontSize: Typography.fontSize.sm,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   backupMeta: {
     fontFamily: Typography.fontFamily.mono,
     fontSize: Typography.fontSize['2xs'],
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   backupBadges: {

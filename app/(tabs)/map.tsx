@@ -9,7 +9,6 @@ import MapView, { Marker, Circle } from 'react-native-maps';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
-import { Colors } from '@/theme';
 import { EmptyState } from '@/components/EmptyState';
 import { useProjectStore } from '@/stores/projectStore';
 import { getPoints } from '@/lib/db/queries';
@@ -49,7 +48,7 @@ export default function MapScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <EmptyState
           icon="map-outline"
           title="No projects"
@@ -61,7 +60,7 @@ export default function MapScreen() {
 
   if (mapPoints.length === 0) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <View style={styles.header}>
           <Text style={styles.title}>{t('nav.map')}</Text>
           <Text style={styles.subtitle}>{project.name}</Text>
@@ -85,7 +84,7 @@ export default function MapScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <View>
           <Text style={styles.title}>{t('nav.map')}</Text>
@@ -108,7 +107,7 @@ export default function MapScreen() {
             description={mp.point.description ?? mp.point.code ?? ''}
           >
             <View style={styles.markerPin}>
-              <MaterialCommunityIcons name="map-marker" size={28} color={Colors.metarduOrange} />
+              <MaterialCommunityIcons name="map-marker" size={28} color={'#F97316'} />
             </View>
           </Marker>
         ))}
@@ -125,11 +124,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   markerPin: {

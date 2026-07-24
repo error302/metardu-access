@@ -10,7 +10,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { useTranslation } from 'react-i18next';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { CameraCapture, type CapturedPhoto } from '@/components/CameraCapture';
@@ -185,7 +184,7 @@ export default function FieldbookScreen() {
             <MaterialCommunityIcons
               name={item.type === 'point' ? 'map-marker' : 'angle-acute'}
               size={18}
-              color={Colors.metarduOrange}
+              color={'#F97316'}
             />
           </View>
           <View style={{ flex: 1 }}>
@@ -202,7 +201,7 @@ export default function FieldbookScreen() {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <View>
           <Text style={styles.title}>{t('fieldbook.title')}</Text>
@@ -222,19 +221,19 @@ export default function FieldbookScreen() {
         <QuickCaptureButton
           icon="crosshairs-gps"
           label={t('fieldbook.captureGps')}
-          color={Colors.metarduOrange}
+          color={'#F97316'}
           onPress={captureGpsPoint}
         />
         <QuickCaptureButton
           icon="camera"
           label={t('fieldbook.capturePhoto')}
-          color={Colors.info}
+          color={'#3B82F6'}
           onPress={() => setShowCamera(true)}
         />
         <QuickCaptureButton
           icon="note-plus"
           label={t('fieldbook.addObservation')}
-          color={Colors.success}
+          color={'#10B981'}
           onPress={() => router.push('/fieldbook/observation')}
         />
       </View>
@@ -297,11 +296,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   quickCaptureRow: {
@@ -309,9 +308,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   quickCaptureBtn: {
     alignItems: 'center',
@@ -328,7 +327,7 @@ const styles = StyleSheet.create({
   quickCaptureLabel: {
     fontSize: 11,
     fontWeight: '500',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     textAlign: 'center',
   },
   itemRow: {
@@ -340,23 +339,23 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 10,
-    backgroundColor: `${Colors.metarduOrange}15`,
+    backgroundColor: #F9731615,
     alignItems: 'center',
     justifyContent: 'center',
   },
   itemLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   itemMeta: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontFamily: 'JetBrainsMono',
   },
   itemTime: {
     fontSize: 11,
-    color: Colors.gray400,
+    color: '#9CA3AF',
     marginTop: 4,
     marginLeft: 46,
   },

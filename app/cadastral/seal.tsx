@@ -20,7 +20,6 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { EmptyState } from '@/components/EmptyState';
@@ -189,19 +188,19 @@ export default function SealScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.gray500 }}>Loading...</Text>
+          <Text style={{ color: '#6B7280' }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Seal & Submit</Text>
@@ -214,7 +213,7 @@ export default function SealScreen() {
         <Card style={{ marginBottom: 16 }}>
           <View style={styles.surveyorRow}>
             <View style={styles.surveyorIcon}>
-              <MaterialCommunityIcons name="account" size={28} color={Colors.metarduNavy} />
+              <MaterialCommunityIcons name="account" size={28} color={'#0B1F3A'} />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={styles.surveyorName}>{profile?.fullName}</Text>
@@ -225,16 +224,16 @@ export default function SealScreen() {
             </View>
             <View style={[
               styles.verifyBadge,
-              { backgroundColor: profile?.verifiedIsk ? `${Colors.success}20` : `${Colors.warning}20` }
+              { backgroundColor: profile?.verifiedIsk ? #10B98120 : #F59E0B20 }
             ]}>
               <MaterialCommunityIcons
                 name={profile?.verifiedIsk ? 'check-decagram' : 'clock-outline'}
                 size={12}
-                color={profile?.verifiedIsk ? Colors.success : Colors.warning}
+                color={profile?.verifiedIsk ? '#10B981' : '#F59E0B'}
               />
               <Text style={[
                 styles.verifyText,
-                { color: profile?.verifiedIsk ? Colors.success : Colors.warning }
+                { color: profile?.verifiedIsk ? '#10B981' : '#F59E0B' }
               ]}>
                 {profile?.verifiedIsk ? 'Verified' : 'Pending'}
               </Text>
@@ -245,17 +244,17 @@ export default function SealScreen() {
         {/* Data summary */}
         <Text style={styles.sectionTitle}>Session Data</Text>
         <View style={styles.statsGrid}>
-          <StatTile icon="map-marker" label="Points" value={stats.points} color={Colors.metarduOrange} />
-          <StatTile icon="shape-polygon-plus" label="Traverses" value={stats.traverses} color={Colors.info} />
-          <StatTile icon="vector-square" label="Parcels" value={stats.parcels} color={Colors.success} />
-          <StatTile icon="map-marker-multiple" label="Beacons" value={stats.beacons} color={Colors.warning} />
+          <StatTile icon="map-marker" label="Points" value={stats.points} color={'#F97316'} />
+          <StatTile icon="shape-polygon-plus" label="Traverses" value={stats.traverses} color={'#3B82F6'} />
+          <StatTile icon="vector-square" label="Parcels" value={stats.parcels} color={'#10B981'} />
+          <StatTile icon="map-marker-multiple" label="Beacons" value={stats.beacons} color={'#F59E0B'} />
         </View>
 
         {/* Seal button */}
         {!seal ? (
           <Card variant="elevated" style={{ marginTop: 16, alignItems: 'center', padding: 24 }}>
             <View style={styles.sealIcon}>
-              <MaterialCommunityIcons name="lock-outline" size={48} color={Colors.metarduNavy} />
+              <MaterialCommunityIcons name="lock-outline" size={48} color={'#0B1F3A'} />
             </View>
             <Text style={styles.sealTitle}>Apply Cryptographic Seal</Text>
             <Text style={styles.sealDesc}>
@@ -271,15 +270,15 @@ export default function SealScreen() {
               loading={sealing}
               size="lg"
               style={{ marginTop: 16, width: '100%' }}
-              icon={<MaterialCommunityIcons name="lock" size={18} color={Colors.metarduWhite} />}
+              icon={<MaterialCommunityIcons name="lock" size={18} color={'#FFFFFF'} />}
             />
           </Card>
         ) : (
           <>
             {/* Seal certificate */}
-            <Card style={[styles.certCard, { borderLeftColor: Colors.success }]}>
+            <Card style={[styles.certCard, { borderLeftColor: '#10B981' }]}>
               <View style={styles.certHeader}>
-                <MaterialCommunityIcons name="lock-check" size={32} color={Colors.success} />
+                <MaterialCommunityIcons name="lock-check" size={32} color={'#10B981'} />
                 <Text style={styles.certTitle}>Session Sealed</Text>
               </View>
 
@@ -325,7 +324,7 @@ export default function SealScreen() {
               title="Share Certificate"
               onPress={handleShare}
               style={{ marginTop: 16 }}
-              icon={<MaterialCommunityIcons name="share-variant" size={18} color={Colors.metarduWhite} />}
+              icon={<MaterialCommunityIcons name="share-variant" size={18} color={'#FFFFFF'} />}
             />
 
             <Button
@@ -349,7 +348,7 @@ export default function SealScreen() {
         {/* Regulatory note */}
         <Card variant="outline" style={{ marginTop: 16 }}>
           <View style={styles.regRow}>
-            <MaterialCommunityIcons name="information" size={16} color={Colors.info} />
+            <MaterialCommunityIcons name="information" size={16} color={'#3B82F6'} />
             <Text style={styles.regText}>
               After sealing, the session is ready for export to a .field-session JSON file.
               The desktop will pull the sealed session for deed plan generation and NLIMS submission.
@@ -391,11 +390,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   surveyorRow: {
@@ -407,24 +406,24 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 14,
-    backgroundColor: `${Colors.metarduNavy}15`,
+    backgroundColor: #0B1F3A15,
     alignItems: 'center',
     justifyContent: 'center',
   },
   surveyorName: {
     fontSize: 16,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   surveyorIsk: {
     fontSize: 13,
-    color: Colors.metarduOrange,
+    color: '#F97316',
     fontWeight: '600',
     marginTop: 2,
   },
   surveyorFirm: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   verifyBadge: {
@@ -442,7 +441,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 8,
@@ -455,7 +454,7 @@ const styles = StyleSheet.create({
   },
   statTile: {
     flex: 1,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     padding: 12,
     borderTopWidth: 3,
@@ -465,17 +464,17 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   statLabel: {
     fontSize: 10,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   sealIcon: {
     width: 80,
     height: 80,
     borderRadius: 24,
-    backgroundColor: `${Colors.metarduNavy}15`,
+    backgroundColor: #0B1F3A15,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
@@ -483,19 +482,19 @@ const styles = StyleSheet.create({
   sealTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     textAlign: 'center',
     marginBottom: 8,
   },
   sealDesc: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     textAlign: 'center',
     lineHeight: 18,
   },
   sealReg: {
     fontSize: 11,
-    color: Colors.metarduOrange,
+    color: '#F97316',
     fontStyle: 'italic',
     marginTop: 8,
   },
@@ -511,39 +510,39 @@ const styles = StyleSheet.create({
   certTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.success,
+    color: '#10B981',
   },
   certRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 6,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   certLabel: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   certValue: {
     fontSize: 12,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '600',
     fontFamily: 'JetBrainsMono',
   },
   certHash: {
-    color: Colors.gray600,
+    color: '#4B5563',
     fontWeight: '400',
   },
   certTextTitle: {
     fontSize: 12,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     textTransform: 'uppercase',
     marginBottom: 8,
   },
   certText: {
     fontSize: 11,
-    color: Colors.gray600,
+    color: '#4B5563',
     fontFamily: 'JetBrainsMono',
     lineHeight: 16,
   },
@@ -555,7 +554,7 @@ const styles = StyleSheet.create({
   regText: {
     flex: 1,
     fontSize: 12,
-    color: Colors.gray600,
+    color: '#4B5563',
     lineHeight: 17,
   },
 });

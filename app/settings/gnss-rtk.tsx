@@ -26,7 +26,6 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
@@ -165,16 +164,16 @@ export default function GnssSettingsScreen() {
     setMountpoint(preset.mountpoint);
   };
 
-  const solutionColor = livePosition?.solutionType === 'fixed' ? Colors.success :
-                        livePosition?.solutionType === 'float' ? Colors.warning :
-                        livePosition?.solutionType === 'dgps' ? Colors.info :
-                        Colors.danger;
+  const solutionColor = livePosition?.solutionType === 'fixed' ? '#10B981' :
+                        livePosition?.solutionType === 'float' ? '#F59E0B' :
+                        livePosition?.solutionType === 'dgps' ? '#3B82F6' :
+                        '#EF4444';
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>GNSS / RTK</Text>
@@ -235,7 +234,7 @@ export default function GnssSettingsScreen() {
                   <Text style={styles.presetName}>{preset.name}</Text>
                   <Text style={styles.presetNote}>{preset.note}</Text>
                 </View>
-                <MaterialCommunityIcons name="chevron-right" size={18} color={Colors.gray400} />
+                <MaterialCommunityIcons name="chevron-right" size={18} color={'#9CA3AF'} />
               </TouchableOpacity>
             ))}
           </View>
@@ -307,7 +306,7 @@ export default function GnssSettingsScreen() {
 
           {connected && (
             <View style={styles.connectedBanner}>
-              <MaterialCommunityIcons name="check-circle" size={16} color={Colors.success} />
+              <MaterialCommunityIcons name="check-circle" size={16} color={'#10B981'} />
               <Text style={styles.connectedText}>NTRIP stream active</Text>
             </View>
           )}
@@ -327,7 +326,7 @@ export default function GnssSettingsScreen() {
             onPress={scanForReceivers}
             loading={scanning}
             fullWidth
-            icon={<MaterialCommunityIcons name="bluetooth-search" size={18} color={Colors.metarduWhite} />}
+            icon={<MaterialCommunityIcons name="bluetooth-search" size={18} color={'#FFFFFF'} />}
           />
 
           {receivers.length > 0 && (
@@ -338,20 +337,20 @@ export default function GnssSettingsScreen() {
                   onPress={() => connectReceiver(r)}
                   style={[
                     styles.receiverRow,
-                    connectedReceiver?.id === r.id && { borderColor: Colors.success, borderWidth: 2 },
+                    connectedReceiver?.id === r.id && { borderColor: '#10B981', borderWidth: 2 },
                   ]}
                 >
-                  <View style={[styles.receiverIcon, { backgroundColor: `${Colors.info}15` }]}>
-                    <MaterialCommunityIcons name="antenna" size={20} color={Colors.info} />
+                  <View style={[styles.receiverIcon, { backgroundColor: #3B82F615 }]}>
+                    <MaterialCommunityIcons name="antenna" size={20} color={'#3B82F6'} />
                   </View>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.receiverName}>{r.name}</Text>
                     <Text style={styles.receiverBrand}>{r.brand}</Text>
                   </View>
                   {connectedReceiver?.id === r.id ? (
-                    <MaterialCommunityIcons name="check-circle" size={20} color={Colors.success} />
+                    <MaterialCommunityIcons name="check-circle" size={20} color={'#10B981'} />
                   ) : (
-                    <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.gray400} />
+                    <MaterialCommunityIcons name="chevron-right" size={20} color={'#9CA3AF'} />
                   )}
                 </TouchableOpacity>
               ))}
@@ -360,7 +359,7 @@ export default function GnssSettingsScreen() {
 
           {connectedReceiver && (
             <View style={styles.connectedBanner}>
-              <MaterialCommunityIcons name="check-circle" size={16} color={Colors.success} />
+              <MaterialCommunityIcons name="check-circle" size={16} color={'#10B981'} />
               <Text style={styles.connectedText}>
                 Connected to {connectedReceiver.name} — receiving corrections
               </Text>
@@ -372,21 +371,21 @@ export default function GnssSettingsScreen() {
         <Card variant="outline">
           <Text style={styles.cardTitle}>Accuracy Comparison</Text>
           <View style={styles.compareRow}>
-            <MaterialCommunityIcons name="cellphone" size={20} color={Colors.danger} />
+            <MaterialCommunityIcons name="cellphone" size={20} color={'#EF4444'} />
             <View style={{ flex: 1 }}>
               <Text style={styles.compareLabel}>Phone GPS only</Text>
               <Text style={styles.compareValue}>3-5m horizontal</Text>
             </View>
           </View>
           <View style={styles.compareRow}>
-            <MaterialCommunityIcons name="antenna" size={20} color={Colors.warning} />
+            <MaterialCommunityIcons name="antenna" size={20} color={'#F59E0B'} />
             <View style={{ flex: 1 }}>
               <Text style={styles.compareLabel}>External receiver, no NTRIP</Text>
               <Text style={styles.compareValue}>1-3m horizontal</Text>
             </View>
           </View>
           <View style={styles.compareRow}>
-            <MaterialCommunityIcons name="check-decagram" size={20} color={Colors.success} />
+            <MaterialCommunityIcons name="check-decagram" size={20} color={'#10B981'} />
             <View style={{ flex: 1 }}>
               <Text style={styles.compareLabel}>RTK Fixed (receiver + NTRIP)</Text>
               <Text style={styles.compareValue}>1-2cm horizontal ✓ survey-grade</Text>
@@ -417,11 +416,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   positionCard: {
@@ -438,7 +437,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   solBadge: {
     paddingHorizontal: 8,
@@ -451,7 +450,7 @@ const styles = StyleSheet.create({
   },
   positionCoords: {
     fontSize: 14,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
     marginBottom: 8,
   },
@@ -465,30 +464,30 @@ const styles = StyleSheet.create({
   posStatValue: {
     fontSize: 13,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   posStatLabel: {
     fontSize: 9,
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
   },
   positionReceiver: {
     fontSize: 11,
-    color: Colors.metarduOrange,
+    color: '#F97316',
     marginTop: 8,
     fontStyle: 'italic',
   },
   positionWaiting: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontStyle: 'italic',
     paddingVertical: 8,
   },
   sectionTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 8,
@@ -497,7 +496,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 12,
     textTransform: 'uppercase',
   },
@@ -507,16 +506,16 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingVertical: 8,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   presetName: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   presetNote: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   row: {
@@ -532,7 +531,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: `${Colors.success}15`,
+    backgroundColor: #10B98115,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 8,
@@ -541,12 +540,12 @@ const styles = StyleSheet.create({
   connectedText: {
     flex: 1,
     fontSize: 12,
-    color: Colors.success,
+    color: '#10B981',
     fontWeight: '600',
   },
   helpText: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     lineHeight: 17,
     marginBottom: 12,
   },
@@ -557,8 +556,8 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     borderWidth: 1.5,
-    borderColor: Colors.gray200,
-    backgroundColor: Colors.metarduWhite,
+    borderColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
   },
   receiverIcon: {
     width: 40,
@@ -570,11 +569,11 @@ const styles = StyleSheet.create({
   receiverName: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   receiverBrand: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
     textTransform: 'capitalize',
   },
@@ -584,16 +583,16 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: 8,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   compareLabel: {
     fontSize: 13,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '500',
   },
   compareValue: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
     fontFamily: 'JetBrainsMono',
   },

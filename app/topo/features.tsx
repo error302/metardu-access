@@ -20,7 +20,6 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
@@ -82,19 +81,19 @@ export default function FeaturesScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.gray500 }}>Loading...</Text>
+          <Text style={{ color: '#6B7280' }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Feature Codes</Text>
@@ -142,7 +141,7 @@ export default function FeaturesScreen() {
               <MaterialCommunityIcons
                 name={FEATURE_LAYERS.find(l => l.value === (section as any).layer.value)?.icon as any ?? 'tag'}
                 size={16}
-                color={FEATURE_LAYERS.find(l => l.value === (section as any).layer.value)?.color ?? Colors.gray500}
+                color={FEATURE_LAYERS.find(l => l.value === (section as any).layer.value)?.color ?? '#6B7280'}
               />
               <Text style={styles.sectionTitle}>{section.title}</Text>
               <Text style={styles.sectionCount}>{section.data.length}</Text>
@@ -158,7 +157,7 @@ export default function FeaturesScreen() {
                   <View style={styles.codeHeader}>
                     <Text style={styles.codeText}>{item.code}</Text>
                     {!item.isActive && (
-                      <View style={[styles.inactiveBadge, { backgroundColor: Colors.gray200 }]}>
+                      <View style={[styles.inactiveBadge, { backgroundColor: '#E5E7EB' }]}>
                         <Text style={styles.inactiveText}>INACTIVE</Text>
                       </View>
                     )}
@@ -175,7 +174,7 @@ export default function FeaturesScreen() {
                     <MaterialCommunityIcons
                       name={item.isActive ? 'eye' : 'eye-off'}
                       size={18}
-                      color={item.isActive ? Colors.metarduOrange : Colors.gray400}
+                      color={item.isActive ? '#F97316' : '#9CA3AF'}
                     />
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -198,7 +197,7 @@ export default function FeaturesScreen() {
                     }}
                     style={{ padding: 4 }}
                   >
-                    <MaterialCommunityIcons name="delete-outline" size={18} color={Colors.danger} />
+                    <MaterialCommunityIcons name="delete-outline" size={18} color={'#EF4444'} />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -240,7 +239,7 @@ function FilterChip({
       onPress={onPress}
       style={[
         styles.filterChip,
-        active && { backgroundColor: color ?? Colors.metarduNavy, borderColor: color ?? Colors.metarduNavy },
+        active && { backgroundColor: color ?? '#0B1F3A', borderColor: color ?? '#0B1F3A' },
       ]}
     >
       <Text style={[styles.filterChipText, active && styles.filterChipTextActive]}>
@@ -310,7 +309,7 @@ function AddCodeModal({
                 <MaterialCommunityIcons
                   name={l.icon as any}
                   size={14}
-                  color={layer === l.value ? Colors.metarduWhite : l.color}
+                  color={layer === l.value ? '#FFFFFF' : l.color}
                 />
                 <Text style={[
                   styles.layerChipText,
@@ -345,13 +344,13 @@ function AddCodeModal({
                 onPress={() => setIcon(i)}
                 style={[
                   styles.iconSwatch,
-                  icon === i && { backgroundColor: Colors.metarduOrange },
+                  icon === i && { backgroundColor: '#F97316' },
                 ]}
               >
                 <MaterialCommunityIcons
                   name={i as any}
                   size={18}
-                  color={icon === i ? Colors.metarduWhite : Colors.metarduNavy}
+                  color={icon === i ? '#FFFFFF' : '#0B1F3A'}
                 />
               </TouchableOpacity>
             ))}
@@ -392,35 +391,35 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   filterRow: {
     maxHeight: 44,
     paddingVertical: 6,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   filterChip: {
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
     borderWidth: 1,
     borderColor: 'transparent',
   },
   filterChipText: {
     fontSize: 12,
-    color: Colors.gray600,
+    color: '#4B5563',
     fontWeight: '500',
   },
   filterChipTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
   sectionHeader: {
@@ -435,13 +434,13 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 12,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
   sectionCount: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontFamily: 'JetBrainsMono',
   },
   codeRow: {
@@ -464,7 +463,7 @@ const styles = StyleSheet.create({
   codeText: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   inactiveBadge: {
@@ -475,11 +474,11 @@ const styles = StyleSheet.create({
   inactiveText: {
     fontSize: 9,
     fontWeight: '700',
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   codeDesc: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   codeActions: {
@@ -492,7 +491,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -502,20 +501,20 @@ const styles = StyleSheet.create({
     width: 40,
     height: 4,
     borderRadius: 2,
-    backgroundColor: Colors.gray300,
+    backgroundColor: '#D1D5DB',
     alignSelf: 'center',
     marginBottom: 16,
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 16,
   },
   modalLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     marginBottom: 8,
     marginTop: 12,
@@ -534,16 +533,16 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 10,
     borderWidth: 1.5,
-    borderColor: Colors.gray200,
-    backgroundColor: Colors.metarduWhite,
+    borderColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
   },
   layerChipText: {
     fontSize: 11,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '500',
   },
   layerChipTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
   paletteRow: {
@@ -560,14 +559,14 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   colorSwatchActive: {
-    borderColor: Colors.metarduNavy,
+    borderColor: '#0B1F3A',
     borderWidth: 3,
   },
   iconSwatch: {
     width: 36,
     height: 36,
     borderRadius: 10,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
     alignItems: 'center',
     justifyContent: 'center',
   },

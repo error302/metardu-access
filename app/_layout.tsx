@@ -13,7 +13,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '@/global.css';
 import '@/i18n';
 
-import { Colors } from '@/theme';
 import { useAuthStore } from '@/stores/authStore';
 import { useSettingsStore } from '@/stores/settingsStore';
 
@@ -60,19 +59,19 @@ export default function RootLayout() {
         <QueryClientProvider client={queryClient}>
           <StatusBar
             style={outdoorMode ? 'light' : 'auto'}
-            backgroundColor={Colors.metarduNavy}
+            backgroundColor={'#0B1F3A'}
           />
           <Stack
             screenOptions={{
               headerStyle: {
-                backgroundColor: Colors.metarduNavy,
+                backgroundColor: '#0B1F3A',
               },
-              headerTintColor: Colors.metarduWhite,
+              headerTintColor: '#FFFFFF',
               headerTitleStyle: {
                 fontWeight: '600',
               },
               contentStyle: {
-                backgroundColor: Colors.metarduCream,
+                backgroundColor: '#FAF7F2',
               },
             }}
           >

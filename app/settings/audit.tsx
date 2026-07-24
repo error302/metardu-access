@@ -8,7 +8,6 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { EmptyState } from '@/components/EmptyState';
 import { getAuditLog } from '@/lib/db/queries';
@@ -41,10 +40,10 @@ export default function AuditLogScreen() {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View>
           <Text style={styles.title}>Audit Log</Text>
@@ -62,7 +61,7 @@ export default function AuditLogScreen() {
                 <MaterialCommunityIcons
                   name={(ACTION_ICONS[item.action] ?? 'circle-outline') as any}
                   size={16}
-                  color={Colors.metarduNavy}
+                  color={'#0B1F3A'}
                 />
               </View>
               <View style={{ flex: 1 }}>
@@ -112,11 +111,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   entryRow: {
@@ -128,31 +127,31 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 8,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
     alignItems: 'center',
     justifyContent: 'center',
   },
   entryAction: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     textTransform: 'capitalize',
   },
   entryMeta: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
     fontFamily: 'JetBrainsMono',
   },
   entryData: {
     fontSize: 10,
-    color: Colors.gray400,
+    color: '#9CA3AF',
     marginTop: 2,
     fontFamily: 'JetBrainsMono',
   },
   entryTime: {
     fontSize: 10,
-    color: Colors.gray400,
+    color: '#9CA3AF',
     fontFamily: 'JetBrainsMono',
   },
 });

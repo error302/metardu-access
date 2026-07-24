@@ -17,7 +17,6 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
@@ -83,19 +82,19 @@ export default function ParcelsScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.gray500 }}>Loading...</Text>
+          <Text style={{ color: '#6B7280' }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Parcels</Text>
@@ -138,7 +137,7 @@ export default function ParcelsScreen() {
               <Card style={{ marginBottom: 16 }}>
                 <View style={styles.parcelHeader}>
                   <View style={styles.parcelIcon}>
-                    <MaterialCommunityIcons name="vector-square" size={22} color={Colors.metarduOrange} />
+                    <MaterialCommunityIcons name="vector-square" size={22} color={'#F97316'} />
                   </View>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.parcelNumber}>{selected.parcelNumber}</Text>
@@ -146,8 +145,8 @@ export default function ParcelsScreen() {
                       <Text style={styles.parcelLr}>LR {selected.lrNumber}</Text>
                     )}
                   </View>
-                  <View style={[styles.statusBadge, { backgroundColor: `${Colors.metarduOrange}20` }]}>
-                    <Text style={[styles.statusText, { color: Colors.metarduOrange }]}>
+                  <View style={[styles.statusBadge, { backgroundColor: #F9731620 }]}>
+                    <Text style={[styles.statusText, { color: '#F97316' }]}>
                       {selected.status.toUpperCase()}
                     </Text>
                   </View>
@@ -169,19 +168,19 @@ export default function ParcelsScreen() {
                   label="Area"
                   value={selected.areaSqm > 0 ? `${selected.areaSqm.toFixed(2)} m²` : '—'}
                   subValue={selected.areaSqm > 0 ? `${(selected.areaSqm / 10000).toFixed(4)} ha` : ''}
-                  color={Colors.metarduOrange}
+                  color={'#F97316'}
                 />
                 <StatCard
                   icon="ruler"
                   label="Perimeter"
                   value={selected.perimeterM > 0 ? `${selected.perimeterM.toFixed(2)} m` : '—'}
-                  color={Colors.info}
+                  color={'#3B82F6'}
                 />
                 <StatCard
                   icon="map-marker-multiple"
                   label="Points"
                   value={String(selected.points.length)}
-                  color={Colors.success}
+                  color={'#10B981'}
                 />
               </View>
 
@@ -190,7 +189,7 @@ export default function ParcelsScreen() {
                 <Text style={styles.sectionTitle}>Boundary Points ({selected.points.length})</Text>
                 <TouchableOpacity onPress={() => setShowAddPoint(true)}>
                   <View style={styles.addBtn}>
-                    <MaterialCommunityIcons name="plus" size={16} color={Colors.metarduWhite} />
+                    <MaterialCommunityIcons name="plus" size={16} color={'#FFFFFF'} />
                     <Text style={styles.addBtnText}>Add Point</Text>
                   </View>
                 </TouchableOpacity>
@@ -336,16 +335,16 @@ function ParcelPointRow({
           <Text style={styles.pointNumber}>{point.pointNumber}</Text>
           <View style={styles.pointMetaRow}>
             {point.isBeacon && (
-              <View style={[styles.badge, { backgroundColor: `${Colors.metarduOrange}20` }]}>
-                <MaterialCommunityIcons name="map-marker" size={11} color={Colors.metarduOrange} />
-                <Text style={[styles.badgeText, { color: Colors.metarduOrange }]}>
+              <View style={[styles.badge, { backgroundColor: #F9731620 }]}>
+                <MaterialCommunityIcons name="map-marker" size={11} color={'#F97316'} />
+                <Text style={[styles.badgeText, { color: '#F97316' }]}>
                   {point.beaconType ?? 'beacon'}
                 </Text>
               </View>
             )}
             {point.condition && point.condition !== 'good' && (
-              <View style={[styles.badge, { backgroundColor: `${Colors.warning}20` }]}>
-                <Text style={[styles.badgeText, { color: Colors.warning }]}>
+              <View style={[styles.badge, { backgroundColor: #F59E0B20 }]}>
+                <Text style={[styles.badgeText, { color: '#F59E0B' }]}>
                   {point.condition}
                 </Text>
               </View>
@@ -353,7 +352,7 @@ function ParcelPointRow({
           </View>
         </View>
         <TouchableOpacity onPress={onDelete} style={{ padding: 4 }}>
-          <MaterialCommunityIcons name="delete-outline" size={20} color={Colors.danger} />
+          <MaterialCommunityIcons name="delete-outline" size={20} color={'#EF4444'} />
         </TouchableOpacity>
       </View>
     </Card>
@@ -618,29 +617,29 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   chip: {
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
   },
   chipActive: {
-    backgroundColor: Colors.metarduNavy,
+    backgroundColor: '#0B1F3A',
   },
   chipText: {
     fontSize: 13,
-    color: Colors.gray600,
+    color: '#4B5563',
     fontWeight: '500',
   },
   chipTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
   parcelHeader: {
@@ -653,18 +652,18 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 12,
-    backgroundColor: `${Colors.metarduOrange}15`,
+    backgroundColor: #F9731615,
     alignItems: 'center',
     justifyContent: 'center',
   },
   parcelNumber: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   parcelLr: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   statusBadge: {
@@ -678,7 +677,7 @@ const styles = StyleSheet.create({
   },
   parcelMeta: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 4,
   },
   statsRow: {
@@ -688,7 +687,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     padding: 12,
     borderTopWidth: 3,
@@ -698,16 +697,16 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   statSubValue: {
     fontSize: 10,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   statLabel: {
     fontSize: 10,
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
   },
   sectionHeader: {
@@ -719,13 +718,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   addBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: Colors.metarduOrange,
+    backgroundColor: '#F97316',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
@@ -733,23 +732,23 @@ const styles = StyleSheet.create({
   addBtnText: {
     fontSize: 12,
     fontWeight: '600',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   emptyTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginTop: 8,
   },
   emptySub: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     textAlign: 'center',
     marginTop: 4,
   },
   hint: {
     fontSize: 11,
-    color: Colors.warning,
+    color: '#F59E0B',
     fontStyle: 'italic',
     textAlign: 'center',
     marginTop: 12,
@@ -763,19 +762,19 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: Colors.metarduNavy,
+    backgroundColor: '#0B1F3A',
     alignItems: 'center',
     justifyContent: 'center',
   },
   seqText: {
     fontSize: 12,
     fontWeight: '700',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   pointNumber: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   pointMetaRow: {
@@ -801,7 +800,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -811,20 +810,20 @@ const styles = StyleSheet.create({
     width: 40,
     height: 4,
     borderRadius: 2,
-    backgroundColor: Colors.gray300,
+    backgroundColor: '#D1D5DB',
     alignSelf: 'center',
     marginBottom: 16,
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 16,
   },
   modalLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     marginBottom: 8,
     marginTop: 8,
@@ -845,19 +844,19 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 10,
     borderWidth: 1.5,
-    borderColor: Colors.gray200,
+    borderColor: '#E5E7EB',
   },
   toggleBtnActive: {
-    borderColor: Colors.metarduNavy,
-    backgroundColor: Colors.metarduNavy,
+    borderColor: '#0B1F3A',
+    backgroundColor: '#0B1F3A',
   },
   toggleBtnText: {
     fontSize: 13,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '500',
   },
   toggleBtnTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
 });

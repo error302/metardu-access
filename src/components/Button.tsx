@@ -1,5 +1,6 @@
 /**
  * Button — touch-friendly button with brand variants.
+ * Theme-aware: bg/text/border adapt to light/dark/outdoor mode.
  */
 
 import React from 'react';
@@ -11,7 +12,7 @@ import {
   type ViewStyle,
   type TextStyle,
 } from 'react-native';
-import { Colors } from '@/theme';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import { field as haptics } from '@/lib/haptics';
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'outline';
@@ -30,14 +31,6 @@ interface ButtonProps {
   textStyle?: TextStyle;
   testID?: string;
 }
-
-const VARIANT_STYLES: Record<Variant, { bg: string; text: string; border?: string }> = {
-  primary: { bg: Colors.metarduOrange, text: Colors.metarduWhite },
-  secondary: { bg: Colors.metarduNavy, text: Colors.metarduWhite },
-  ghost: { bg: 'transparent', text: Colors.metarduNavy },
-  danger: { bg: Colors.danger, text: Colors.metarduWhite },
-  outline: { bg: 'transparent', text: Colors.metarduNavy, border: Colors.metarduNavy },
-};
 
 const SIZE_STYLES: Record<Size, { height: number; fontSize: number; paddingHorizontal: number }> = {
   sm: { height: 40, fontSize: 14, paddingHorizontal: 12 },
@@ -58,9 +51,17 @@ export function Button({
   textStyle,
   testID,
 }: ButtonProps) {
-  const variantStyle = VARIANT_STYLES[variant];
-  const sizeStyle = SIZE_STYLES[size];
+  const Colors = useThemeColors();
 
+  const variantStyle: { bg: string; text: string; border?: string } = {
+    primary: { bg: Colors.metarduOrange, text: Colors.metarduWhite },
+    secondary: { bg: Colors.metarduNavy, text: Colors.metarduWhite },
+    ghost: { bg: 'transparent', text: Colors.fg },
+    danger: { bg: Colors.danger, text: Colors.metarduWhite },
+    outline: { bg: 'transparent', text: Colors.fg, border: Colors.borderStrong },
+  }[variant];
+
+  const sizeStyle = SIZE_STYLES[size];
   const isDisabled = disabled || loading;
 
   return (

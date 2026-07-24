@@ -5,7 +5,6 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Colors } from '@/theme';
 import { useTranslation } from 'react-i18next';
 
 export default function TabsLayout() {
@@ -13,11 +12,11 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.metarduOrange,
-        tabBarInactiveTintColor: Colors.gray500,
+        tabBarActiveTintColor: '#F97316',
+        tabBarInactiveTintColor: '#6B7280',
         tabBarStyle: {
-          backgroundColor: Colors.metarduWhite,
-          borderTopColor: Colors.gray200,
+          backgroundColor: '#FFFFFF',
+          borderTopColor: '#E5E7EB',
           borderTopWidth: 1,
           height: 64,
           paddingBottom: 8,
@@ -28,9 +27,9 @@ export default function TabsLayout() {
           fontWeight: '500',
         },
         headerStyle: {
-          backgroundColor: Colors.metarduNavy,
+          backgroundColor: '#0B1F3A',
         },
-        headerTintColor: Colors.metarduWhite,
+        headerTintColor: '#FFFFFF',
         headerTitleStyle: {
           fontWeight: '600',
         },

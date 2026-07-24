@@ -87,21 +87,21 @@ export default function ProjectDetailScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.gray500 }}>Loading...</Text>
+          <Text style={{ color: '#6B7280' }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 4 }}>
             <TouchableOpacity onPress={() => router.back()}>
-              <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+              <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
             </TouchableOpacity>
             <Text style={styles.title} numberOfLines={1}>{project.name}</Text>
           </View>
@@ -143,7 +143,7 @@ export default function ProjectDetailScreen() {
         style={styles.fab}
         onPress={() => router.push(`/fieldbook/observation?projectId=${project.id}`)}
       >
-        <MaterialCommunityIcons name="plus" size={28} color={Colors.metarduWhite} />
+        <MaterialCommunityIcons name="plus" size={28} color={'#FFFFFF'} />
       </TouchableOpacity>
 
       <View style={styles.bottomBar}>
@@ -189,9 +189,9 @@ function OverviewTab({
       </Card>
 
       <View style={styles.statsRow}>
-        <MiniStat icon="map-marker" label="Points" value={points.length} color={Colors.metarduOrange} />
-        <MiniStat icon="angle-acute" label="Observations" value={obsCount} color={Colors.info} />
-        <MiniStat icon="clock-outline" label="Created" value={new Date(project.createdAt).toLocaleDateString()} color={Colors.success} />
+        <MiniStat icon="map-marker" label="Points" value={points.length} color={'#F97316'} />
+        <MiniStat icon="angle-acute" label="Observations" value={obsCount} color={'#3B82F6'} />
+        <MiniStat icon="clock-outline" label="Created" value={new Date(project.createdAt).toLocaleDateString()} color={'#10B981'} />
       </View>
     </View>
   );
@@ -213,7 +213,7 @@ function PointsTab({ points }: { points: SurveyPoint[] }) {
         <Card key={`${p.pointNumber}-${i}`} style={{ padding: 12 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
             <View style={styles.pointIcon}>
-              <MaterialCommunityIcons name="map-marker" size={18} color={Colors.metarduOrange} />
+              <MaterialCommunityIcons name="map-marker" size={18} color={'#F97316'} />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={styles.pointNumber}>{p.pointNumber}</Text>
@@ -271,10 +271,10 @@ function WorkflowTab({ project }: { project: Project }) {
           <Card style={{ padding: 14 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
               <View style={styles.workflowIcon}>
-                <MaterialCommunityIcons name={item.icon as any} size={22} color={Colors.metarduOrange} />
+                <MaterialCommunityIcons name={item.icon as any} size={22} color={'#F97316'} />
               </View>
               <Text style={styles.workflowLabel}>{item.label}</Text>
-              <MaterialCommunityIcons name="chevron-right" size={22} color={Colors.gray400} style={{ marginLeft: 'auto' }} />
+              <MaterialCommunityIcons name="chevron-right" size={22} color={'#9CA3AF'} style={{ marginLeft: 'auto' }} />
             </View>
           </Card>
         </TouchableOpacity>
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     flex: 1,
   },
   metaRow: {
@@ -329,21 +329,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   tabActive: {
-    backgroundColor: Colors.metarduNavy,
+    backgroundColor: '#0B1F3A',
   },
   tabText: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontWeight: '500',
   },
   tabTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
   cardTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 8,
   },
   detailRow: {
@@ -351,15 +351,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 6,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   detailLabel: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   detailValue: {
     fontSize: 13,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '500',
   },
   statsRow: {
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
   },
   miniStat: {
     flex: 1,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     padding: 10,
     borderTopWidth: 2,
@@ -378,34 +378,34 @@ const styles = StyleSheet.create({
   miniStatValue: {
     fontSize: 16,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   miniStatLabel: {
     fontSize: 10,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   pointIcon: {
     width: 36,
     height: 36,
     borderRadius: 10,
-    backgroundColor: `${Colors.metarduOrange}15`,
+    backgroundColor: #F9731615,
     alignItems: 'center',
     justifyContent: 'center',
   },
   pointNumber: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   pointCoords: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontFamily: 'JetBrainsMono',
     marginTop: 2,
   },
   pointCode: {
     fontSize: 11,
-    color: Colors.metarduOrange,
+    color: '#F97316',
     marginTop: 2,
     fontWeight: '500',
   },
@@ -413,13 +413,13 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 12,
-    backgroundColor: `${Colors.metarduOrange}15`,
+    backgroundColor: #F9731615,
     alignItems: 'center',
     justifyContent: 'center',
   },
   workflowLabel: {
     fontSize: 15,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '500',
   },
   fab: {
@@ -429,10 +429,10 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: Colors.metarduOrange,
+    backgroundColor: '#F97316',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: Colors.metarduOrange,
+    shadowColor: '#F97316',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.4,
     shadowRadius: 8,
@@ -442,8 +442,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     padding: 12,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
-    borderTopColor: Colors.gray200,
+    borderTopColor: '#E5E7EB',
   },
 });

@@ -16,7 +16,6 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { EmptyState } from '@/components/EmptyState';
@@ -98,19 +97,19 @@ export default function AdjustmentScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.gray500 }}>Loading...</Text>
+          <Text style={{ color: '#6B7280' }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Adjustment Results</Text>
@@ -118,7 +117,7 @@ export default function AdjustmentScreen() {
         </View>
         {preview && (
           <TouchableOpacity onPress={handleShare} style={styles.shareBtn}>
-            <MaterialCommunityIcons name="share-variant" size={18} color={Colors.metarduOrange} />
+            <MaterialCommunityIcons name="share-variant" size={18} color={'#F97316'} />
           </TouchableOpacity>
         )}
       </View>
@@ -155,18 +154,18 @@ export default function AdjustmentScreen() {
         ) : (
           <>
             {/* Summary card */}
-            <Card style={[styles.summaryCard, { borderLeftColor: preview.precisionPasses ? Colors.success : Colors.danger }]}>
+            <Card style={[styles.summaryCard, { borderLeftColor: preview.precisionPasses ? '#10B981' : '#EF4444' }]}>
               <View style={styles.summaryHeader}>
                 <MaterialCommunityIcons
                   name={preview.precisionPasses ? 'check-decagram' : 'alert-decagram'}
                   size={28}
-                  color={preview.precisionPasses ? Colors.success : Colors.danger}
+                  color={preview.precisionPasses ? '#10B981' : '#EF4444'}
                 />
                 <View style={{ flex: 1 }}>
                   <Text style={styles.summaryTitle}>{preview.precisionRatio}</Text>
                   <Text style={styles.summarySubtitle}>Precision Ratio</Text>
                 </View>
-                <View style={[styles.passBadge, { backgroundColor: preview.precisionPasses ? Colors.success : Colors.danger }]}>
+                <View style={[styles.passBadge, { backgroundColor: preview.precisionPasses ? '#10B981' : '#EF4444' }]}>
                   <Text style={styles.passBadgeText}>
                     {preview.precisionPasses ? 'PASS' : 'FAIL'}
                   </Text>
@@ -190,7 +189,7 @@ export default function AdjustmentScreen() {
               <DetailRow
                 label="Status"
                 value={preview.precisionPasses ? 'Within tolerance' : 'Exceeds tolerance'}
-                valueColor={preview.precisionPasses ? Colors.success : Colors.danger}
+                valueColor={preview.precisionPasses ? '#10B981' : '#EF4444'}
               />
             </Card>
 
@@ -205,7 +204,7 @@ export default function AdjustmentScreen() {
               </View>
               {preview.legs.map((leg, i) => (
                 <View key={i} style={styles.legTableRow}>
-                  <Text style={[styles.legTableCell, { flex: 1.5, color: Colors.metarduOrange, fontWeight: '600' }]}>
+                  <Text style={[styles.legTableCell, { flex: 1.5, color: '#F97316', fontWeight: '600' }]}>
                     {leg.fromPoint}→{leg.toPoint}
                   </Text>
                   <Text style={[styles.legTableCell, { flex: 1 }]}>
@@ -231,7 +230,7 @@ export default function AdjustmentScreen() {
               </View>
               {Object.entries(preview.adjustedCoordinates).map(([pt, c]) => (
                 <View key={pt} style={styles.legTableRow}>
-                  <Text style={[styles.legTableCell, { flex: 1, color: Colors.metarduOrange, fontWeight: '600' }]}>
+                  <Text style={[styles.legTableCell, { flex: 1, color: '#F97316', fontWeight: '600' }]}>
                     {pt}
                   </Text>
                   <Text style={[styles.legTableCell, { flex: 1.5 }]}>
@@ -256,7 +255,7 @@ export default function AdjustmentScreen() {
               title="Share Report"
               onPress={handleShare}
               style={{ marginTop: 16 }}
-              icon={<MaterialCommunityIcons name="share-variant" size={18} color={Colors.metarduWhite} />}
+              icon={<MaterialCommunityIcons name="share-variant" size={18} color={'#FFFFFF'} />}
             />
           </>
         )}
@@ -286,11 +285,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   shareBtn: {
@@ -299,26 +298,26 @@ const styles = StyleSheet.create({
   selector: {
     maxHeight: 44,
     paddingVertical: 6,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   chip: {
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
   },
   chipActive: {
-    backgroundColor: Colors.metarduNavy,
+    backgroundColor: '#0B1F3A',
   },
   chipText: {
     fontSize: 13,
-    color: Colors.gray600,
+    color: '#4B5563',
     fontWeight: '500',
   },
   chipTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
   summaryCard: {
@@ -333,12 +332,12 @@ const styles = StyleSheet.create({
   summaryTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   summarySubtitle: {
     fontSize: 11,
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
@@ -350,18 +349,18 @@ const styles = StyleSheet.create({
   passBadgeText: {
     fontSize: 11,
     fontWeight: '700',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   summaryNote: {
     fontSize: 11,
-    color: Colors.gray400,
+    color: '#9CA3AF',
     marginTop: 8,
     fontStyle: 'italic',
   },
   cardTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 12,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -371,15 +370,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 6,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   detailLabel: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   detailValue: {
     fontSize: 13,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '600',
     fontFamily: 'JetBrainsMono',
   },
@@ -387,28 +386,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 6,
     borderBottomWidth: 1.5,
-    borderBottomColor: Colors.metarduNavy,
+    borderBottomColor: '#0B1F3A',
   },
   legTableHeaderCell: {
     fontSize: 11,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     textTransform: 'uppercase',
   },
   legTableRow: {
     flexDirection: 'row',
     paddingVertical: 8,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   legTableCell: {
     fontSize: 12,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   logText: {
     fontSize: 10,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontFamily: 'JetBrainsMono',
     lineHeight: 14,
   },

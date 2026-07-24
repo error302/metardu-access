@@ -21,7 +21,6 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import * as FileSystem from 'expo-file-system';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
@@ -63,19 +62,19 @@ export default function BeaconsScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.gray500 }}>Loading...</Text>
+          <Text style={{ color: '#6B7280' }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Beacon Library</Text>
@@ -145,21 +144,21 @@ function BeaconCard({ beacon, onDelete }: { beacon: Beacon; onDelete: () => void
           <Image source={{ uri: beacon.photoUri }} style={styles.beaconPhoto} />
         ) : (
           <View style={[styles.beaconPhoto, styles.noPhoto]}>
-            <MaterialCommunityIcons name={typeConfig?.icon as any ?? 'map-marker'} size={28} color={Colors.gray400} />
+            <MaterialCommunityIcons name={typeConfig?.icon as any ?? 'map-marker'} size={28} color={'#9CA3AF'} />
           </View>
         )}
         <View style={{ flex: 1 }}>
           <Text style={styles.beaconPoint}>{beacon.pointNumber}</Text>
           <View style={styles.badgeRow}>
-            <View style={[styles.badge, { backgroundColor: `${Colors.metarduOrange}20` }]}>
-              <MaterialCommunityIcons name={typeConfig?.icon as any ?? 'cube-outline'} size={11} color={Colors.metarduOrange} />
-              <Text style={[styles.badgeText, { color: Colors.metarduOrange }]}>
+            <View style={[styles.badge, { backgroundColor: #F9731620 }]}>
+              <MaterialCommunityIcons name={typeConfig?.icon as any ?? 'cube-outline'} size={11} color={'#F97316'} />
+              <Text style={[styles.badgeText, { color: '#F97316' }]}>
                 {typeConfig?.label ?? beacon.beaconType}
               </Text>
             </View>
-            <View style={[styles.badge, { backgroundColor: `${condConfig?.color ?? Colors.gray500}20` }]}>
-              <MaterialCommunityIcons name="circle-medium" size={11} color={condConfig?.color ?? Colors.gray500} />
-              <Text style={[styles.badgeText, { color: condConfig?.color ?? Colors.gray500 }]}>
+            <View style={[styles.badge, { backgroundColor: `${condConfig?.color ?? '#6B7280'}20` }]}>
+              <MaterialCommunityIcons name="circle-medium" size={11} color={condConfig?.color ?? '#6B7280'} />
+              <Text style={[styles.badgeText, { color: condConfig?.color ?? '#6B7280' }]}>
                 {condConfig?.label ?? beacon.condition}
               </Text>
             </View>
@@ -172,7 +171,7 @@ function BeaconCard({ beacon, onDelete }: { beacon: Beacon; onDelete: () => void
           </Text>
         </View>
         <TouchableOpacity onPress={onDelete} style={{ padding: 4 }}>
-          <MaterialCommunityIcons name="delete-outline" size={20} color={Colors.danger} />
+          <MaterialCommunityIcons name="delete-outline" size={20} color={'#EF4444'} />
         </TouchableOpacity>
       </View>
     </Card>
@@ -282,7 +281,7 @@ function AddBeaconModal({
                 <MaterialCommunityIcons
                   name={bt.icon as any}
                   size={14}
-                  color={beaconType === bt.value ? Colors.metarduWhite : Colors.metarduNavy}
+                  color={beaconType === bt.value ? '#FFFFFF' : '#0B1F3A'}
                 />
                 <Text style={[styles.typeChipText, beaconType === bt.value && styles.typeChipTextActive]}>
                   {bt.label}
@@ -321,7 +320,7 @@ function AddBeaconModal({
               <Image source={{ uri: photoUri }} style={styles.photoPreview} />
             ) : (
               <View style={styles.photoPlaceholder}>
-                <MaterialCommunityIcons name="camera" size={32} color={Colors.gray400} />
+                <MaterialCommunityIcons name="camera" size={32} color={'#9CA3AF'} />
                 <Text style={styles.photoPlaceholderText}>Tap to take photo</Text>
               </View>
             )}
@@ -331,12 +330,12 @@ function AddBeaconModal({
           <Text style={styles.modalLabel}>GPS Coordinates (optional)</Text>
           {coords ? (
             <View style={styles.coordsCard}>
-              <MaterialCommunityIcons name="check-circle" size={16} color={Colors.success} />
+              <MaterialCommunityIcons name="check-circle" size={16} color={'#10B981'} />
               <Text style={styles.coordsText}>
                 E: {coords.easting.toFixed(3)}  N: {coords.northing.toFixed(3)}  Elev: {coords.elevation.toFixed(2)}m
               </Text>
               <TouchableOpacity onPress={captureGps}>
-                <MaterialCommunityIcons name="refresh" size={16} color={Colors.metarduOrange} />
+                <MaterialCommunityIcons name="refresh" size={16} color={'#F97316'} />
               </TouchableOpacity>
             </View>
           ) : (
@@ -346,7 +345,7 @@ function AddBeaconModal({
               size="sm"
               onPress={captureGps}
               loading={capturing}
-              icon={<MaterialCommunityIcons name="crosshairs-gps" size={16} color={Colors.metarduNavy} />}
+              icon={<MaterialCommunityIcons name="crosshairs-gps" size={16} color={'#0B1F3A'} />}
             />
           )}
 
@@ -390,11 +389,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   beaconRow: {
@@ -405,7 +404,7 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 10,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
   },
   noPhoto: {
     alignItems: 'center',
@@ -414,7 +413,7 @@ const styles = StyleSheet.create({
   beaconPoint: {
     fontSize: 15,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   badgeRow: {
@@ -437,12 +436,12 @@ const styles = StyleSheet.create({
   },
   beaconDesc: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 4,
   },
   beaconDate: {
     fontSize: 10,
-    color: Colors.gray400,
+    color: '#9CA3AF',
     marginTop: 4,
   },
   modalOverlay: {
@@ -451,7 +450,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -461,20 +460,20 @@ const styles = StyleSheet.create({
     width: 40,
     height: 4,
     borderRadius: 2,
-    backgroundColor: Colors.gray300,
+    backgroundColor: '#D1D5DB',
     alignSelf: 'center',
     marginBottom: 16,
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 16,
   },
   modalLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     marginBottom: 8,
     marginTop: 12,
@@ -493,20 +492,20 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 10,
     borderWidth: 1.5,
-    borderColor: Colors.gray200,
-    backgroundColor: Colors.metarduWhite,
+    borderColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
   },
   typeChipActive: {
-    backgroundColor: Colors.metarduNavy,
-    borderColor: Colors.metarduNavy,
+    backgroundColor: '#0B1F3A',
+    borderColor: '#0B1F3A',
   },
   typeChipText: {
     fontSize: 12,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '500',
   },
   typeChipTextActive: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
   photoPicker: {
@@ -523,20 +522,20 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 2,
     borderStyle: 'dashed',
-    borderColor: Colors.gray300,
+    borderColor: '#D1D5DB',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
   },
   photoPlaceholderText: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   coordsCard: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: `${Colors.success}15`,
+    backgroundColor: #10B98115,
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -545,7 +544,7 @@ const styles = StyleSheet.create({
   coordsText: {
     flex: 1,
     fontSize: 12,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   modalActions: {

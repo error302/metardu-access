@@ -20,7 +20,6 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
@@ -165,19 +164,19 @@ export default function LevelingScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.gray500 }}>Loading...</Text>
+          <Text style={{ color: '#6B7280' }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Engineering Leveling</Text>
@@ -215,16 +214,16 @@ export default function LevelingScreen() {
         {result && expectedEndRl && (
           <Card style={[
             styles.closureCard,
-            { borderLeftColor: result.passes ? Colors.success : Colors.danger }
+            { borderLeftColor: result.passes ? '#10B981' : '#EF4444' }
           ]}>
             <View style={styles.closureHeader}>
               <MaterialCommunityIcons
                 name={result.passes ? 'check-circle' : 'alert-circle'}
                 size={22}
-                color={result.passes ? Colors.success : Colors.danger}
+                color={result.passes ? '#10B981' : '#EF4444'}
               />
               <Text style={styles.closureTitle}>Closure Check</Text>
-              <View style={[styles.closureBadge, { backgroundColor: result.passes ? Colors.success : Colors.danger }]}>
+              <View style={[styles.closureBadge, { backgroundColor: result.passes ? '#10B981' : '#EF4444' }]}>
                 <Text style={styles.closureBadgeText}>
                   {result.passes ? 'PASS' : 'FAIL'}
                 </Text>
@@ -246,7 +245,7 @@ export default function LevelingScreen() {
           <Text style={styles.tableTitle}>Readings ({readings.length})</Text>
           <TouchableOpacity onPress={() => setShowAdd(true)}>
             <View style={styles.addBtn}>
-              <MaterialCommunityIcons name="plus" size={16} color={Colors.metarduWhite} />
+              <MaterialCommunityIcons name="plus" size={16} color={'#FFFFFF'} />
               <Text style={styles.addBtnText}>Add</Text>
             </View>
           </TouchableOpacity>
@@ -271,7 +270,7 @@ export default function LevelingScreen() {
             </View>
             {result?.readings.map((r, i) => (
               <View key={r.id} style={[styles.tableRow, i % 2 === 0 ? styles.tableRowAlt : null]}>
-                <Text style={[styles.tableCell, { flex: 1.2, fontWeight: '600', color: Colors.metarduNavy }]}>
+                <Text style={[styles.tableCell, { flex: 1.2, fontWeight: '600', color: '#0B1F3A' }]}>
                   {r.station}
                 </Text>
                 <Text style={[styles.tableCell, { flex: 0.8 }]}>
@@ -283,17 +282,17 @@ export default function LevelingScreen() {
                 <Text style={[styles.tableCell, { flex: 0.8 }]}>
                   {r.fs !== null ? r.fs.toFixed(3) : '—'}
                 </Text>
-                <Text style={[styles.tableCell, { flex: 1, color: Colors.metarduOrange, fontWeight: '600' }]}>
+                <Text style={[styles.tableCell, { flex: 1, color: '#F97316', fontWeight: '600' }]}>
                   {r.rl !== null ? r.rl.toFixed(3) : '—'}
                 </Text>
                 <TouchableOpacity onPress={() => removeReading(r.id)} style={{ flex: 0.4, alignItems: 'center' }}>
-                  <MaterialCommunityIcons name="delete" size={14} color={Colors.danger} />
+                  <MaterialCommunityIcons name="delete" size={14} color={'#EF4444'} />
                 </TouchableOpacity>
               </View>
             ))}
             {/* Totals */}
             <View style={[styles.tableRow, styles.tableRowTotal]}>
-              <Text style={[styles.tableCell, { flex: 1.2, fontWeight: '700', color: Colors.metarduNavy }]}>
+              <Text style={[styles.tableCell, { flex: 1.2, fontWeight: '700', color: '#0B1F3A' }]}>
                 TOTAL
               </Text>
               <Text style={[styles.tableCell, { flex: 0.8, fontWeight: '700' }]}>
@@ -325,7 +324,7 @@ export default function LevelingScreen() {
             <DetailRow
               label="Closure status"
               value={expectedEndRl ? (result.passes ? 'Within tolerance' : 'Exceeds tolerance') : 'Open run (no closure)'}
-              valueColor={expectedEndRl ? (result.passes ? Colors.success : Colors.danger) : Colors.gray500}
+              valueColor={expectedEndRl ? (result.passes ? '#10B981' : '#EF4444') : '#6B7280'}
             />
           </Card>
         )}
@@ -493,17 +492,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   cardTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     textTransform: 'uppercase',
     marginBottom: 12,
   },
@@ -525,7 +524,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 15,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   closureBadge: {
     paddingHorizontal: 10,
@@ -535,7 +534,7 @@ const styles = StyleSheet.create({
   closureBadgeText: {
     fontSize: 11,
     fontWeight: '700',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   closureStats: {
     flexDirection: 'row',
@@ -544,19 +543,19 @@ const styles = StyleSheet.create({
   },
   closureStatLabel: {
     fontSize: 10,
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
   },
   closureStatValue: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
     marginTop: 2,
   },
   closureNote: {
     fontSize: 10,
-    color: Colors.gray400,
+    color: '#9CA3AF',
     fontStyle: 'italic',
   },
   tableHeader: {
@@ -568,13 +567,13 @@ const styles = StyleSheet.create({
   tableTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   addBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: Colors.metarduOrange,
+    backgroundColor: '#F97316',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
@@ -582,38 +581,38 @@ const styles = StyleSheet.create({
   addBtnText: {
     fontSize: 12,
     fontWeight: '600',
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
   },
   tableRowHeader: {
     flexDirection: 'row',
     paddingVertical: 8,
     borderBottomWidth: 1.5,
-    borderBottomColor: Colors.metarduNavy,
+    borderBottomColor: '#0B1F3A',
   },
   tableHeaderCell: {
     fontSize: 11,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     textTransform: 'uppercase',
   },
   tableRow: {
     flexDirection: 'row',
     paddingVertical: 8,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   tableRowAlt: {
-    backgroundColor: Colors.gray50,
+    backgroundColor: '#F9FAFB',
   },
   tableRowTotal: {
-    backgroundColor: `${Colors.metarduNavy}10`,
+    backgroundColor: #0B1F3A10,
     borderBottomWidth: 0,
     borderTopWidth: 1.5,
-    borderTopColor: Colors.metarduNavy,
+    borderTopColor: '#0B1F3A',
   },
   tableCell: {
     fontSize: 11,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   detailRow: {
@@ -621,15 +620,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 6,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.gray200,
+    borderBottomColor: '#E5E7EB',
   },
   detailLabel: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
   },
   detailValue: {
     fontSize: 13,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontWeight: '600',
     fontFamily: 'JetBrainsMono',
   },
@@ -639,7 +638,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -649,20 +648,20 @@ const styles = StyleSheet.create({
     width: 40,
     height: 4,
     borderRadius: 2,
-    backgroundColor: Colors.gray300,
+    backgroundColor: '#D1D5DB',
     alignSelf: 'center',
     marginBottom: 16,
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     marginBottom: 16,
   },
   modalLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
     marginBottom: 8,
   },

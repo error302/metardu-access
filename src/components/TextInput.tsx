@@ -1,10 +1,10 @@
 /**
- * TextInput — touch-friendly input with label, error state, and outdoor-readable styling.
+ * TextInput — touch-friendly input with label, error state, and theme-aware styling.
  */
 
 import React from 'react';
 import { View, Text, TextInput as RNTextInput, type TextInputProps } from 'react-native';
-import { Colors } from '@/theme';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 interface InputProps extends TextInputProps {
   label?: string;
@@ -30,6 +30,7 @@ export function TextInput({
   testID,
   style,
 }: InputProps) {
+  const Colors = useThemeColors();
   return (
     <View style={{ marginBottom: 16 }}>
       {label && (
@@ -37,7 +38,7 @@ export function TextInput({
           style={{
             fontSize: 14,
             fontWeight: '500',
-            color: Colors.metarduNavy,
+            color: Colors.fgSecondary,
             marginBottom: 6,
           }}
         >
@@ -50,7 +51,7 @@ export function TextInput({
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor={Colors.gray400}
+        placeholderTextColor={Colors.fgSubtle}
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
         autoCapitalize={autoCapitalize}
@@ -60,13 +61,13 @@ export function TextInput({
         style={{
           minHeight: 48,
           borderWidth: 1.5,
-          borderColor: error ? Colors.danger : Colors.gray300,
+          borderColor: error ? Colors.danger : Colors.inputBorder,
           borderRadius: 12,
           paddingHorizontal: 16,
           paddingVertical: 12,
           fontSize: 16,
-          color: Colors.metarduNavy,
-          backgroundColor: Colors.metarduWhite,
+          color: Colors.fg,
+          backgroundColor: Colors.inputBg,
           ...(multiline ? { minHeight: 96, textAlignVertical: 'top' } : {}),
           ...style,
         }}
@@ -75,7 +76,7 @@ export function TextInput({
         <Text style={{ fontSize: 12, color: Colors.danger, marginTop: 4 }}>{error}</Text>
       )}
       {hint && !error && (
-        <Text style={{ fontSize: 12, color: Colors.gray500, marginTop: 4 }}>{hint}</Text>
+        <Text style={{ fontSize: 12, color: Colors.fgMuted, marginTop: 4 }}>{hint}</Text>
       )}
     </View>
   );

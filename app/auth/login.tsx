@@ -18,7 +18,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
-import { Colors } from '@/theme';
 import { LogoMark } from '@/components/LogoMark';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
@@ -52,7 +51,7 @@ export default function LoginScreen() {
 
   return (
     <LinearGradient
-      colors={[Colors.metarduNavy, Colors.metarduNavyDark]}
+      colors={['#0B1F3A', '#061122']}
       style={{ flex: 1 }}
     >
       <SafeAreaView style={{ flex: 1 }}>
@@ -93,7 +92,7 @@ export default function LoginScreen() {
 
               {error && (
                 <View style={styles.errorBox}>
-                  <MaterialCommunityIcons name="alert-circle" size={18} color={Colors.danger} />
+                  <MaterialCommunityIcons name="alert-circle" size={18} color={'#EF4444'} />
                   <Text style={styles.errorText}>{error}</Text>
                 </View>
               )}
@@ -107,7 +106,7 @@ export default function LoginScreen() {
               />
 
               <View style={styles.demoNotice}>
-                <MaterialCommunityIcons name="information-outline" size={14} color={Colors.metarduCream} />
+                <MaterialCommunityIcons name="information-outline" size={14} color={'#FAF7F2'} />
                 <Text style={styles.demoText}>{t('auth.demoModeNotice')}</Text>
               </View>
 
@@ -118,7 +117,7 @@ export default function LoginScreen() {
                   variant="ghost"
                   size="sm"
                   onPress={() => router.push('/auth/register')}
-                  textStyle={{ color: Colors.metarduOrange }}
+                  textStyle={{ color: '#F97316' }}
                 />
               </View>
             </View>
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
     paddingVertical: 32,
   },
   tagline: {
-    color: Colors.metarduCream,
+    color: '#FAF7F2',
     fontSize: 13,
     letterSpacing: 2,
     textTransform: 'uppercase',
@@ -146,13 +145,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: Colors.metarduWhite,
+    color: '#FFFFFF',
     fontSize: 28,
     fontWeight: '700',
     marginBottom: 4,
   },
   subtitle: {
-    color: Colors.metarduCream,
+    color: '#FAF7F2',
     fontSize: 14,
     marginBottom: 32,
     opacity: 0.7,
@@ -161,14 +160,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: `${Colors.danger}20`,
+    backgroundColor: #EF444420,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 8,
     marginBottom: 16,
   },
   errorText: {
-    color: Colors.danger,
+    color: '#EF4444',
     fontSize: 14,
     flex: 1,
   },
@@ -179,11 +178,11 @@ const styles = StyleSheet.create({
     gap: 6,
     marginTop: 16,
     padding: 10,
-    backgroundColor: `${Colors.metarduOrange}20`,
+    backgroundColor: #F9731620,
     borderRadius: 8,
   },
   demoText: {
-    color: Colors.metarduCream,
+    color: '#FAF7F2',
     fontSize: 12,
   },
   footer: {
@@ -194,7 +193,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   footerText: {
-    color: Colors.metarduCream,
+    color: '#FAF7F2',
     fontSize: 14,
   },
 });

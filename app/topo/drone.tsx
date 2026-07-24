@@ -30,7 +30,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import * as ImagePicker from 'expo-image-picker';
 
-import { Colors } from '@/theme';
 import { Card } from '@/components/Card';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
@@ -171,19 +170,19 @@ export default function GcpScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.gray500 }}>Loading...</Text>
+          <Text style={{ color: '#6B7280' }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.metarduCream }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <MaterialCommunityIcons name="arrow-left" size={22} color={Colors.metarduNavy} />
+          <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={styles.title}>Drone / GCPs</Text>
@@ -193,12 +192,12 @@ export default function GcpScreen() {
 
       {/* Stats summary */}
       <View style={styles.statsRow}>
-        <StatCard icon="map-marker-multiple" label="GCPs" value={String(gcps.length)} color={Colors.metarduOrange} />
+        <StatCard icon="map-marker-multiple" label="GCPs" value={String(gcps.length)} color={'#F97316'} />
         <StatCard
           icon="check-decagram"
           label="Fixed"
           value={String(gcps.filter(g => g.solutionType === 'fixed').length)}
-          color={Colors.success}
+          color={'#10B981'}
         />
         <StatCard
           icon="crosshairs"
@@ -206,13 +205,13 @@ export default function GcpScreen() {
           value={gcps.length > 0 && gcps[0].accuracyMm != null
             ? `${Math.round(gcps.reduce((s, g) => s + (g.accuracyMm ?? 0), 0) / gcps.length)}mm`
             : '—'}
-          color={Colors.info}
+          color={'#3B82F6'}
         />
         <StatCard
           icon="swap-vertical"
           label="Spacing"
           value={assessment ? `${assessment.spacing.toFixed(0)}m` : '—'}
-          color={Colors.warning}
+          color={'#F59E0B'}
         />
       </View>
 
@@ -224,7 +223,7 @@ export default function GcpScreen() {
           loading={capturing}
           fullWidth
           size="lg"
-          icon={<MaterialCommunityIcons name="crosshairs-gps" size={20} color={Colors.metarduWhite} />}
+          icon={<MaterialCommunityIcons name="crosshairs-gps" size={20} color={'#FFFFFF'} />}
         />
       </View>
 
@@ -233,13 +232,13 @@ export default function GcpScreen() {
         <View style={{ paddingHorizontal: 16, marginBottom: 12 }}>
           <Card style={[
             styles.assessmentCard,
-            { borderLeftColor: assessment.issues.length === 0 ? Colors.success : Colors.warning },
+            { borderLeftColor: assessment.issues.length === 0 ? '#10B981' : '#F59E0B' },
           ]}>
             <View style={styles.assessmentHeader}>
               <MaterialCommunityIcons
                 name={assessment.issues.length === 0 ? 'check-decagram' : 'alert-decagram'}
                 size={18}
-                color={assessment.issues.length === 0 ? Colors.success : Colors.warning}
+                color={assessment.issues.length === 0 ? '#10B981' : '#F59E0B'}
               />
               <Text style={styles.assessmentTitle}>
                 {assessment.issues.length === 0
@@ -249,14 +248,14 @@ export default function GcpScreen() {
             </View>
             {assessment.issues.map((issue, i) => (
               <View key={`i${i}`} style={styles.assessmentRow}>
-                <MaterialCommunityIcons name="alert-circle-outline" size={12} color={Colors.warning} />
-                <Text style={[styles.assessmentText, { color: Colors.warning }]}>{issue}</Text>
+                <MaterialCommunityIcons name="alert-circle-outline" size={12} color={'#F59E0B'} />
+                <Text style={[styles.assessmentText, { color: '#F59E0B' }]}>{issue}</Text>
               </View>
             ))}
             {assessment.recommendations.slice(0, 2).map((rec, i) => (
               <View key={`r${i}`} style={styles.assessmentRow}>
-                <MaterialCommunityIcons name="lightbulb-outline" size={12} color={Colors.info} />
-                <Text style={[styles.assessmentText, { color: Colors.info }]}>{rec}</Text>
+                <MaterialCommunityIcons name="lightbulb-outline" size={12} color={'#3B82F6'} />
+                <Text style={[styles.assessmentText, { color: '#3B82F6' }]}>{rec}</Text>
               </View>
             ))}
           </Card>
@@ -318,7 +317,7 @@ function GcpCard({ gcp, onDelete }: { gcp: GCP; onDelete: () => void }) {
           <Image source={{ uri: gcp.photoUri }} style={styles.gcpPhoto} />
         ) : (
           <View style={[styles.gcpPhoto, styles.noPhoto]}>
-            <MaterialCommunityIcons name={targetConfig?.icon as any ?? 'map-marker'} size={22} color={Colors.gray400} />
+            <MaterialCommunityIcons name={targetConfig?.icon as any ?? 'map-marker'} size={22} color={'#9CA3AF'} />
           </View>
         )}
         <View style={{ flex: 1 }}>
@@ -343,7 +342,7 @@ function GcpCard({ gcp, onDelete }: { gcp: GCP; onDelete: () => void }) {
           )}
         </View>
         <TouchableOpacity onPress={onDelete} style={{ padding: 4 }}>
-          <MaterialCommunityIcons name="delete-outline" size={20} color={Colors.danger} />
+          <MaterialCommunityIcons name="delete-outline" size={20} color={'#EF4444'} />
         </TouchableOpacity>
       </View>
     </Card>
@@ -372,11 +371,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: '#6B7280',
     marginTop: 2,
   },
   statsRow: {
@@ -387,7 +386,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     padding: 8,
     borderTopWidth: 3,
@@ -397,12 +396,12 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 13,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   statLabel: {
     fontSize: 9,
-    color: Colors.gray500,
+    color: '#6B7280',
     textTransform: 'uppercase',
   },
   assessmentCard: {
@@ -418,7 +417,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 13,
     fontWeight: '600',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
   },
   assessmentRow: {
     flexDirection: 'row',
@@ -440,7 +439,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 8,
-    backgroundColor: Colors.gray100,
+    backgroundColor: '#F3F4F6',
   },
   noPhoto: {
     alignItems: 'center',
@@ -455,7 +454,7 @@ const styles = StyleSheet.create({
   gcpId: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   solBadge: {
@@ -469,18 +468,18 @@ const styles = StyleSheet.create({
   },
   gcpCoords: {
     fontSize: 11,
-    color: Colors.metarduNavy,
+    color: '#0B1F3A',
     fontFamily: 'JetBrainsMono',
   },
   gcpWgs: {
     fontSize: 10,
-    color: Colors.gray500,
+    color: '#6B7280',
     fontFamily: 'JetBrainsMono',
     marginTop: 2,
   },
   gcpAcc: {
     fontSize: 10,
-    color: Colors.metarduOrange,
+    color: '#F97316',
     marginTop: 2,
     fontWeight: '600',
   },
@@ -488,8 +487,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     padding: 12,
-    backgroundColor: Colors.metarduWhite,
+    backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
-    borderTopColor: Colors.gray200,
+    borderTopColor: '#E5E7EB',
   },
 });
