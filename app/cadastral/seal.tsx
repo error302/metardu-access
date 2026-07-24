@@ -31,8 +31,10 @@ import { getBeacons } from '@/lib/db/beacons';
 import { sealSession, type SealResult } from '@/lib/crypto/seal';
 import { buildSession } from '@/lib/sync/engine';
 import type { Project } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function SealScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
   const profile = useAuthStore((s) => s.profile);
@@ -188,16 +190,16 @@ export default function SealScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#6B7280' }}>Loading...</Text>
+          <Text style={{ color: Colors.fgMuted }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -270,7 +272,7 @@ export default function SealScreen() {
               loading={sealing}
               size="lg"
               style={{ marginTop: 16, width: '100%' }}
-              icon={<MaterialCommunityIcons name="lock" size={18} color={'#FFFFFF'} />}
+              icon={<MaterialCommunityIcons name="lock" size={18} color={Colors.bgCard} />}
             />
           </Card>
         ) : (
@@ -324,7 +326,7 @@ export default function SealScreen() {
               title="Share Certificate"
               onPress={handleShare}
               style={{ marginTop: 16 }}
-              icon={<MaterialCommunityIcons name="share-variant" size={18} color={'#FFFFFF'} />}
+              icon={<MaterialCommunityIcons name="share-variant" size={18} color={Colors.bgCard} />}
             />
 
             <Button
@@ -394,7 +396,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   surveyorRow: {
@@ -423,7 +425,7 @@ const styles = StyleSheet.create({
   },
   surveyorFirm: {
     fontSize: 11,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   verifyBadge: {
@@ -441,7 +443,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 8,
@@ -454,7 +456,7 @@ const styles = StyleSheet.create({
   },
   statTile: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderRadius: 10,
     padding: 12,
     borderTopWidth: 3,
@@ -468,7 +470,7 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 10,
-    color: '#6B7280',
+    color: Colors.fgMuted,
   },
   sealIcon: {
     width: 80,
@@ -488,7 +490,7 @@ const styles = StyleSheet.create({
   },
   sealDesc: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textAlign: 'center',
     lineHeight: 18,
   },
@@ -521,7 +523,7 @@ const styles = StyleSheet.create({
   },
   certLabel: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
   },
   certValue: {
     fontSize: 12,

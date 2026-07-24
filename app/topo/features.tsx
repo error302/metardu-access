@@ -34,8 +34,10 @@ import {
   FEATURE_LAYERS,
 } from '@/lib/db/featureCodes';
 import type { FeatureCode, FeatureLayer, Project } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function FeaturesScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
 
@@ -81,16 +83,16 @@ export default function FeaturesScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#6B7280' }}>Loading...</Text>
+          <Text style={{ color: Colors.fgMuted }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -141,7 +143,7 @@ export default function FeaturesScreen() {
               <MaterialCommunityIcons
                 name={FEATURE_LAYERS.find(l => l.value === (section as any).layer.value)?.icon as any ?? 'tag'}
                 size={16}
-                color={FEATURE_LAYERS.find(l => l.value === (section as any).layer.value)?.color ?? '#6B7280'}
+                color={FEATURE_LAYERS.find(l => l.value === (section as any).layer.value)?.color ?? Colors.fgMuted}
               />
               <Text style={styles.sectionTitle}>{section.title}</Text>
               <Text style={styles.sectionCount}>{section.data.length}</Text>
@@ -174,7 +176,7 @@ export default function FeaturesScreen() {
                     <MaterialCommunityIcons
                       name={item.isActive ? 'eye' : 'eye-off'}
                       size={18}
-                      color={item.isActive ? '#F97316' : '#9CA3AF'}
+                      color={item.isActive ? '#F97316' : Colors.fgSubtle}
                     />
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -270,7 +272,7 @@ function AddCodeModal({
   const [color, setColor] = useState('#F97316');
   const [icon, setIcon] = useState('map-marker');
 
-  const palette = ['#F97316', '#3B82F6', '#10B981', '#06B6D4', '#A21CAF', '#EF4444', '#6B7280', '#000000'];
+  const palette = ['#F97316', '#3B82F6', '#10B981', '#06B6D4', '#A21CAF', '#EF4444', Colors.fgMuted, '#000000'];
   const icons = ['map-marker', 'tree', 'home', 'road-variant', 'waves', 'transmission-tower', 'crosshairs-gps', 'circle-multiple'];
 
   return (
@@ -309,7 +311,7 @@ function AddCodeModal({
                 <MaterialCommunityIcons
                   name={l.icon as any}
                   size={14}
-                  color={layer === l.value ? '#FFFFFF' : l.color}
+                  color={layer === l.value ? Colors.bgCard : l.color}
                 />
                 <Text style={[
                   styles.layerChipText,
@@ -350,7 +352,7 @@ function AddCodeModal({
                 <MaterialCommunityIcons
                   name={i as any}
                   size={18}
-                  color={icon === i ? '#FFFFFF' : '#0B1F3A'}
+                  color={icon === i ? Colors.bgCard : '#0B1F3A'}
                 />
               </TouchableOpacity>
             ))}
@@ -395,13 +397,13 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   filterRow: {
     maxHeight: 44,
     paddingVertical: 6,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
   },
@@ -409,7 +411,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: Colors.bgSubtle,
     borderWidth: 1,
     borderColor: 'transparent',
   },
@@ -419,7 +421,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   filterChipTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   sectionHeader: {
@@ -440,7 +442,7 @@ const styles = StyleSheet.create({
   },
   sectionCount: {
     fontSize: 11,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     fontFamily: 'JetBrainsMono',
   },
   codeRow: {
@@ -474,11 +476,11 @@ const styles = StyleSheet.create({
   inactiveText: {
     fontSize: 9,
     fontWeight: '700',
-    color: '#6B7280',
+    color: Colors.fgMuted,
   },
   codeDesc: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   codeActions: {
@@ -491,7 +493,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -514,7 +516,7 @@ const styles = StyleSheet.create({
   modalLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     marginBottom: 8,
     marginTop: 12,
@@ -534,7 +536,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1.5,
     borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
   },
   layerChipText: {
     fontSize: 11,
@@ -542,7 +544,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   layerChipTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   paletteRow: {
@@ -566,7 +568,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 10,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: Colors.bgSubtle,
     alignItems: 'center',
     justifyContent: 'center',
   },

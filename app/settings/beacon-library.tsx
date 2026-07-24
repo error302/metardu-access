@@ -15,8 +15,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { KENYA_BEACON_TYPES, type BeaconTypeSpec } from '@/lib/data/kenya-beacons';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function BeaconLibraryScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
 
   const handleShare = async (beacon: BeaconTypeSpec) => {
@@ -37,7 +39,7 @@ export default function BeaconLibraryScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -94,7 +96,7 @@ function DetailRow({ icon, label, value }: { icon: string; label: string; value:
   return (
     <View style={styles.detailRow}>
       <View style={styles.detailIconRow}>
-        <MaterialCommunityIcons name={icon as any} size={14} color={'#6B7280'} />
+        <MaterialCommunityIcons name={icon as any} size={14} color={Colors.fgMuted} />
         <Text style={styles.detailLabel}>{label}</Text>
       </View>
       <Text style={styles.detailValue}>{value}</Text>
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   infoRow: {
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     lineHeight: 17,
   },
   beaconCard: {
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
   },
   beaconSwahili: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
     fontStyle: 'italic',
   },
@@ -170,7 +172,7 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     fontSize: 11,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     fontWeight: '600',
   },

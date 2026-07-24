@@ -35,8 +35,10 @@ import { getFeatureCodes } from '@/lib/db/featureCodes';
 import { utmToWgs84 } from '@engine/transforms';
 import { assessCoverage, buildTinPrepData, computeBbox } from '@engine/breaklines';
 import type { Project, SurveyPoint, FeatureCode, Breakline } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function CoverageScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
 
@@ -171,16 +173,16 @@ export default function CoverageScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#6B7280' }}>Loading...</Text>
+          <Text style={{ color: Colors.fgMuted }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -280,7 +282,7 @@ export default function CoverageScreen() {
             <MaterialCommunityIcons
               name={showBreaklines ? 'eye' : 'eye-off'}
               size={16}
-              color={'#FFFFFF'}
+              color={Colors.bgCard}
             />
             <Text style={styles.mapToggleText}>Breaklines</Text>
           </TouchableOpacity>
@@ -332,7 +334,7 @@ export default function CoverageScreen() {
             title="Export TIN Prep Data"
             onPress={handleExportTinPrep}
             style={{ marginTop: 12 }}
-            icon={<MaterialCommunityIcons name="file-export" size={18} color={'#FFFFFF'} />}
+            icon={<MaterialCommunityIcons name="file-export" size={18} color={Colors.bgCard} />}
           />
         </ScrollView>
       )}
@@ -398,7 +400,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   statsRow: {
@@ -409,7 +411,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderRadius: 10,
     padding: 8,
     borderTopWidth: 3,
@@ -424,7 +426,7 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 9,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
   },
   filterRow: {
@@ -436,7 +438,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 14,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: Colors.bgSubtle,
   },
   filterChipText: {
     fontSize: 11,
@@ -444,7 +446,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   filterChipTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   mapToggle: {
@@ -461,7 +463,7 @@ const styles = StyleSheet.create({
   },
   mapToggleText: {
     fontSize: 11,
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   assessmentCard: {

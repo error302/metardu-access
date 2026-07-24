@@ -24,6 +24,7 @@ import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
 import { useProjectStore } from '@/stores/projectStore';
 import type { SurveyType } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 const KENYA_COUNTIES = [
   'Nairobi', 'Kiambu', 'Machakos', 'Kajiado', 'Murang\'a', 'Nyandarua',
@@ -37,6 +38,7 @@ const KENYA_COUNTIES = [
 ];
 
 export default function NewProjectScreen() {
+  const Colors = useThemeColors();
   const { t } = useTranslation();
   const router = useRouter();
   const params = useLocalSearchParams<{ type?: string }>();
@@ -304,7 +306,7 @@ const styles = StyleSheet.create({
     color: '#6B7280',
   },
   stepNumberActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   stepLabel: {
     fontSize: 11,
@@ -379,7 +381,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderWidth: 1,
     borderColor: '#E5E7EB',
   },
@@ -392,7 +394,7 @@ const styles = StyleSheet.create({
     color: '#0B1F3A',
   },
   chipTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   buttonRow: {

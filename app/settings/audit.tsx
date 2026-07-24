@@ -12,6 +12,7 @@ import { Card } from '@/components/Card';
 import { EmptyState } from '@/components/EmptyState';
 import { getAuditLog } from '@/lib/db/queries';
 import type { AuditEntry } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 const ACTION_ICONS: Record<string, string> = {
   create_session: 'folder-plus',
@@ -28,6 +29,7 @@ const ACTION_ICONS: Record<string, string> = {
 };
 
 export default function AuditLogScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const [entries, setEntries] = useState<AuditEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -40,7 +42,7 @@ export default function AuditLogScreen() {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   entryRow: {
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 8,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: Colors.bgSubtle,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -139,19 +141,19 @@ const styles = StyleSheet.create({
   },
   entryMeta: {
     fontSize: 11,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
     fontFamily: 'JetBrainsMono',
   },
   entryData: {
     fontSize: 10,
-    color: '#9CA3AF',
+    color: Colors.fgSubtle,
     marginTop: 2,
     fontFamily: 'JetBrainsMono',
   },
   entryTime: {
     fontSize: 10,
-    color: '#9CA3AF',
+    color: Colors.fgSubtle,
     fontFamily: 'JetBrainsMono',
   },
 });

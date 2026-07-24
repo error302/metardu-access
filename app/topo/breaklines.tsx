@@ -44,8 +44,10 @@ import {
 import { validateBreakline, type BreaklineValidation } from '@engine/breaklines';
 import { wgs84ToArc1960Utm37S } from '@engine/transforms';
 import type { Breakline, BreaklineWithPoints, BreaklineType, Project } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function BreaklinesScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
 
@@ -121,9 +123,9 @@ export default function BreaklinesScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#6B7280' }}>Loading...</Text>
+          <Text style={{ color: Colors.fgMuted }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
@@ -140,7 +142,7 @@ export default function BreaklinesScreen() {
     : null;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -175,7 +177,7 @@ export default function BreaklinesScreen() {
                   <MaterialCommunityIcons
                     name={typeConfig?.icon as any ?? 'wave'}
                     size={12}
-                    color={isActive ? '#FFFFFF' : typeConfig?.color ?? '#4B5563'}
+                    color={isActive ? Colors.bgCard : typeConfig?.color ?? '#4B5563'}
                   />
                   <Text style={[styles.blChipText, isActive && styles.blChipTextActive]}>
                     {bl.name} ({bl.pointCount})
@@ -190,11 +192,11 @@ export default function BreaklinesScreen() {
               {/* Selected breakline header */}
               <Card style={{ marginBottom: 12 }}>
                 <View style={styles.selectedHeader}>
-                  <View style={[styles.selectedIcon, { backgroundColor: `${BREAKLINE_TYPES.find(t => t.value === selected.type)?.color ?? '#6B7280'}20` }]}>
+                  <View style={[styles.selectedIcon, { backgroundColor: `${BREAKLINE_TYPES.find(t => t.value === selected.type)?.color ?? Colors.fgMuted}20` }]}>
                     <MaterialCommunityIcons
                       name={BREAKLINE_TYPES.find(t => t.value === selected.type)?.icon as any ?? 'wave'}
                       size={22}
-                      color={BREAKLINE_TYPES.find(t => t.value === selected.type)?.color ?? '#6B7280'}
+                      color={BREAKLINE_TYPES.find(t => t.value === selected.type)?.color ?? Colors.fgMuted}
                     />
                   </View>
                   <View style={{ flex: 1 }}>
@@ -254,7 +256,7 @@ export default function BreaklinesScreen() {
                   onPress={captureGpsPoint}
                   loading={capturing}
                   style={{ flex: 1 }}
-                  icon={<MaterialCommunityIcons name="crosshairs-gps" size={18} color={'#FFFFFF'} />}
+                  icon={<MaterialCommunityIcons name="crosshairs-gps" size={18} color={Colors.bgCard} />}
                 />
                 <ManualPointButton onAdd={addManualPoint} />
               </View>
@@ -263,7 +265,7 @@ export default function BreaklinesScreen() {
               <Text style={styles.sectionTitle}>Vertices ({selected.points.length})</Text>
               {selected.points.length === 0 ? (
                 <Card variant="outline" style={{ alignItems: 'center', padding: 20 }}>
-                  <MaterialCommunityIcons name="map-marker-plus" size={32} color={'#9CA3AF'} />
+                  <MaterialCommunityIcons name="map-marker-plus" size={32} color={Colors.fgSubtle} />
                   <Text style={styles.emptyTitle}>No vertices yet</Text>
                   <Text style={styles.emptySub}>
                     Walk along the feature and tap "Capture GPS Point" at each vertex.
@@ -595,13 +597,13 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   selector: {
     maxHeight: 44,
     paddingVertical: 6,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
   },
@@ -612,7 +614,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: Colors.bgSubtle,
   },
   blChipText: {
     fontSize: 12,
@@ -620,7 +622,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   blChipTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   selectedHeader: {
@@ -643,7 +645,7 @@ const styles = StyleSheet.create({
   },
   selectedType: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   statsRow: {
@@ -660,7 +662,7 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 10,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     marginTop: 2,
   },
@@ -693,7 +695,7 @@ const styles = StyleSheet.create({
   },
   validationMore: {
     fontSize: 11,
-    color: '#9CA3AF',
+    color: Colors.fgSubtle,
     fontStyle: 'italic',
     marginTop: 4,
   },
@@ -716,7 +718,7 @@ const styles = StyleSheet.create({
   },
   emptySub: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textAlign: 'center',
     marginTop: 4,
   },
@@ -736,7 +738,7 @@ const styles = StyleSheet.create({
   vertexSeqText: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   vertexPoint: {
     fontSize: 13,
@@ -746,7 +748,7 @@ const styles = StyleSheet.create({
   },
   vertexCoords: {
     fontSize: 11,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     fontFamily: 'JetBrainsMono',
     marginTop: 2,
   },
@@ -756,7 +758,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -779,7 +781,7 @@ const styles = StyleSheet.create({
   modalLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     marginBottom: 8,
     marginTop: 12,
@@ -801,7 +803,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1.5,
     borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
   },
   typeIcon: {
     width: 40,
@@ -817,7 +819,7 @@ const styles = StyleSheet.create({
   },
   typeDesc: {
     fontSize: 11,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
     lineHeight: 15,
   },

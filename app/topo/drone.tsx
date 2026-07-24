@@ -54,8 +54,10 @@ import {
   nextGcpId,
 } from '@engine/gcps';
 import type { GCP, Project, TargetType } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function GcpScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
 
@@ -170,16 +172,16 @@ export default function GcpScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#6B7280' }}>Loading...</Text>
+          <Text style={{ color: Colors.fgMuted }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -223,7 +225,7 @@ export default function GcpScreen() {
           loading={capturing}
           fullWidth
           size="lg"
-          icon={<MaterialCommunityIcons name="crosshairs-gps" size={20} color={'#FFFFFF'} />}
+          icon={<MaterialCommunityIcons name="crosshairs-gps" size={20} color={Colors.bgCard} />}
         />
       </View>
 
@@ -317,7 +319,7 @@ function GcpCard({ gcp, onDelete }: { gcp: GCP; onDelete: () => void }) {
           <Image source={{ uri: gcp.photoUri }} style={styles.gcpPhoto} />
         ) : (
           <View style={[styles.gcpPhoto, styles.noPhoto]}>
-            <MaterialCommunityIcons name={targetConfig?.icon as any ?? 'map-marker'} size={22} color={'#9CA3AF'} />
+            <MaterialCommunityIcons name={targetConfig?.icon as any ?? 'map-marker'} size={22} color={Colors.fgSubtle} />
           </View>
         )}
         <View style={{ flex: 1 }}>
@@ -375,7 +377,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   statsRow: {
@@ -386,7 +388,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderRadius: 10,
     padding: 8,
     borderTopWidth: 3,
@@ -401,7 +403,7 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 9,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
   },
   assessmentCard: {
@@ -439,7 +441,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 8,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: Colors.bgSubtle,
   },
   noPhoto: {
     alignItems: 'center',
@@ -473,7 +475,7 @@ const styles = StyleSheet.create({
   },
   gcpWgs: {
     fontSize: 10,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     fontFamily: 'JetBrainsMono',
     marginTop: 2,
   },
@@ -487,7 +489,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     padding: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderTopWidth: 1,
     borderTopColor: '#E5E7EB',
   },

@@ -16,10 +16,12 @@ import { useAuthStore } from '@/stores/authStore';
 import { useSettingsStore } from '@/stores/settingsStore';
 import { getSyncQueue } from '@/lib/db/queries';
 import { getSyncEngine } from '@/lib/sync/engine';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import * as Application from 'expo-application';
 import React, { useState, useEffect, useCallback } from 'react';
 
 export default function ProfileScreen() {
+  const Colors = useThemeColors();
   const { t } = useTranslation();
   const router = useRouter();
   const profile = useAuthStore((s) => s.profile);
@@ -402,7 +404,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
   },
   toggleKnobOn: {
     backgroundColor: '#F97316',
@@ -424,7 +426,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   localeBtnActive: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     shadowColor: '#0B1F3A',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,

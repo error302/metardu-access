@@ -33,11 +33,13 @@ import { EmptyState } from '@/components/EmptyState';
 import { getGnssRtkDriver, type GnssReceiver, type GnssPosition } from '@/lib/drivers/gnss-rtk';
 import { KENYA_CORS_PRESETS } from '@/lib/drivers/ntrip-client';
 import { field as haptics } from '@/lib/haptics';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import * as SecureStore from 'expo-secure-store';
 
 const NTRIP_STORAGE = 'metardu_ntrip_creds';
 
 export default function GnssSettingsScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const driver = getGnssRtkDriver();
 
@@ -326,7 +328,7 @@ export default function GnssSettingsScreen() {
             onPress={scanForReceivers}
             loading={scanning}
             fullWidth
-            icon={<MaterialCommunityIcons name="bluetooth-search" size={18} color={'#FFFFFF'} />}
+            icon={<MaterialCommunityIcons name="bluetooth-search" size={18} color={Colors.bgCard} />}
           />
 
           {receivers.length > 0 && (
@@ -557,7 +559,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1.5,
     borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
   },
   receiverIcon: {
     width: 40,

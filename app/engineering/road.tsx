@@ -18,6 +18,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Card } from '@/components/Card';
 import { TextInput } from '@/components/TextInput';
 import { Button } from '@/components/Button';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import {
   horizontalCurve,
   curveDeflections,
@@ -25,6 +26,7 @@ import {
 } from '@engine/curves';
 
 export default function RoadDesignScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
 
   const [piEasting, setPiEasting] = useState('');
@@ -90,7 +92,7 @@ export default function RoadDesignScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -283,7 +285,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   cardTitle: {
@@ -306,7 +308,7 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
   },
   detailValue: {
     fontSize: 13,
@@ -340,7 +342,7 @@ const styles = StyleSheet.create({
   },
   pointCoords: {
     fontSize: 11,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     fontFamily: 'JetBrainsMono',
     marginTop: 2,
   },

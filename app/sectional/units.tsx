@@ -27,6 +27,7 @@ import { EmptyState } from '@/components/EmptyState';
 import { getDatabase, generateId, nowISO } from '@/lib/db/schema';
 import { getProject } from '@/lib/db/queries';
 import type { Project, SectionalUnit, ExclusiveUseArea } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 interface SectionalPropertyWithUnits {
   id: string;
@@ -44,6 +45,7 @@ interface UnitWithEUAs extends SectionalUnit {
 }
 
 export default function UnitsScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
 
@@ -121,16 +123,16 @@ export default function UnitsScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#6B7280' }}>Loading...</Text>
+          <Text style={{ color: Colors.fgMuted }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -201,7 +203,7 @@ export default function UnitsScreen() {
                 <Text style={styles.sectionTitle}>Units ({selected.units.length})</Text>
                 <TouchableOpacity onPress={() => setShowAddUnit(true)}>
                   <View style={styles.addBtn}>
-                    <MaterialCommunityIcons name="plus" size={16} color={'#FFFFFF'} />
+                    <MaterialCommunityIcons name="plus" size={16} color={Colors.bgCard} />
                     <Text style={styles.addBtnText}>Add Unit</Text>
                   </View>
                 </TouchableOpacity>
@@ -307,7 +309,7 @@ function UnitCard({ unit, onEdit }: { unit: UnitWithEUAs; onEdit: () => void }) 
               </View>
             )}
           </View>
-          <MaterialCommunityIcons name="chevron-right" size={20} color={'#9CA3AF'} />
+          <MaterialCommunityIcons name="chevron-right" size={20} color={Colors.fgSubtle} />
         </View>
       </TouchableOpacity>
     </Card>
@@ -488,14 +490,14 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   chip: {
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: Colors.bgSubtle,
   },
   chipActive: {
     backgroundColor: '#0B1F3A',
@@ -506,7 +508,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   chipTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   devHeader: {
@@ -530,7 +532,7 @@ const styles = StyleSheet.create({
   },
   devParcel: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   statusBadge: {
@@ -555,12 +557,12 @@ const styles = StyleSheet.create({
   },
   devStatTarget: {
     fontSize: 10,
-    color: '#9CA3AF',
+    color: Colors.fgSubtle,
     fontFamily: 'JetBrainsMono',
   },
   devStatLabel: {
     fontSize: 10,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     marginTop: 2,
   },
@@ -587,7 +589,7 @@ const styles = StyleSheet.create({
   addBtnText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   emptyTitle: {
     fontSize: 14,
@@ -597,7 +599,7 @@ const styles = StyleSheet.create({
   },
   emptySub: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textAlign: 'center',
     marginTop: 4,
   },
@@ -616,13 +618,13 @@ const styles = StyleSheet.create({
   },
   unitFloorLabel: {
     fontSize: 9,
-    color: '#FAF7F2',
+    color: Colors.bg,
     fontWeight: '600',
   },
   unitNumber: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   unitTitle: {
     fontSize: 14,
@@ -631,7 +633,7 @@ const styles = StyleSheet.create({
   },
   unitMeta: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   euaRow: {
@@ -658,7 +660,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,

@@ -26,6 +26,7 @@ import { Button } from '@/components/Button';
 import { EmptyState } from '@/components/EmptyState';
 import { getProject } from '@/lib/db/queries';
 import type { Project } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 interface LevelReading {
   id: string;
@@ -121,6 +122,7 @@ function computeRiseFall(
 }
 
 export default function LevelingScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
 
@@ -164,16 +166,16 @@ export default function LevelingScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#6B7280' }}>Loading...</Text>
+          <Text style={{ color: Colors.fgMuted }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -245,7 +247,7 @@ export default function LevelingScreen() {
           <Text style={styles.tableTitle}>Readings ({readings.length})</Text>
           <TouchableOpacity onPress={() => setShowAdd(true)}>
             <View style={styles.addBtn}>
-              <MaterialCommunityIcons name="plus" size={16} color={'#FFFFFF'} />
+              <MaterialCommunityIcons name="plus" size={16} color={Colors.bgCard} />
               <Text style={styles.addBtnText}>Add</Text>
             </View>
           </TouchableOpacity>
@@ -324,7 +326,7 @@ export default function LevelingScreen() {
             <DetailRow
               label="Closure status"
               value={expectedEndRl ? (result.passes ? 'Within tolerance' : 'Exceeds tolerance') : 'Open run (no closure)'}
-              valueColor={expectedEndRl ? (result.passes ? '#10B981' : '#EF4444') : '#6B7280'}
+              valueColor={expectedEndRl ? (result.passes ? '#10B981' : '#EF4444') : Colors.fgMuted}
             />
           </Card>
         )}
@@ -496,7 +498,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   cardTitle: {
@@ -534,7 +536,7 @@ const styles = StyleSheet.create({
   closureBadgeText: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   closureStats: {
     flexDirection: 'row',
@@ -543,7 +545,7 @@ const styles = StyleSheet.create({
   },
   closureStatLabel: {
     fontSize: 10,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
   },
   closureStatValue: {
@@ -555,7 +557,7 @@ const styles = StyleSheet.create({
   },
   closureNote: {
     fontSize: 10,
-    color: '#9CA3AF',
+    color: Colors.fgSubtle,
     fontStyle: 'italic',
   },
   tableHeader: {
@@ -581,7 +583,7 @@ const styles = StyleSheet.create({
   addBtnText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   tableRowHeader: {
     flexDirection: 'row',
@@ -624,7 +626,7 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
   },
   detailValue: {
     fontSize: 13,
@@ -638,7 +640,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -661,7 +663,7 @@ const styles = StyleSheet.create({
   modalLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     marginBottom: 8,
   },

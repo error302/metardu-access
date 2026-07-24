@@ -34,8 +34,10 @@ import {
   type ObservationReading,
 } from '@/lib/drivers/total-station';
 import { field as haptics } from '@/lib/haptics';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function InstrumentsScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const driver = getTotalStationDriver();
 
@@ -140,7 +142,7 @@ export default function InstrumentsScreen() {
                 title="Measure"
                 onPress={sendMeasureCommand}
                 style={{ flex: 1 }}
-                icon={<MaterialCommunityIcons name="target" size={18} color={'#FFFFFF'} />}
+                icon={<MaterialCommunityIcons name="target" size={18} color={Colors.bgCard} />}
               />
               <Button
                 title="Disconnect"
@@ -160,7 +162,7 @@ export default function InstrumentsScreen() {
             loading={scanning}
             fullWidth
             size="lg"
-            icon={<MaterialCommunityIcons name="bluetooth-search" size={20} color={'#FFFFFF'} />}
+            icon={<MaterialCommunityIcons name="bluetooth-search" size={20} color={Colors.bgCard} />}
           />
         )}
 
@@ -329,7 +331,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1.5,
     borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
   },
   instrumentIcon: {
     width: 40,

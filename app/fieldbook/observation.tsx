@@ -25,8 +25,10 @@ import { Button } from '@/components/Button';
 import { addObservation, getProject } from '@/lib/db/queries';
 import { useProjectStore } from '@/stores/projectStore';
 import type { ObservationFace } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function ObservationEntryScreen() {
+  const Colors = useThemeColors();
   const { t } = useTranslation();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
@@ -85,7 +87,7 @@ export default function ObservationEntryScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{ flex: 1 }}
@@ -277,7 +279,7 @@ const styles = StyleSheet.create({
   faceBtnText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#6B7280',
+    color: Colors.fgMuted,
   },
   faceBtnTextActive: {
     color: '#F97316',

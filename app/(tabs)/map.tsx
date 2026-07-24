@@ -14,11 +14,13 @@ import { useProjectStore } from '@/stores/projectStore';
 import { getPoints } from '@/lib/db/queries';
 import { utmToWgs84 } from '@engine/transforms';
 import type { SurveyPoint } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 // Default center: Nairobi, Kenya
 const NAIROBI = { latitude: -1.2864, longitude: 36.8172 };
 
 export default function MapScreen() {
+  const Colors = useThemeColors();
   const { t } = useTranslation();
   const projects = useProjectStore((s) => s.projects);
   const selected = useProjectStore((s) => s.selectedProject);
@@ -48,7 +50,7 @@ export default function MapScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <EmptyState
           icon="map-outline"
           title="No projects"
@@ -60,7 +62,7 @@ export default function MapScreen() {
 
   if (mapPoints.length === 0) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={styles.header}>
           <Text style={styles.title}>{t('nav.map')}</Text>
           <Text style={styles.subtitle}>{project.name}</Text>
@@ -84,7 +86,7 @@ export default function MapScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <View>
           <Text style={styles.title}>{t('nav.map')}</Text>
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   markerPin: {

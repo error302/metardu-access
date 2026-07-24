@@ -27,10 +27,12 @@ import { useProjectStore } from '@/stores/projectStore';
 import { getProject, getPoints, deleteProject } from '@/lib/db/queries';
 import { getDatabase } from '@/lib/db/schema';
 import type { Project, SurveyPoint } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 type Tab = 'overview' | 'points' | 'workflow';
 
 export default function ProjectDetailScreen() {
+  const Colors = useThemeColors();
   const { t } = useTranslation();
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -143,7 +145,7 @@ export default function ProjectDetailScreen() {
         style={styles.fab}
         onPress={() => router.push(`/fieldbook/observation?projectId=${project.id}`)}
       >
-        <MaterialCommunityIcons name="plus" size={28} color={'#FFFFFF'} />
+        <MaterialCommunityIcons name="plus" size={28} color={Colors.bgCard} />
       </TouchableOpacity>
 
       <View style={styles.bottomBar}>
@@ -337,7 +339,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   tabTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   cardTitle: {
@@ -368,7 +370,7 @@ const styles = StyleSheet.create({
   },
   miniStat: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderRadius: 10,
     padding: 10,
     borderTopWidth: 2,
@@ -442,7 +444,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     padding: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderTopWidth: 1,
     borderTopColor: '#E5E7EB',
   },

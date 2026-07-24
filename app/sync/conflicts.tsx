@@ -38,8 +38,10 @@ import {
 } from '@/lib/realtime/conflicts';
 import { getRealtimeSync } from '@/lib/realtime/sync';
 import { field as haptics } from '@/lib/haptics';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function ConflictsScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const [conflicts, setConflicts] = useState<ConflictRecord[]>([]);
 
@@ -365,7 +367,7 @@ const styles = StyleSheet.create({
     fontFamily: Typography.fontFamily.sansBold,
     fontSize: 9,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   diffValue: {
     fontFamily: Typography.fontFamily.mono,

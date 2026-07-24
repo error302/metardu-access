@@ -21,6 +21,7 @@ import { useProjectStore } from '@/stores/projectStore';
 import { useAuthStore } from '@/stores/authStore';
 import { getPoints, addPoint } from '@/lib/db/queries';
 import type { SurveyPoint } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 interface RecentItem {
   type: 'point' | 'observation';
@@ -34,6 +35,7 @@ interface RecentItem {
 }
 
 export default function FieldbookScreen() {
+  const Colors = useThemeColors();
   const { t } = useTranslation();
   const router = useRouter();
   const projects = useProjectStore((s) => s.projects);
@@ -308,7 +310,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
   },

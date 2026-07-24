@@ -24,8 +24,10 @@ import { getProject } from '@/lib/db/queries';
 import type { TraverseWithLegs } from '@/lib/db/traverses';
 import type { TraverseAdjustmentResult } from '@engine/traverse';
 import type { Project } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function AdjustmentScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
 
@@ -97,16 +99,16 @@ export default function AdjustmentScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#6B7280' }}>Loading...</Text>
+          <Text style={{ color: Colors.fgMuted }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -255,7 +257,7 @@ export default function AdjustmentScreen() {
               title="Share Report"
               onPress={handleShare}
               style={{ marginTop: 16 }}
-              icon={<MaterialCommunityIcons name="share-variant" size={18} color={'#FFFFFF'} />}
+              icon={<MaterialCommunityIcons name="share-variant" size={18} color={Colors.bgCard} />}
             />
           </>
         )}
@@ -289,7 +291,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   shareBtn: {
@@ -298,7 +300,7 @@ const styles = StyleSheet.create({
   selector: {
     maxHeight: 44,
     paddingVertical: 6,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
   },
@@ -306,7 +308,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: Colors.bgSubtle,
   },
   chipActive: {
     backgroundColor: '#0B1F3A',
@@ -317,7 +319,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   chipTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   summaryCard: {
@@ -337,7 +339,7 @@ const styles = StyleSheet.create({
   },
   summarySubtitle: {
     fontSize: 11,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
@@ -349,11 +351,11 @@ const styles = StyleSheet.create({
   passBadgeText: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   summaryNote: {
     fontSize: 11,
-    color: '#9CA3AF',
+    color: Colors.fgSubtle,
     marginTop: 8,
     fontStyle: 'italic',
   },
@@ -374,7 +376,7 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
   },
   detailValue: {
     fontSize: 13,
@@ -407,7 +409,7 @@ const styles = StyleSheet.create({
   },
   logText: {
     fontSize: 10,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     fontFamily: 'JetBrainsMono',
     lineHeight: 14,
   },

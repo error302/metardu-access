@@ -33,8 +33,10 @@ import {
 import { getTraverses, getTraverse } from '@/lib/db/traverses';
 import type { Parcel, Project, ParcelPoint } from '@/types';
 import type { TraverseWithLegs } from '@/lib/db/traverses';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function ParcelsScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
 
@@ -82,16 +84,16 @@ export default function ParcelsScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#6B7280' }}>Loading...</Text>
+          <Text style={{ color: Colors.fgMuted }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -189,7 +191,7 @@ export default function ParcelsScreen() {
                 <Text style={styles.sectionTitle}>Boundary Points ({selected.points.length})</Text>
                 <TouchableOpacity onPress={() => setShowAddPoint(true)}>
                   <View style={styles.addBtn}>
-                    <MaterialCommunityIcons name="plus" size={16} color={'#FFFFFF'} />
+                    <MaterialCommunityIcons name="plus" size={16} color={Colors.bgCard} />
                     <Text style={styles.addBtnText}>Add Point</Text>
                   </View>
                 </TouchableOpacity>
@@ -621,14 +623,14 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   chip: {
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: Colors.bgSubtle,
   },
   chipActive: {
     backgroundColor: '#0B1F3A',
@@ -639,7 +641,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   chipTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   parcelHeader: {
@@ -663,7 +665,7 @@ const styles = StyleSheet.create({
   },
   parcelLr: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   statusBadge: {
@@ -677,7 +679,7 @@ const styles = StyleSheet.create({
   },
   parcelMeta: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 4,
   },
   statsRow: {
@@ -687,7 +689,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderRadius: 12,
     padding: 12,
     borderTopWidth: 3,
@@ -702,11 +704,11 @@ const styles = StyleSheet.create({
   },
   statSubValue: {
     fontSize: 10,
-    color: '#6B7280',
+    color: Colors.fgMuted,
   },
   statLabel: {
     fontSize: 10,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
   },
   sectionHeader: {
@@ -732,7 +734,7 @@ const styles = StyleSheet.create({
   addBtnText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   emptyTitle: {
     fontSize: 14,
@@ -742,7 +744,7 @@ const styles = StyleSheet.create({
   },
   emptySub: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textAlign: 'center',
     marginTop: 4,
   },
@@ -769,7 +771,7 @@ const styles = StyleSheet.create({
   seqText: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   pointNumber: {
     fontSize: 14,
@@ -800,7 +802,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -823,7 +825,7 @@ const styles = StyleSheet.create({
   modalLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     marginBottom: 8,
     marginTop: 8,
@@ -856,7 +858,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   toggleBtnTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
 });

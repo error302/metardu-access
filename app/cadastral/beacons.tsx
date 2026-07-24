@@ -36,8 +36,10 @@ import {
 } from '@/lib/db/beacons';
 import { wgs84ToArc1960Utm37S } from '@engine/transforms';
 import type { Project, ParcelPoint } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function BeaconsScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
 
@@ -62,16 +64,16 @@ export default function BeaconsScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#6B7280' }}>Loading...</Text>
+          <Text style={{ color: Colors.fgMuted }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -144,7 +146,7 @@ function BeaconCard({ beacon, onDelete }: { beacon: Beacon; onDelete: () => void
           <Image source={{ uri: beacon.photoUri }} style={styles.beaconPhoto} />
         ) : (
           <View style={[styles.beaconPhoto, styles.noPhoto]}>
-            <MaterialCommunityIcons name={typeConfig?.icon as any ?? 'map-marker'} size={28} color={'#9CA3AF'} />
+            <MaterialCommunityIcons name={typeConfig?.icon as any ?? 'map-marker'} size={28} color={Colors.fgSubtle} />
           </View>
         )}
         <View style={{ flex: 1 }}>
@@ -156,9 +158,9 @@ function BeaconCard({ beacon, onDelete }: { beacon: Beacon; onDelete: () => void
                 {typeConfig?.label ?? beacon.beaconType}
               </Text>
             </View>
-            <View style={[styles.badge, { backgroundColor: `${condConfig?.color ?? '#6B7280'}20` }]}>
-              <MaterialCommunityIcons name="circle-medium" size={11} color={condConfig?.color ?? '#6B7280'} />
-              <Text style={[styles.badgeText, { color: condConfig?.color ?? '#6B7280' }]}>
+            <View style={[styles.badge, { backgroundColor: `${condConfig?.color ?? Colors.fgMuted}20` }]}>
+              <MaterialCommunityIcons name="circle-medium" size={11} color={condConfig?.color ?? Colors.fgMuted} />
+              <Text style={[styles.badgeText, { color: condConfig?.color ?? Colors.fgMuted }]}>
                 {condConfig?.label ?? beacon.condition}
               </Text>
             </View>
@@ -281,7 +283,7 @@ function AddBeaconModal({
                 <MaterialCommunityIcons
                   name={bt.icon as any}
                   size={14}
-                  color={beaconType === bt.value ? '#FFFFFF' : '#0B1F3A'}
+                  color={beaconType === bt.value ? Colors.bgCard : '#0B1F3A'}
                 />
                 <Text style={[styles.typeChipText, beaconType === bt.value && styles.typeChipTextActive]}>
                   {bt.label}
@@ -320,7 +322,7 @@ function AddBeaconModal({
               <Image source={{ uri: photoUri }} style={styles.photoPreview} />
             ) : (
               <View style={styles.photoPlaceholder}>
-                <MaterialCommunityIcons name="camera" size={32} color={'#9CA3AF'} />
+                <MaterialCommunityIcons name="camera" size={32} color={Colors.fgSubtle} />
                 <Text style={styles.photoPlaceholderText}>Tap to take photo</Text>
               </View>
             )}
@@ -393,7 +395,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   beaconRow: {
@@ -404,7 +406,7 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 10,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: Colors.bgSubtle,
   },
   noPhoto: {
     alignItems: 'center',
@@ -436,12 +438,12 @@ const styles = StyleSheet.create({
   },
   beaconDesc: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 4,
   },
   beaconDate: {
     fontSize: 10,
-    color: '#9CA3AF',
+    color: Colors.fgSubtle,
     marginTop: 4,
   },
   modalOverlay: {
@@ -450,7 +452,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -473,7 +475,7 @@ const styles = StyleSheet.create({
   modalLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     marginBottom: 8,
     marginTop: 12,
@@ -493,7 +495,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1.5,
     borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
   },
   typeChipActive: {
     backgroundColor: '#0B1F3A',
@@ -505,7 +507,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   typeChipTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   photoPicker: {
@@ -529,7 +531,7 @@ const styles = StyleSheet.create({
   },
   photoPlaceholderText: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
   },
   coordsCard: {
     flexDirection: 'row',

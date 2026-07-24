@@ -25,8 +25,10 @@ import { getSyncQueue, getPoints, getObservations, getProject } from '@/lib/db/q
 import { getSyncEngine, buildSession } from '@/lib/sync/engine';
 import { useAuthStore } from '@/stores/authStore';
 import type { SyncQueueItem } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function SyncQueueScreen() {
+  const Colors = useThemeColors();
   const { t } = useTranslation();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId?: string }>();
@@ -222,7 +224,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     padding: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderTopWidth: 1,
     borderTopColor: '#E5E7EB',
   },

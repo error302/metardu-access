@@ -51,8 +51,10 @@ import {
 } from '@/lib/cloud/backup';
 import { useAuthStore } from '@/stores/authStore';
 import { field as haptics } from '@/lib/haptics';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function DatabaseSettingsScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const profile = useAuthStore((s) => s.profile);
 
@@ -244,7 +246,7 @@ export default function DatabaseSettingsScreen() {
             onPress={handleIntegrityCheck}
             loading={checking}
             fullWidth
-            icon={<MaterialCommunityIcons name="shield-check-outline" size={18} color={'#FFFFFF'} />}
+            icon={<MaterialCommunityIcons name="shield-check-outline" size={18} color={Colors.bgCard} />}
           />
           {integrity && (
             <View style={[styles.integrityResult, {
@@ -353,7 +355,7 @@ export default function DatabaseSettingsScreen() {
             onPress={handleCreateBackup}
             loading={backing}
             style={{ flex: 1 }}
-            icon={<MaterialCommunityIcons name="cloud-upload" size={18} color={'#FFFFFF'} />}
+            icon={<MaterialCommunityIcons name="cloud-upload" size={18} color={Colors.bgCard} />}
           />
           <Button
             title={compacting ? 'Compacting...' : 'Compact'}
@@ -454,7 +456,7 @@ function ProviderChip({
       <MaterialCommunityIcons
         name={icon as any}
         size={14}
-        color={active ? '#FFFFFF' : '#0B1F3A'}
+        color={active ? Colors.bgCard : '#0B1F3A'}
       />
       <Text style={[styles.providerChipText, active && styles.providerChipTextActive]}>
         {label}
@@ -567,7 +569,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.md,
     borderWidth: 1,
     borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
   },
   providerChipActive: {
     backgroundColor: '#0B1F3A',
@@ -580,7 +582,7 @@ const styles = StyleSheet.create({
     color: '#0B1F3A',
   },
   providerChipTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   toggleRow: {
     flexDirection: 'row',
@@ -617,7 +619,7 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     borderRadius: 8,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
   },
   toggleKnobOn: {
     alignSelf: 'flex-end',

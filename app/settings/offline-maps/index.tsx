@@ -32,8 +32,10 @@ import {
   formatFileSize,
   type OfflineMap,
 } from '@/lib/offline-maps';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function OfflineMapsScreen() {
+  const Colors = useThemeColors();
   const router = useRouter();
   const [maps, setMaps] = useState<OfflineMap[]>([]);
   const [loading, setLoading] = useState(true);
@@ -122,7 +124,7 @@ export default function OfflineMapsScreen() {
           loading={importing}
           fullWidth
           size="lg"
-          icon={<MaterialCommunityIcons name="file-import" size={20} color={'#FFFFFF'} />}
+          icon={<MaterialCommunityIcons name="file-import" size={20} color={Colors.bgCard} />}
         />
 
         {/* Maps list */}
@@ -274,7 +276,7 @@ const styles = StyleSheet.create({
   activeBadgeText: {
     fontSize: 10,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   mapActions: {
     flexDirection: 'row',

@@ -45,8 +45,10 @@ import {
 import type { TraverseLeg } from '@engine/traverse';
 import type { TraverseAdjustmentResult } from '@engine/traverse';
 import type { Project } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function TraverseScreen() {
+  const Colors = useThemeColors();
   const { t } = useTranslation();
   const router = useRouter();
   const { projectId } = useLocalSearchParams<{ projectId: string }>();
@@ -80,16 +82,16 @@ export default function TraverseScreen() {
 
   if (!project) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#6B7280' }}>Loading...</Text>
+          <Text style={{ color: Colors.fgMuted }}>Loading...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={22} color={'#0B1F3A'} />
@@ -279,7 +281,7 @@ function TraverseEditor({
           <Text style={styles.legsTitle}>Legs ({traverse.legs.length})</Text>
           <TouchableOpacity onPress={() => setShowAddLeg(true)}>
             <View style={styles.addLegBtn}>
-              <MaterialCommunityIcons name="plus" size={18} color={'#FFFFFF'} />
+              <MaterialCommunityIcons name="plus" size={18} color={Colors.bgCard} />
               <Text style={styles.addLegBtnText}>Add Leg</Text>
             </View>
           </TouchableOpacity>
@@ -287,7 +289,7 @@ function TraverseEditor({
 
         {traverse.legs.length === 0 ? (
           <Card variant="outline" style={{ alignItems: 'center', padding: 24 }}>
-            <MaterialCommunityIcons name="vector-line" size={36} color={'#9CA3AF'} />
+            <MaterialCommunityIcons name="vector-line" size={36} color={Colors.fgSubtle} />
             <Text style={styles.emptyLegsTitle}>No legs yet</Text>
             <Text style={styles.emptyLegsSub}>Tap "Add Leg" to enter your first bearing and distance.</Text>
           </Card>
@@ -679,7 +681,7 @@ function NewTraverseModal({
                 <MaterialCommunityIcons
                   name="loop"
                   size={18}
-                  color={isClosed ? '#FFFFFF' : '#0B1F3A'}
+                  color={isClosed ? Colors.bgCard : '#0B1F3A'}
                 />
                 <Text style={[styles.typeBtnText, isClosed && styles.typeBtnTextActive]}>
                   Closed (link to known point)
@@ -692,7 +694,7 @@ function NewTraverseModal({
                 <MaterialCommunityIcons
                   name="ray-end-arrow"
                   size={18}
-                  color={!isClosed ? '#FFFFFF' : '#0B1F3A'}
+                  color={!isClosed ? Colors.bgCard : '#0B1F3A'}
                 />
                 <Text style={[styles.typeBtnText, !isClosed && styles.typeBtnTextActive]}>
                   Open (no closure check)
@@ -760,13 +762,13 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   travSelector: {
     maxHeight: 44,
     paddingVertical: 6,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
   },
@@ -774,7 +776,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: '#F3F4F6',
+    backgroundColor: Colors.bgSubtle,
   },
   travChipActive: {
     backgroundColor: '#0B1F3A',
@@ -785,7 +787,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   travChipTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
   setupHeader: {
@@ -806,7 +808,7 @@ const styles = StyleSheet.create({
   },
   setupLabel: {
     fontSize: 11,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
@@ -847,7 +849,7 @@ const styles = StyleSheet.create({
   previewBadgeText: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   previewStatsRow: {
     flexDirection: 'row',
@@ -855,7 +857,7 @@ const styles = StyleSheet.create({
   },
   previewStatLabel: {
     fontSize: 10,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
   },
   previewStatValue: {
@@ -867,7 +869,7 @@ const styles = StyleSheet.create({
   },
   previewNote: {
     fontSize: 10,
-    color: '#9CA3AF',
+    color: Colors.fgSubtle,
     marginTop: 8,
     fontStyle: 'italic',
   },
@@ -894,7 +896,7 @@ const styles = StyleSheet.create({
   addLegBtnText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   emptyLegsTitle: {
     fontSize: 14,
@@ -904,7 +906,7 @@ const styles = StyleSheet.create({
   },
   emptyLegsSub: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textAlign: 'center',
     marginTop: 4,
     paddingHorizontal: 16,
@@ -925,7 +927,7 @@ const styles = StyleSheet.create({
   legSeqText: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: Colors.bgCard,
   },
   legRoute: {
     fontSize: 14,
@@ -940,7 +942,7 @@ const styles = StyleSheet.create({
   },
   legMeta: {
     fontSize: 11,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     fontFamily: 'JetBrainsMono',
   },
   legDelete: {
@@ -978,7 +980,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalSheet: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
@@ -1001,7 +1003,7 @@ const styles = StyleSheet.create({
   modalSectionTitle: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#6B7280',
+    color: Colors.fgMuted,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginTop: 16,
@@ -1027,7 +1029,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1.5,
     borderColor: '#E5E7EB',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.bgCard,
   },
   typeBtnActive: {
     borderColor: '#0B1F3A',
@@ -1040,7 +1042,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   typeBtnTextActive: {
-    color: '#FFFFFF',
+    color: Colors.bgCard,
     fontWeight: '600',
   },
 });

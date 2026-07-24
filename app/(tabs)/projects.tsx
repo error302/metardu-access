@@ -16,8 +16,10 @@ import { SurveyTypeBadge } from '@/components/SurveyTypeBadge';
 import { SyncStatusBadge } from '@/components/SyncStatusBadge';
 import { useProjectStore } from '@/stores/projectStore';
 import type { Project } from '@/types';
+import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function ProjectsScreen() {
+  const Colors = useThemeColors();
   const { t } = useTranslation();
   const router = useRouter();
   const projects = useProjectStore((s) => s.projects);
@@ -41,19 +43,19 @@ export default function ProjectsScreen() {
           <SurveyTypeBadge type={item.surveyType} size="sm" />
         </View>
         <View style={styles.metaRow}>
-          <MaterialCommunityIcons name="map-marker" size={14} color={'#6B7280'} />
+          <MaterialCommunityIcons name="map-marker" size={14} color={Colors.fgMuted} />
           <Text style={styles.metaText}>
             {item.county ?? '—'}, {item.country}
           </Text>
         </View>
         {item.lrNumber && (
           <View style={styles.metaRow}>
-            <MaterialCommunityIcons name="file-document-outline" size={14} color={'#6B7280'} />
+            <MaterialCommunityIcons name="file-document-outline" size={14} color={Colors.fgMuted} />
             <Text style={styles.metaText}>LR {item.lrNumber}</Text>
           </View>
         )}
         <View style={styles.metaRow}>
-          <MaterialCommunityIcons name="account" size={14} color={'#6B7280'} />
+          <MaterialCommunityIcons name="account" size={14} color={Colors.fgMuted} />
           <Text style={styles.metaText}>
             {item.surveyorName} · {item.surveyorLicense}
           </Text>
@@ -69,7 +71,7 @@ export default function ProjectsScreen() {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF7F2' }} edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }} edges={['top']}>
       <View style={styles.header}>
         <View>
           <Text style={styles.title}>{t('projects.title')}</Text>
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 13,
-    color: '#6B7280',
+    color: Colors.fgMuted,
     marginTop: 2,
   },
   row: {
@@ -143,7 +145,7 @@ const styles = StyleSheet.create({
   },
   metaText: {
     fontSize: 12,
-    color: '#6B7280',
+    color: Colors.fgMuted,
   },
   footer: {
     flexDirection: 'row',
@@ -153,6 +155,6 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 11,
-    color: '#9CA3AF',
+    color: Colors.fgSubtle,
   },
 });
