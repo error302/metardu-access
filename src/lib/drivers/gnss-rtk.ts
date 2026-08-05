@@ -22,6 +22,12 @@
 import { Platform } from 'react-native';
 import { getNtripClient, type NtripCredentials } from './ntrip-client';
 
+export interface GnssSatelliteStatus {
+  totalInView: number;
+  avgSnr: number;
+  timestamp: string;
+}
+
 export interface GnssPosition {
   latitude: number;
   longitude: number;
@@ -29,6 +35,8 @@ export interface GnssPosition {
   accuracy: number;       // meters
   solutionType: 'single' | 'dgps' | 'float' | 'fixed';
   numSatellites: number;
+  satellitesInView?: number;
+  avgSnr?: number;        // Signal-to-Noise Ratio (dB-Hz)
   hdop?: number;
   vdop?: number;
   timestamp: string;
@@ -56,6 +64,7 @@ export class GnssRtkDriver {
   private bleManager: any = null;
   private connectedReceiver: any = null;
   private positionListeners: ((pos: GnssPosition) => void)[] = [];
+  private satelliteListeners: ((status: GnssSatelliteStatus) => void)[] = [];
   private ntripCredentials: NtripCredentials | null = null;
   private watchSubscription: any = null;
 
@@ -160,18 +169,18 @@ export class GnssRtkDriver {
 
     // Subscribe to position messages from the receiver
     // Receivers send NMEA sentences (GGA, RMC, etc.) via the Nordic UART RX characteristic
-    await this.connectedReceiver.monitorCharacteristicForService(
-      BLE_SERVICES.nordicUart,
-      BLE_SERVICES.nordicUartRx,
-      (error: any, characteristic: any) => {
-        if (error || !characteristic?.value) return;
-        const text = Buffer.from(characteristic.value, 'base64').toString('utf-8');
-        const position = this.parseNmea(text);
-        if (position) {
-          this.positionListeners.forEach(cb => cb(position));
+      await this.connectedReceiver.monitorCharacteristicForService(
+        BLE_SERVICES.nordicUart,
+        BLE_SERVICES.nordicUartRx,
+        (error: any, characteristic: any) => {
+          if (error || !characteristic?.value) return;
+          const text = base64ToUtf8(characteristic.value);
+          const position = this.parseNmea(text);
+          if (position) {
+            this.positionListeners.forEach(cb => cb(position));
+          }
         }
-      }
-    );
+      );
   }
 
   /**
@@ -186,7 +195,7 @@ export class GnssRtkDriver {
     const type = parts[0];
 
     if (type === '$GPGGA' || type === '$GNGGA') {
-      // GGA: Global Positioning System Fix Data
+      // ... existing GGA parsing ...
       const time = parts[1];
       const lat = this.parseNmeaLat(parts[2], parts[3]);
       const lng = this.parseNmeaLng(parts[4], parts[5]);
@@ -216,6 +225,27 @@ export class GnssRtkDriver {
       };
     }
 
+    if (type.endsWith('GSV')) {
+      // GSV: Satellites in view
+      const totalSats = parseInt(parts[3] ?? '0');
+      let snrSum = 0;
+      let snrCount = 0;
+      for (let i = 7; i < parts.length; i += 4) {
+        const snr = parseInt(parts[i]);
+        if (!isNaN(snr) && snr > 0) {
+          snrSum += snr;
+          snrCount++;
+        }
+      }
+      const status: GnssSatelliteStatus = {
+        totalInView: totalSats,
+        avgSnr: snrCount > 0 ? snrSum / snrCount : 0,
+        timestamp: new Date().toISOString(),
+      };
+      this.satelliteListeners.forEach(cb => cb(status));
+      return null;
+    }
+
     return null;
   }
 
@@ -242,6 +272,16 @@ export class GnssRtkDriver {
     this.positionListeners.push(cb);
     return () => {
       this.positionListeners = this.positionListeners.filter(l => l !== cb);
+    };
+  }
+
+  /**
+   * Subscribe to satellite status updates (from GSV sentences).
+   */
+  onSatelliteStatus(cb: (status: GnssSatelliteStatus) => void): () => void {
+    this.satelliteListeners.push(cb);
+    return () => {
+      this.satelliteListeners = this.satelliteListeners.filter(l => l !== cb);
     };
   }
 
@@ -339,4 +379,16 @@ export function getGnssRtkDriver(): GnssRtkDriver {
     gnssInstance = new GnssRtkDriver();
   }
   return gnssInstance;
+}
+
+// ============================================================================
+// Helpers — base64 <-> UTF-8 (Buffer.from is not available in RN runtime)
+// Matches the pattern used in drivers/total-station.ts
+// ============================================================================
+function base64ToUtf8(b64: string): string {
+  if (typeof atob === 'function') {
+    return atob(b64);
+  }
+  // Fallback (dev/Node only)
+  return Buffer.from(b64, 'base64').toString('utf-8');
 }

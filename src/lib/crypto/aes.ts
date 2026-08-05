@@ -109,7 +109,7 @@ export function decrypt(payload: EncryptedPayload, password: string): string {
  */
 export function verifyKey(payload: EncryptedPayload, password: string): boolean {
   try {
-    decrypt(payload, payload.ciphertext.length > 0 ? password : '');
+    decrypt(payload, password);
     return true;
   } catch {
     return false;

@@ -21,7 +21,7 @@ import { BleManager, type Device, type State as BluetoothState } from 'react-nat
 import { Platform } from 'react-native';
 
 export type InstrumentBrand = 'trimble' | 'leica' | 'topcon' | 'sokkia' | 'nikon' | 'generic';
-export type ProtocolFormat = 'gsi' | 'jobxml' | 'rw5' | 'sdr' | 'nikon_raw' | 'ascii';
+export type ProtocolFormat = 'gsi' | 'jobxml' | 'rw5' | 'sdr' | 'nikon_raw' | 'gts' | 'ascii';
 
 export interface Instrument {
   id: string;
@@ -31,6 +31,7 @@ export interface Instrument {
   serialNumber?: string;
   protocol: ProtocolFormat;
   rssi?: number;
+  connectionType?: 'ble' | 'usb' | 'spp';
 }
 
 export interface ObservationReading {
@@ -61,6 +62,11 @@ export class TotalStationDriver {
   private connectedDevice: Device | null = null;
   private scanSubscription: any = null;
   public isConnected: boolean = false;
+  public connectionType: 'ble' | 'usb' | 'spp' | null = null;
+  // USB serial state
+  private usbHandle: string | null = null;
+  private usbReceiveBuffer: string = '';
+  private measurementCallback: ((reading: ObservationReading) => void) | null = null;
 
   constructor() {
     this.manager = new BleManager();
@@ -146,9 +152,9 @@ export class TotalStationDriver {
     } else if (name.includes('leica') || name.includes('ts') || name.includes('nova')) {
       brand = 'leica';
       protocol = 'gsi';
-    } else if (name.includes('topcon') || name.includes('gt') || name.includes('gpt')) {
+    } else if (name.includes('topcon') || name.includes('gt') || name.includes('gpt') || name.includes('es')) {
       brand = 'topcon';
-      protocol = 'rw5';
+      protocol = name.includes('es') ? 'gts' : 'rw5';
     } else if (name.includes('sokkia') || name.includes('cx') || name.includes('fx')) {
       brand = 'sokkia';
       protocol = 'sdr';
@@ -169,7 +175,7 @@ export class TotalStationDriver {
   }
 
   /**
-   * Connect to a specific instrument.
+   * Connect to a specific instrument via BLE.
    */
   async connect(instrumentId: string): Promise<void> {
     this.connectedDevice = await this.manager.connectToDevice(instrumentId);
@@ -178,23 +184,99 @@ export class TotalStationDriver {
   }
 
   /**
+   * Connect to an instrument via USB Serial (Android only).
+   *
+   * Uses the `usb-serial-for-android` library via a custom Expo config plugin
+   * (see `plugins/usb-serial/index.ts`). The native module exposes:
+   *
+   *   UsbSerial.connect(deviceId, baudRate) -> native handle
+   *   UsbSerial.write(handle, base64Payload) -> Promise<void>
+   *   UsbSerial.subscribe(handle, cb)       -> receives base64 chunks
+   *   UsbSerial.disconnect(handle)          -> Promise<void>
+   *
+   * Falls back gracefully if the native module is not available (e.g. dev
+   * build without the plugin, or iOS — USB-OTG serial is Android-only).
+   */
+  async connectUsb(deviceId?: string, baudRate: number = 9600): Promise<void> {
+    if (Platform.OS !== 'android') {
+      throw new Error('USB Serial is only supported on Android');
+    }
+    const UsbSerial = await loadUsbSerialModule();
+    if (!UsbSerial) {
+      throw new Error(
+        'USB Serial native module not available. Rebuild with the usb-serial ' +
+        'Expo config plugin (see plugins/usb-serial/README.md).'
+      );
+    }
+
+    // If no deviceId provided, list connected devices and take the first.
+    if (!deviceId) {
+      const devices = await UsbSerial.listDevices();
+      if (!devices || devices.length === 0) {
+        throw new Error('No USB serial devices connected');
+      }
+      deviceId = devices[0].deviceId;
+    }
+
+    this.usbHandle = await UsbSerial.connect(deviceId, baudRate);
+    this.connectionType = 'usb';
+    this.isConnected = true;
+
+    // Auto-subscribe to incoming measurements
+    UsbSerial.subscribe(this.usbHandle, (base64Chunk: string) => {
+      const raw = this.decodeBase64(base64Chunk);
+      // Buffer until newline (most serial protocols are line-based)
+      this.usbReceiveBuffer += raw;
+      let nl: number;
+      while ((nl = this.usbReceiveBuffer.indexOf('\n')) >= 0) {
+        const line = this.usbReceiveBuffer.slice(0, nl).trim();
+        this.usbReceiveBuffer = this.usbReceiveBuffer.slice(nl + 1);
+        if (line) {
+          const reading = this.parseRawMessage(line);
+          if (reading && this.measurementCallback) this.measurementCallback(reading);
+        }
+      }
+    });
+  }
+
+  /**
    * Disconnect from the current instrument.
    */
   async disconnect(): Promise<void> {
+    // BLE path
     if (this.connectedDevice) {
       await this.manager.cancelDeviceConnection(this.connectedDevice.id);
       this.connectedDevice = null;
-      this.isConnected = false;
     }
+    // USB path
+    if (this.usbHandle) {
+      const UsbSerial = await loadUsbSerialModule();
+      if (UsbSerial) {
+        try { await UsbSerial.disconnect(this.usbHandle); } catch {}
+      }
+      this.usbHandle = null;
+    }
+    this.usbReceiveBuffer = '';
+    this.measurementCallback = null;
+    this.isConnected = false;
+    this.connectionType = null;
   }
 
   /**
    * Listen for incoming measurements from the instrument.
-   * The protocol parser converts raw BLE bytes to ObservationReading objects.
+   * Works for both BLE and USB modes — in USB mode, this just stores the
+   * callback since `connectUsb` already subscribes to the native stream.
    */
   async subscribeToMeasurements(
     onReading: (reading: ObservationReading) => void
   ): Promise<void> {
+    this.measurementCallback = onReading;
+
+    // USB mode — already subscribed in connectUsb(); nothing more to do.
+    if (this.connectionType === 'usb' && this.usbHandle) {
+      return;
+    }
+
     if (!this.connectedDevice) {
       throw new Error('Not connected to an instrument');
     }
@@ -222,6 +304,13 @@ export class TotalStationDriver {
    * Send a command to the instrument (e.g., "measure", "set prism", "face right").
    */
   async sendCommand(command: string): Promise<void> {
+    if (this.connectionType === 'usb' && this.usbHandle) {
+      const UsbSerial = await loadUsbSerialModule();
+      if (!UsbSerial) throw new Error('USB Serial native module went away');
+      await UsbSerial.write(this.usbHandle, this.encodeBase64(command));
+      return;
+    }
+
     if (!this.connectedDevice) {
       throw new Error('Not connected to an instrument');
     }
@@ -241,6 +330,10 @@ export class TotalStationDriver {
     // GSI format: *12345 1.2345 2.3456 3.4567 ...
     if (raw.startsWith('*')) {
       return this.parseGSI(raw);
+    }
+    // GTS format (basic): <VH>,<HH>,<SD>
+    if (raw.includes('VH') || raw.includes('ZA')) {
+      return this.parseGTS(raw);
     }
     // RW5 format: line-based
     if (raw.includes(',"') && raw.includes('"')) {
@@ -297,6 +390,29 @@ export class TotalStationDriver {
     }
   }
 
+  private parseGTS(raw: string): ObservationReading | null {
+    // Topcon GTS format varies, but common is: "VH 12.3456 HH 23.4567 SD 34.5678"
+    // or comma separated with labels.
+    try {
+      const reading: ObservationReading = { timestamp: new Date().toISOString(), raw };
+      const normalized = raw.replace(/,/g, ' ');
+      const parts = normalized.split(/\s+/);
+
+      for (let i = 0; i < parts.length - 1; i++) {
+        const label = parts[i].toUpperCase();
+        const next = parseFloat(parts[i+1]);
+        if (isNaN(next)) continue;
+
+        if (label === 'VH' || label === 'ZA') reading.verticalAngle = next;
+        else if (label === 'HH' || label === 'HA') reading.horizontalAngle = next;
+        else if (label === 'SD') reading.slopeDistance = next;
+      }
+      return reading;
+    } catch {
+      return null;
+    }
+  }
+
   private decodeBase64(b64: string): string {
     // react-native-ble-plx returns base64; decode to string
     if (typeof atob === 'function') {
@@ -320,6 +436,33 @@ export class TotalStationDriver {
     this.stopScan();
     void this.disconnect();
     this.manager.destroy();
+  }
+
+  /**
+   * List connected USB serial devices (Android only).
+   * Use to populate a connection picker UI before calling connectUsb().
+   */
+  async listUsbDevices(): Promise<Array<{ deviceId: string; productName?: string; vendorId?: number }>> {
+    if (Platform.OS !== 'android') return [];
+    const UsbSerial = await loadUsbSerialModule();
+    if (!UsbSerial) return [];
+    return await UsbSerial.listDevices();
+  }
+}
+
+// ============================================================================
+// USB Serial native module loader
+// ============================================================================
+/**
+ * Lazily load the UsbSerial native module added by `plugins/usb-serial`.
+ * Returns null if not available (e.g. iOS, or dev build without the plugin).
+ */
+async function loadUsbSerialModule(): Promise<any | null> {
+  try {
+    const mod = await import('NativeModules').then(NativeModules => NativeModules.UsbSerial);
+    return mod ?? null;
+  } catch {
+    return null;
   }
 }
 

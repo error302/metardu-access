@@ -28,6 +28,25 @@
 // RTCM3 preamble byte
 const RTCM3_PREAMBLE = 0xD3;
 
+/**
+ * CRC-24/Q (RTCM3) — used for frame integrity.
+ * Polynomial: 0x1864CFB, initial value 0, no reflection, no final XOR.
+ * Per RTCM 3.3 spec. Receivers will reject frames with an invalid CRC.
+ */
+const CRC24_POLY = 0x1864CFB;
+function crc24(buf: Buffer): number {
+  let crc = 0;
+  for (let i = 0; i < buf.length; i++) {
+    crc ^= buf[i] << 16;
+    for (let j = 0; j < 8; j++) {
+      crc <<= 1;
+      if (crc & 0x1000000) crc ^= CRC24_POLY;
+    }
+    crc &= 0xFFFFFF;
+  }
+  return crc & 0xFFFFFF;
+}
+
 export interface RtcmMessage {
   type: number;
   length: number;
@@ -366,14 +385,17 @@ export class NtripClient {
   forwardToBle(writeFn: (data: Buffer) => Promise<void>): void {
     this.parser.onMessage(async (msg) => {
       try {
-        // Reconstruct the full RTCM frame (preamble + length + payload + CRC)
+        // Reconstruct full RTCM frame: preamble + length(2) + payload + CRC-24(3)
         const frame = Buffer.alloc(msg.length + 6);
         frame[0] = RTCM3_PREAMBLE;
         frame[1] = (msg.length >> 8) & 0x03;
         frame[2] = msg.length & 0xFF;
         msg.payload.copy(frame, 3);
-        // CRC-24 (last 3 bytes) — in production, compute properly
-        // For now, the receiver will reject invalid CRC; we'd need a CRC-24 implementation
+        // Append CRC-24 over preamble + length + payload (first 3+len bytes)
+        const crc = crc24(frame.slice(0, 3 + msg.length));
+        frame[3 + msg.length] = (crc >> 16) & 0xFF;
+        frame[3 + msg.length + 1] = (crc >> 8) & 0xFF;
+        frame[3 + msg.length + 2] = crc & 0xFF;
         await writeFn(frame);
       } catch (err) {
         console.warn('[NTRIP] BLE forward failed:', err);

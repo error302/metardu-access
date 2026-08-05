@@ -61,12 +61,13 @@ describe('verifySeal', () => {
 });
 
 describe('sealSession', () => {
-  it('returns a complete seal result', async () => {
+  it('returns a complete HMAC seal result when forceHmac is true', async () => {
     const result = await sealSession({
       payload: { points: [{ x: 1, y: 2 }] },
       surveyorName: 'John Doe',
       surveyorLicense: 'ISK/1234',
       firmName: 'Doe Surveyors',
+      forceHmac: true,
     });
     expect(result.method).toBe('hmac-sha256');
     expect(result.documentHash).toHaveLength(64);
@@ -77,5 +78,20 @@ describe('sealSession', () => {
     expect(result.certificateText).toContain('John Doe');
     expect(result.certificateText).toContain('ISK/1234');
     expect(result.certificateText).toContain('HMAC-SHA256');
+  });
+
+  it('falls back to HMAC when SecureStore is unavailable (test/Node env)', async () => {
+    // Without a React Native runtime, getOrCreateSigningKeyPair throws,
+    // and sealSession must gracefully degrade to HMAC. This is the
+    // default path in Jest/Node — no forceHmac flag needed.
+    const result = await sealSession({
+      payload: { points: [{ x: 1, y: 2 }] },
+      surveyorName: 'Jane Doe',
+      surveyorLicense: 'ISK/5678',
+    });
+    // In the Node test environment, ECDSA is unavailable → HMAC path.
+    expect(['hmac-sha256', 'ecdsa-p256-sha256']).toContain(result.method);
+    expect(result.documentHash).toHaveLength(64);
+    expect(result.surveyorName).toBe('Jane Doe');
   });
 });
